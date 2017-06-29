@@ -13,10 +13,16 @@ class UserTableSeeder extends Seeder
     {
         //填充数据
         $data=[];
-        for($i=1;$i++;$i<=50)
+        for($i=0;$i<50;$i++)
         {
-
+            $data[]=[
+                'name'=>str_random(10),
+                'password'=>encrypt('123'),
+                'auth'=>2,
+                'pic'=>'149866865622689887.jpeg'
+            ];
         }
+        \DB::table('users')->insert($data);
 
     }
 }

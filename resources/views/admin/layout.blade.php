@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} - {{ $title  }} </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -327,20 +328,21 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">导航栏</li>
                 <li class="active treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>用户管理</span>
+                    <a href="{{ url('/admin/user/index') }}">
+                        <i class="fa fa-dashboard"></i>
+                        <span>用户管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="{{ url('/admin/user/add') }}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                        <li><a href="{{ url('/admin/user/index') }}"><i class="fa fa-circle-o"></i> 用户列表</a></li>
+                        <li><a href="{{ url('/admin/user/add') }}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span>Layout Options</span>
@@ -363,7 +365,7 @@
             </span>
                     </a>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
                         <span>Charts</span>
@@ -378,7 +380,7 @@
                         <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-laptop"></i>
                         <span>UI Elements</span>
@@ -395,7 +397,7 @@
                         <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-edit"></i> <span>Forms</span>
                         <span class="pull-right-container">
@@ -408,7 +410,7 @@
                         <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-table"></i> <span>Tables</span>
                         <span class="pull-right-container">
@@ -439,7 +441,7 @@
             </span>
                     </a>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>Examples</span>
                         <span class="pull-right-container">
@@ -458,7 +460,7 @@
                         <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-share"></i> <span>Multilevel</span>
                         <span class="pull-right-container">
@@ -746,5 +748,7 @@
 <script src="{{ asset('/admin/adminlte/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('/admin/adminlte/dist/js/demo.js') }}"></script>
+
+@yield('js')
 </body>
 </html>

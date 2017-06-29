@@ -14,7 +14,6 @@ class UserController extends Controller
         $num=$request->input('num',10);
         $keywords=$request->input('keywords','');
 
-
         //查询数据库
         $data=\DB::table('users')->where('name','like','%'.$keywords.'%')->paginate($num);
 
@@ -97,6 +96,27 @@ class UserController extends Controller
             return back()->with(['info'=>'添加失败']);  //存到session中
         }
     }
+
+    public function ajaxRename(Request $request)
+    {
+//        dd($request->all());
+        $res=\DB::table('users')->where('name',$request->input('name'))->first();
+
+        if($res)
+        {
+            return response()->json(0);
+        }else
+        {
+            $res=\DB::table('users')->where('id',$request->input('id'))->update(['name'=>$request->input('name')]);
+            if($res)
+            {
+                return response()->json(1);
+            }else{
+                return response()->json(2);
+            }
+        }
+    }
+
 
 
 }
