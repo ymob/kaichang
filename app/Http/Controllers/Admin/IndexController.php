@@ -8,7 +8,5 @@ use App\Http\Controllers\Controller;
 class IndexController extends Controller
 {
     //index
-    public function index(){
-        return view('admin.index.index',['title'=>'后台首页']);
-    }
+
 }

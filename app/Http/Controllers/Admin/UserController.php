@@ -7,8 +7,20 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index(){
-        return '用户列表';
+
+    public function index(Request $request)
+    {
+        //获取get传参
+        $num=$request->input('num',10);
+        $keywords=$request->input('keywords','');
+
+
+        //查询数据库
+        $data=\DB::table('users')->where('name','like','%'.$keywords.'%')->paginate($num);
+
+
+        return view('admin.user.index',['title'=>'用户列表','request'=>$request->all(),'data'=>$data]);
+
     }
 
     public function add(){
@@ -85,4 +97,6 @@ class UserController extends Controller
             return back()->with(['info'=>'添加失败']);  //存到session中
         }
     }
+
+
 }
