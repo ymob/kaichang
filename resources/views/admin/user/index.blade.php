@@ -26,6 +26,12 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
+                        @if(session('info'))
+                            <div class="alert alert-danger">
+                                {{ session('info') }}
+                            </div>
+                        @endif
+
                         <form action="/admin/user/index" method="get">
                             <div class="row">
                                 <div class="col-md-2">
@@ -87,7 +93,11 @@
                                 <td>
                                     <img style="width:50px;height:50px;" src="/uploads/adminUser/{{ $value->pic }}" alt="">
                                 </td>
-                                <td>编辑 删除</td>
+                                <td>
+                                    <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
+                                    <a data-toggle="modal" data-target="#myModal">删除</a>
+                                </td>
+
                             </tr>
                             @endforeach
 
@@ -118,49 +128,55 @@
             }
         });
 
-        $(".name").on('dblclick',function(){
+        //绑定一次双击事件
+        $(".name").one('dblclick',update);
 
-            var td=$(this);
+        //双击事件封装函数
+        function update() {
+
+            var td = $(this);
 
             //获取id
-            var id=$(this).parent('.parent').find('.ids').html();
+            var id = $(this).parent('.parent').find('.ids').html();
 
             //获取原来的值
-            var oldName=$(this).html();
+            var oldName = $(this).html();
 
-            var inp=$("<input type='text'>");
+            var inp = $("<input type='text'>");
             inp.val(oldName);
             $(this).html(inp);
 
-            inp.on('blur',function(){
+            //直接选中
+            inp.select();
+
+            inp.on('blur', function () {
 
                 //获取新名
-                var newName=inp.val();
+                var newName = inp.val();
                 //执行ajax
-                $.ajax('/admin/user/ajaxrename',{
-                    type:'POST',
-                    data:{id:id,name:newName}
-                    success:function(data){
-                        if(data=='0')
-                        {
+                $.ajax('/admin/user/ajaxrename', {
+                    type: 'POST',
+                    data: {id: id, name: newName},
+                    success: function (data) {
+                        if (data == '0') {
                             alert('用户名已经存在');
                             td.html(oldName);
-                        }else if(data=='1')
-                        {
+                        } else if (data == '1') {
                             td.html(newName);
-                        }else
-                        {
+                        } else {
                             alert('修改失败');
                         }
                     },
-                    error:function(data){
+                    error: function (data) {
                         alert('数据异常');
                     },
-                    dataType:'json'
+                    dataType: 'json'
                 });
-                td.one('dblclick');
+
+                //再绑定一次双击事件
+                td.one('dblclick', update);
             });
-        });
+        }
 
     </script>
 @endsection

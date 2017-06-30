@@ -117,6 +117,60 @@ class UserController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $data=\DB::table('users')->where('id',$id)->first();
+        return view('admin.user.edit',['title'=>'用户编辑','data'=>$data]);
+    }
 
+    public function update(Request $request)
+    {
+        $data=$request->except('_token','id');
+
+        //查询原图片
+        $oldPic=\DB::table('users')->where('id',$request->id)->first()->pic;
+
+        if($request->hasFile('pic')){
+            if($request->file('pic')->isValid())
+            {
+                //获取扩展名
+                $ext=$request->file('pic')->extension();
+                //随机文件名
+                $filename=time().mt_rand(10000000,99999999).'.'.$ext;
+                //移动
+                $request->file('pic')->move('./uploads/adminUser',$filename);
+
+                //删除原图片
+                if(file_exists('./uploads/adminUser/'.$oldPic) && $oldPic!='default.jpg')
+                {
+                    unlink('./uploads/adminUser/'.$oldPic);
+                }
+
+                //添加data数据
+                $data['pic']=$filename;
+            }
+        }
+
+        $res=\DB::table('users')->where('id',$request->id)->update($data);
+        if($res)
+        {
+            return redirect('/admin/user/index')->with(['info'=>'更新成功']);
+        }else
+        {
+            return back()->with(['info'=>'更新失败']);
+        }
+    }
+
+    public function delete($id)
+    {
+        $res=\DB::table('users')->delete($id);
+        if($res)
+        {
+            return redirect('/admin/user/index')->with(['info'=>'删除成功']);
+        }else
+        {
+            return back()->with(['info'=>'删除失败']);
+        }
+    }
 
 }

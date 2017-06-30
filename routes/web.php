@@ -22,6 +22,9 @@ Route::get('/admin/index','Admin\IndexController@index');
 Route::get('/admin/user/add','Admin\UserController@add');
 Route::post('/admin/user/insert','Admin\UserController@insert');
 Route::get('/admin/user/index','Admin\UserController@index');
+Route::get('/admin/user/edit/{id}','Admin\UserController@edit');
+Route::post('/admin/user/update','Admin\UserController@update');
+Route::get('/admin/user/delete/{id}','Admin\UserController@delete');
 
 //ajax 操作
 Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
