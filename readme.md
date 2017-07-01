@@ -23,15 +23,12 @@
 ```
 	修改 .env 里的 数据库连接 等配置信息
 ```  
-* ### 生成司机密钥  
-```
-	key:generate  
-```  
 
 * ### 生成随机密钥  
 ```
 	key:generate  
-```
+```  
+
 * ### 运行数据库迁移 
 ```
 	php artisan migrate  
