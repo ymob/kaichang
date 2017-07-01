@@ -28,3 +28,6 @@ Route::get('/admin/user/delete/{id}','Admin\UserController@delete');
 
 //ajax 操作
 Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
+
+//分类管理
+Route::resource('/admin/category',"Admin\CategoryController");
