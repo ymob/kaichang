@@ -49,32 +49,39 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" action="{{url('/admin/category') }}" method="post" >
+                        <form role="form" action="{{url('/admin/category/') }}/{{ $data->id }}" method="post" >
+                            {{ method_field('PUT') }}
                             {{ csrf_field()  }}
                             <div class="box-body">
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">分类名</label>
-                                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1" placeholder="请输入用户名">
-                                </div>
-
-                                <div class="form-group">
                                     <label for="exampleInputauth">父分类</label>
-                                    <select name="pid" id="exampleInputauth" class="form-control">
+                                    <select name="pid" id="exampleInputauth" class="form-control" >
                                         <option value="0">根分类</option>
                                         @foreach($allData as $key=>$value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option value="{{ $value->id }}"
+                                            @if($data->pid == $value->id)
+                                                selected="selected"
+                                            @endif
+                                            @if($data->pid == $value->id)
+                                                disabled="disabled"
+                                            @endif
+                                            >{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">分类名</label>
+                                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1">
+                                </div>
 
 
                             </div>
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">添加</button>
+                                <button type="submit" class="btn btn-primary">更新</button>
                             </div>
                         </form>
                     </div>

@@ -54,6 +54,12 @@
                                     </tr>
                                 @endforeach
 
+                                {{--隐藏的表单提交,用于删除--}}
+                                <form action="" id="formDel" method="post">
+                                    {{ method_field('DELETE') }}
+                                    {{ csrf_field() }}
+                                </form>
+
                                 </tbody>
                             </table>
 
@@ -164,7 +170,11 @@
     <script !src="">
 
         $("#delete").click(function(){
-            location.href="/admin/user/delete/"+id;
+
+            var url="/admin/category/"+id;
+            $("#formDel").attr('action',url);
+            $("#formDel").submit();
+
         });
 
     </script>

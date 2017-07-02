@@ -83,10 +83,10 @@ class CategoryController extends Controller
         $res=\DB::table('category')->insert($data);
         if ($res)
         {
-            return redirect('/admin/category/create')->with(['info'=>'添加成功']);
+            return redirect('/admin/category')->with(['info'=>'添加成功']);
         }else
         {
-            return redirect('/admin/category/create')->with(['info'=>'添加失败']);
+            return back()->with(['info'=>'添加失败']);
         }
     }
 
@@ -109,7 +109,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //编辑//
+        //编辑分类//
 
         //要编辑的数据
         $data=\DB::table('category')->where('id',$id)->first();
@@ -136,7 +136,33 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //执行修改//
+
+        $data=$request->except('_token','_method');
+
+        //判断是否是添加根分类
+        if($data['pid'] == '0')
+        {
+            $data['path']=0;
+            $data['status']=1;
+        }else
+        {
+            //查询父path
+            $parent_path=\DB::table('category')->where('id',$data['pid'])->first()->path;
+
+            //拼接要在其下添加的子分类的path
+            $data['path']=$parent_path.','.$data['pid'];
+            $data['status']=1;
+        }
+
+        $res=\DB::table('category')->where('id',$id)->update($data);
+        if ($res)
+        {
+            return redirect('/admin/category')->with(['info'=>'更新成功']);
+        }else
+        {
+            return back()->with(['info'=>'更新失败']);
+        }
     }
 
     /**
@@ -147,6 +173,43 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //执行删除分类//
+
+        $res=\DB::table('category')->where('pid',$id)->first();
+        if($res)
+        {
+            return back()->with(['info'=>'有子分类,不允许删除']);
+        }
+
+        $res=\DB::table('category')->delete($id);
+        if ($res)
+        {
+            return redirect('/admin/category')->with(['info'=>'删除成功']);
+        }else
+        {
+            return back()->with(['info'=>'删除失败']);
+        }
+
+    }
+
+    //递归查询所有多级分类
+    public function getCategoryByPid($pid)
+    {
+        //根据 pid 查询子分类
+        $data=\DB::table('category')->where('pid',$pid)->get();
+
+        $allData=[];
+        foreach($data as $key=>$val)
+        {
+            $val->sub=$this->getCategoryByPid($val->id);
+            $allData[]=$val;
+        }
+
+        return $allData;
+    }
+    public function get()
+    {
+        $data=$this->getCategoryByPid(0);
+        dd($data);
     }
 }

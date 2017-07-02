@@ -31,3 +31,4 @@ Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
 
 //分类管理
 Route::resource('/admin/category',"Admin\CategoryController");
+Route::get('/admin/getallCategory',"Admin\CategoryController@get");
