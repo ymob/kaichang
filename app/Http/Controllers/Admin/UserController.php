@@ -15,7 +15,7 @@ class UserController extends Controller
         $keywords=$request->input('keywords','');
 
         //查询数据库
-        $data=\DB::table('users')->where('name','like','%'.$keywords.'%')->paginate($num);
+        $data=\DB::table('admins')->where('name','like','%'.$keywords.'%')->paginate($num);
 
 
         return view('admin.user.index',['title'=>'用户列表','request'=>$request->all(),'data'=>$data]);
@@ -51,18 +51,20 @@ class UserController extends Controller
             'name.max' => '用户名最多个20个字符',
             'password.required' => '密码不能为空',
             're_password.same' => '确认密码不一致',
-             'pic.image' => '您上传的不是一张图片'
+            'pic.image' => '您上传的不是一张图片'
         ]);
 
         $data=$request->except('_token','re_password');
 
         //密码加密
-//        $data['password']=encrypt($data['password']);
-        $data['password']=\Hash::make($data['password']);
+        $data['password']=encrypt($data['password']);
+//        $data['password']=\Hash::make($data['password']);
         //解密
 //        if(\Hash::check('123',$data['password'])){
 //            echo '密码正确';
 //        }
+//        password=decrypt($admin->password);
+
 
 
         //处理图片
@@ -80,10 +82,11 @@ class UserController extends Controller
         }
 
         //处理token
-//        $data['remember_token']=str_random(50);
+        $data['remember_token']=str_random(50);
         //处理时间
-//        $data['created_at']=$time;
-//        $data['updated_at']=$time;
+        $time=time();
+        $data['created_at']=$time;
+        $data['updated_at']=$time;
 
 //        dd($data);
 
@@ -100,14 +103,14 @@ class UserController extends Controller
     public function ajaxRename(Request $request)
     {
 //        dd($request->all());
-        $res=\DB::table('users')->where('name',$request->input('name'))->first();
+        $res=\DB::table('admins')->where('name',$request->input('name'))->first();
 
         if($res)
         {
             return response()->json(0);
         }else
         {
-            $res=\DB::table('users')->where('id',$request->input('id'))->update(['name'=>$request->input('name')]);
+            $res=\DB::table('admins')->where('id',$request->input('id'))->update(['name'=>$request->input('name')]);
             if($res)
             {
                 return response()->json(1);
@@ -119,7 +122,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data=\DB::table('users')->where('id',$id)->first();
+        $data=\DB::table('admins')->where('id',$id)->first();
         return view('admin.user.edit',['title'=>'用户编辑','data'=>$data]);
     }
 
@@ -128,7 +131,7 @@ class UserController extends Controller
         $data=$request->except('_token','id');
 
         //查询原图片
-        $oldPic=\DB::table('users')->where('id',$request->id)->first()->pic;
+        $oldPic=\DB::table('admins')->where('id',$request->id)->first()->pic;
 
         if($request->hasFile('pic')){
             if($request->file('pic')->isValid())
@@ -151,7 +154,7 @@ class UserController extends Controller
             }
         }
 
-        $res=\DB::table('users')->where('id',$request->id)->update($data);
+        $res=\DB::table('admins')->where('id',$request->id)->update($data);
         if($res)
         {
             return redirect('/admin/user/index')->with(['info'=>'更新成功']);
@@ -163,7 +166,7 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $res=\DB::table('users')->delete($id);
+        $res=\DB::table('admins')->delete($id);
         if($res)
         {
             return redirect('/admin/user/index')->with(['info'=>'删除成功']);

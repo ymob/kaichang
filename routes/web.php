@@ -15,20 +15,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//后台主页
-Route::get('/admin/index','Admin\IndexController@index');
+//路由群组
+Route::group(['middleware'=>'adminlogin'],function(){
 
-//用户管理
-Route::get('/admin/user/add','Admin\UserController@add');
-Route::post('/admin/user/insert','Admin\UserController@insert');
-Route::get('/admin/user/index','Admin\UserController@index');
-Route::get('/admin/user/edit/{id}','Admin\UserController@edit');
-Route::post('/admin/user/update','Admin\UserController@update');
-Route::get('/admin/user/delete/{id}','Admin\UserController@delete');
+    //后台主页
+    Route::get('/admin/index','Admin\IndexController@index');
 
-//ajax 操作
-Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
+    //用户管理
+    Route::get('/admin/user/add','Admin\UserController@add')->middleware('adminauth');
+    Route::post('/admin/user/insert','Admin\UserController@insert');
+    Route::get('/admin/user/index','Admin\UserController@index');
+    Route::get('/admin/user/edit/{id}','Admin\UserController@edit')->middleware('adminauth');
+    Route::post('/admin/user/update','Admin\UserController@update');
+    Route::get('/admin/user/delete/{id}','Admin\UserController@delete')->middleware('adminauth');
 
-//分类管理
-Route::resource('/admin/category',"Admin\CategoryController");
-Route::get('/admin/getallCategory',"Admin\CategoryController@get");
+    //ajax 操作
+    Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
+
+    //分类管理
+    Route::resource('/admin/category',"Admin\CategoryController");
+    Route::get('/admin/getallCategory',"Admin\CategoryController@get");
+
+});
+
+//登录
+Route::get('/admin/login','Admin\LoginController@index');
+Route::post('/admin/login','Admin\LoginController@doLogin');
+Route::get('/admin/logout','Admin\LoginController@logout');
+
+//生成验证码
+Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
+

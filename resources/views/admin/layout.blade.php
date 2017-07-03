@@ -43,7 +43,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/admin/index" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
@@ -254,41 +254,45 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ asset('/admin/adminlte/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <img src="{{ asset('/uploads/adminUser') }}/{{ session('master')->pic }}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{ session('master')->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ asset('/admin/adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                <img src="{{ asset('/uploads/adminUser') }}/{{ session('master')->pic }}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{ session('master')->name }}
+                                    <small>创建时间
+                                        @php
+                                        echo date('Y-m-d',session('master')->created_at)
+                                        @endphp
+                                    </small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
-                            <li class="user-body">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-                            </li>
+                            {{--<li class="user-body">--}}
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-xs-4 text-center">--}}
+                                        {{--<a href="#">Followers</a>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="col-xs-4 text-center">--}}
+                                        {{--<a href="#">Sales</a>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="col-xs-4 text-center">--}}
+                                        {{--<a href="#">Friends</a>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<!-- /.row -->--}}
+                            {{--</li>--}}
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="/admin/logout" class="btn btn-default btn-flat">退出登录</a>
                                 </div>
                             </li>
                         </ul>
@@ -308,11 +312,16 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ asset('/admin/adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                    <img src="{{ asset('/uploads/adminUser') }}/{{ session('master')->pic }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Admin</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p>{{ session('master')->name }}</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> @if(session('master'))
+                                                                              普通管理员
+                                                                              @else
+                                                                                超级管理员
+                                                                              @endif
+                    </a>
                 </div>
             </div>
 
@@ -348,7 +357,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 分类列表</a></li>
                         <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> 添加分类</a></li>
-                     </ul>
+                    </ul>
                 </li>
 
 
@@ -502,8 +511,8 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    @yield('content')
-    <!-- /.content-wrapper -->
+@yield('content')
+<!-- /.content-wrapper -->
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">

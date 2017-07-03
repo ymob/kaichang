@@ -67,8 +67,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputauth">用户权限</label>
                                     <select name="auth" id="exampleInputauth">
-                                        <option value="2">用户管理员</option>
-                                        <option value="3">加盟商管理员</option>
+                                        <option value="1">普通管理员</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

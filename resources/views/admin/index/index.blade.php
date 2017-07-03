@@ -7,7 +7,11 @@
         <section class="content-header">
             <h1>
                 Dashboard
-                <small>Control panel</small>
+                <small>
+                    @if(session('info'))
+                        <p calss="text-danger">{{ session('info') }}</p>
+                        @endif
+                </small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

@@ -18,11 +18,14 @@ class UserTableSeeder extends Seeder
             $data[]=[
                 'name'=>str_random(10),
                 'password'=>encrypt('123'),
-                'auth'=>2,
-                'pic'=>'149866865622689887.jpeg'
+                'auth'=>1,
+                'pic'=>'149866865622689887.jpeg',
+                'remember_token'=>str_random(50),
+                'created_at'=>time(),
+                'updated_at'=>time()
             ];
         }
-        \DB::table('users')->insert($data);
+        \DB::table('admins')->insert($data);
 
     }
 }
