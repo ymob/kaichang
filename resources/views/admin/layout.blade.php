@@ -341,8 +341,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/user/index') }}"><i class="fa fa-circle-o"></i> 用户列表</a></li>
-                        <li><a href="{{ url('/admin/user/add') }}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
+                        <li><a href="{{ url('/admin/user/index') }}"><i class="fa fa-user-secret"></i> 管理员列表</a></li>
+                        <li><a href="{{ url('/admin/shopuser/index') }}"><i class="fa fa-user-md"></i> 加盟商列表</a></li>
+                        <li><a href="{{ url('/admin/homeuser/index') }}"><i class="fa fa-users"></i> 用户列表</a></li>
                     </ul>
                 </li>
 

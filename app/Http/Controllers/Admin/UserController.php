@@ -8,44 +8,34 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
 
+    // 管理员列表页
     public function index(Request $request)
     {
-        //获取get传参
         $num=$request->input('num',10);
+
         $keywords=$request->input('keywords','');
 
-        //查询数据库
         $data=\DB::table('admins')->where('name','like','%'.$keywords.'%')->paginate($num);
 
-
-        return view('admin.user.index',['title'=>'用户列表','request'=>$request->all(),'data'=>$data]);
-
+        return view('admin.user.index',['title'=>'管理员列表','request'=>$request->all(),'data'=>$data]);
     }
 
-    public function add(){
-        return view('admin.user.add',['title'=>'用户添加']);
+    // 管理员添加页
+    public function add()
+    {
+
+        return view('admin.user.add',['title'=>'管理员添加']);
     }
 
-    public function insert(Request $request){
-
-        //表单验证
-//        $this->validate($request, [
-//            'name' => 'required|unique:users|min:3|max:20',
-//            'password' => 'required',
-//            'email' => 'email'
-//        ],[
-//            'name.required' => '用户名不能为空'
-//            'name.unique' => '用户名已经存在'
-//            'name.min' => '用户名最少3个字符',
-//            'name.max' => '用户名最多个20个字符',
-//            'email.email' => '请输入正确的邮箱格式'
-//        ]);
-         $this->validate($request, [
+    // 管理员添加
+    public function insert(Request $request)
+    {
+        $this->validate($request, [
              'name' => 'required|min:3|max:20',
              'password' => 'required',
              're_password' => 'same:password',
              'pic' => 'required|image'
-         ],[
+        ],[
             'name.required' => '用户名不能为空',
             'name.min' => '用户名最少3个字符',
             'name.max' => '用户名最多个20个字符',
@@ -56,41 +46,32 @@ class UserController extends Controller
 
         $data=$request->except('_token','re_password');
 
-        //密码加密
         $data['password']=encrypt($data['password']);
-//        $data['password']=\Hash::make($data['password']);
-        //解密
-//        if(\Hash::check('123',$data['password'])){
-//            echo '密码正确';
-//        }
-//        password=decrypt($admin->password);
 
-
-
-        //处理图片
         if($request->hasFile('pic')){
             if($request->file('pic')->isValid()){
                 //获取扩展名
-                $ext=$request->file('pic')->extension();
+                $ext = $request->file('pic')->extension();
                 //随机文件名
-                $filename=time().mt_rand(10000000,99999999).'.'.$ext;
+                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
                 //移动
                 $request->file('pic')->move('./uploads/adminUser',$filename);
                 //添加data数据
-                $data['pic']=$filename;
+                $data['pic'] = $filename;
             }
         }
 
-        //处理token
-        $data['remember_token']=str_random(50);
-        //处理时间
-        $time=time();
-        $data['created_at']=$time;
-        $data['updated_at']=$time;
+        do
+        {
+            $data['remember_token'] = str_random(50);
+        }while($admins = \DB::table('admins')->where('remember_token', $data['remember_token'])->first());
 
-//        dd($data);
+        $time = time();
 
-        //执行添加  (查询构造器)
+        $data['created_at'] = $time;
+
+        $data['updated_at'] = $time;
+
         $res=\DB::table('users')->insert($data);
 
         if($res){
@@ -100,9 +81,9 @@ class UserController extends Controller
         }
     }
 
+    // ajax 修改管理员名称
     public function ajaxRename(Request $request)
     {
-//        dd($request->all());
         $res=\DB::table('admins')->where('name',$request->input('name'))->first();
 
         if($res)
@@ -111,6 +92,7 @@ class UserController extends Controller
         }else
         {
             $res=\DB::table('admins')->where('id',$request->input('id'))->update(['name'=>$request->input('name')]);
+         
             if($res)
             {
                 return response()->json(1);
@@ -120,41 +102,72 @@ class UserController extends Controller
         }
     }
 
+    // 管理员信息修改页
     public function edit($id)
     {
         $data=\DB::table('admins')->where('id',$id)->first();
-        return view('admin.user.edit',['title'=>'用户编辑','data'=>$data]);
+        return view('admin.user.edit',['title'=>'管理员编辑','data'=>$data]);
     }
 
+    // 管理员信息修改
     public function update(Request $request)
     {
         $data=$request->except('_token','id');
 
-        //查询原图片
-        $oldPic=\DB::table('admins')->where('id',$request->id)->first()->pic;
+        $oldDate = \DB::table('users')->where('id', $request->id)->first();
 
+        $oldPic = $oldDate->pic;
+
+        $valid = [
+            'name' => 'required|min:6|max:18',
+            'email' => 'email',
+        ];
+
+        $validInfo = [
+            'name.required' => '用户名不能为空。',
+            'name.min' => '用户名最少 6 个字符。',
+            'name.max' => '用户名最多 18 个字符。',
+            'email.email' => '请输入正确的邮箱，推荐您使用新浪邮箱。',
+        ];
+
+        if($oldDate->name != $data['name'])
+        {
+            $valid['name'] = $valid['name'].'|unique:users';
+            $validInfo['name.unique'] = '用户名已存在。';
+        }
+
+        if($oldDate->email != $data['email'])
+        {
+            $valid['email'] = $valid['email'].'|unique:users';
+            $validInfo['email.unique'] = '邮箱已存在。';
+        }
+
+        $this->validate($request, $valid, $validInfo);
+
+        // 处理图片
         if($request->hasFile('pic')){
+
             if($request->file('pic')->isValid())
             {
-                //获取扩展名
                 $ext=$request->file('pic')->extension();
-                //随机文件名
+                
                 $filename=time().mt_rand(10000000,99999999).'.'.$ext;
-                //移动
+
                 $request->file('pic')->move('./uploads/adminUser',$filename);
 
-                //删除原图片
                 if(file_exists('./uploads/adminUser/'.$oldPic) && $oldPic!='default.jpg')
                 {
                     unlink('./uploads/adminUser/'.$oldPic);
                 }
 
-                //添加data数据
                 $data['pic']=$filename;
             }
         }
 
+        $data['password'] = encrypt($data['password']);
+
         $res=\DB::table('admins')->where('id',$request->id)->update($data);
+
         if($res)
         {
             return redirect('/admin/user/index')->with(['info'=>'更新成功']);
@@ -164,9 +177,11 @@ class UserController extends Controller
         }
     }
 
+    // 管理员删除
     public function delete($id)
     {
         $res=\DB::table('admins')->delete($id);
+
         if($res)
         {
             return redirect('/admin/user/index')->with(['info'=>'删除成功']);
@@ -174,6 +189,30 @@ class UserController extends Controller
         {
             return back()->with(['info'=>'删除失败']);
         }
+    }
+
+    // 加盟商列表
+    public function sindex(Request $request)
+    {
+        $num=$request->input('num',10);
+
+        $keywords=$request->input('keywords','');
+
+        $data=\DB::table('shopkeepers')->where('name','like','%'.$keywords.'%')->paginate($num);
+
+        return view('admin.user.sindex',['title'=>'加盟商列表','request'=>$request->all(),'data'=>$data]);
+    }
+
+    // 用户列表
+    public function hindex(Request $request)
+    {
+        $num=$request->input('num',10);
+
+        $keywords=$request->input('keywords','');
+
+        $data=\DB::table('users')->where('name','like','%'.$keywords.'%')->paginate($num);
+
+        return view('admin.user.hindex',['title'=>'用户列表','request'=>$request->all(),'data'=>$data]);
     }
 
 }

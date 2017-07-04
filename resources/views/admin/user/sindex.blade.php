@@ -5,8 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            管理员管理
-            <small>管理员列表</small>
+            加盟商管理
+            <small>加盟商列表</small>
         </h1>
         {{--<ol class="breadcrumb">--}}
             {{--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--}}
@@ -21,9 +21,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">管理员列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ url('/admin/user/add') }}" class="><button class="btn-flat"><i class="fa fa-user-plus"> </i> 管理员添加</button></a>
-
+                        <h3 class="box-title">加盟商列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -34,7 +32,7 @@
                             </div>
                         @endif
 
-                        <form action="/admin/user/index" method="get">
+                        <form action="/admin/shopuser/index" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -79,10 +77,10 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>管理员名</th>
-                                <th>权限</th>
+                                <th>加盟商名</th>
+                                <th>Email</th>
+                                <th>手机号</th>
                                 <th>状态</th>
-                                <th>头像</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -91,16 +89,9 @@
                             @foreach($data as $key=>$value)
                             <tr class="parent">
                                 <td class="ids">{{ $value->id  }}</td>
-                                <td class="name">{{ $value->name }}</td>
-                                <td>
-                                    @if($value->auth == 1)
-                                    超级管理员
-                                    @elseif($value->auth == 2)
-                                    管理员管理员
-                                    @else
-                                    加盟商管理员
-                                    @endif
-                                </td>
+                                <td>{{ $value->name }}</td>
+                                <td>{{ $value->email }}</td>
+                                <td>{{ $value->phone }}</td>
                                 <td class="status">
                                     @if($value->status == 1)
                                     启用
@@ -109,15 +100,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img style="width:50px;height:50px;" src="/uploads/adminUser/{{ $value->pic }}" alt="">
-                                </td>
-                                <td>
-                                    <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
-                                    @if($value->auth != 1)
-                                    <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
-                                    @else
+                                    {{-- <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a> --}}
+                                    <a href="#">编辑</a>
                                     <a href="#">删除</a>
-                                    @endif
                                 </td>
 
                             </tr>
@@ -127,6 +113,7 @@
                         </table>
 
                         {{ $data->appends($request)->links() }}
+                        
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -139,74 +126,10 @@
     <!-- /.content -->
 </div>
 
-    @endsection
+@endsection
 
 @section('js')
     <script>
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        //绑定一次双击事件
-        $(".name").one('dblclick',update);
-
-        //双击事件封装函数
-        function update() {
-
-            var td = $(this);
-
-            //获取id
-            var id = $(this).parent('.parent').find('.ids').html();
-
-            //获取原来的值
-            var oldName = $(this).html();
-
-            var inp = $("<input type='text'>");
-            inp.val(oldName);
-            $(this).html(inp);
-
-            //直接选中
-            inp.select();
-
-            inp.on('blur', function () {
-
-                //获取新名
-                var newName = inp.val();
-                //执行ajax
-                $.ajax('/admin/user/ajaxrename', {
-                    type: 'POST',
-                    data: {id: id, name: newName},
-                    success: function (data) {
-                        if (data == '0') {
-                            alert('管理员名已经存在');
-                            td.html(oldName);
-                        } else if (data == '1') {
-                            td.html(newName);
-                        } else {
-                            alert('修改失败');
-                        }
-                    },
-                    error: function (data) {
-                        alert('数据异常');
-                    },
-                    dataType: 'json'
-                });
-
-                //再绑定一次双击事件
-                td.one('dblclick', update);
-            });
-        }
-
-        //全局变量
-        var id=0;
-
-        $(".del").click(function(){
-
-            id=$(this).parents('.parent').find('.ids').html();
-        });
 
 
         // 每页条数下拉框选中事件
@@ -237,13 +160,9 @@
         </div>
     </div>
 
-    <script !src="">
-
+    <script>
         $("#delete").click(function(){
             location.href="/admin/user/delete/"+id;
         });
-
     </script>
-
-    @endsection
-
+@endsection

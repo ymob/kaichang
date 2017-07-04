@@ -20,21 +20,43 @@ class CreateAllTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('password');
-            $table->string('auth');
-            $table->string('pic');
+            $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
+            $table->tinyInteger('auth')->default('1');
+            $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
 
-        //分类表
-        Schema::create('category', function (Blueprint $table) {
+        // 用户表
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->integer('pid');
-            $table->string('path');
-            $table->smallInteger('status');
+            $table->string('password');
+            $table->string('email')->unique();
+            $table->integer('phone')->unique();
+            $table->string('pic')->default('default.jpg');
+            $table->string('remember_token')->unique();
+            $table->tinyInteger('status')->default('1');
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
+
+        // 加盟商表
+        Schema::create('shopkeepers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->unique();
+            $table->string('password');
+            $table->string('email')->unique();
+            $table->integer('phone')->unique();
+            $table->string('pic')->default('default.jpg');
+            $table->string('remember_token')->unique();
+            $table->tinyInteger('status')->default('1');
+            $table->integer('created_at');
+            $table->integer('updated_at');
+        });
+
+        
     }
 
     /**
@@ -44,6 +66,11 @@ class CreateAllTable extends Migration
      */
     public function down()
     {
-        //
+
+        Schema::dropIfExists('admins');
+
+        Schema::dropIfExists('users');
+        
+        Schema::dropIfExists('shopkeepers');
     }
 }

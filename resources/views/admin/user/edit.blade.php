@@ -40,7 +40,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                @endif
+                    @endif
 
                 <!-- general form elements -->
                     <div class="box box-primary">
@@ -59,15 +59,48 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">密码</label>
-                                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="{{ $data->password }}" disabled>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="{{ decrypt($data->password) }}" 
+                                    @if(session('master')->id != 1)
+                                        
+                                        @if($data->id != session('master')->id)
+                                        disabled
+                                        @endif
+
+                                    @endif
+                                    >
                                 </div>
+                                @if($data->auth != 1)
                                 <div class="form-group">
                                     <label for="exampleInputauth">用户权限</label>
                                     <select name="auth" id="exampleInputauth">
-                                        <option value="2">用户管理员</option>
-                                        <option value="3">加盟商管理员</option>
+                                        <option value="2"
+                                        @if($data->auth == 2)
+                                        selected
+                                        @endif
+                                        >用户管理员</option>
+                                        <option value="3"
+                                        @if($data->auth == 3)
+                                        selected
+                                        @endif
+                                        >加盟商管理员</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputstatus">用户状态</label>
+                                    <select name="status" id="exampleInputstatus">
+                                        <option value="1"
+                                        @if($data->status == 1)
+                                        selected
+                                        @endif
+                                        >启用</option>
+                                        <option value="0"
+                                        @if($data->status == 0)
+                                        selected
+                                        @endif
+                                        >禁用</option>
+                                    </select>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="exampleInputFile">上传头像</label>
                                     <input type="file" name="pic" id="exampleInputFile">

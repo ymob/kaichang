@@ -15,9 +15,9 @@ class adminauthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(session('master')->auth != 0)
+        if(session('master')->auth != 1)
         {
-            return redirect('/admin/index')->with(['info'=>'抱歉,您的权限不足']);
+            return back()->with(['info'=>'抱歉,您的权限不足']);
         }
         return $next($request);
     }

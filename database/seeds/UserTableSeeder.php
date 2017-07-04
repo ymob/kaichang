@@ -13,19 +13,32 @@ class UserTableSeeder extends Seeder
     {
         //填充数据
         $data=[];
-        for($i=0;$i<50;$i++)
+        for($i=0;$i<48;$i++)
         {
+            // // 管理员
+            // $data[]=[
+            //     'name' => str_random(10),
+            //     'password' => encrypt('123'),
+            //     'pic' => 'default.jpg',
+            //     'remember_token' => str_random(50),
+            //     'created_at' => time(),
+            //     'updated_at' => time()
+            // ];
+
+            // 加盟商
             $data[]=[
-                'name'=>str_random(10),
-                'password'=>encrypt('123'),
-                'auth'=>1,
-                'pic'=>'149866865622689887.jpeg',
-                'remember_token'=>str_random(50),
-                'created_at'=>time(),
-                'updated_at'=>time()
+                'name' => str_random(10),
+                'password' => encrypt('123'),
+                'email' => str_random(6).'@qq.com',
+                'phone' => mt_rand(13330000, 18899999),
+                'pic' => 'default.jpg',
+                'remember_token' => str_random(50),
+                'created_at' => time(),
+                'updated_at' => time()
             ];
         }
-        \DB::table('admins')->insert($data);
+
+        \DB::table('users')->insert($data);
 
     }
 }
