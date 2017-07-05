@@ -22,7 +22,7 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">管理员列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ url('/admin/user/add') }}" class="><button class="btn-flat"><i class="fa fa-user-plus"> </i> 管理员添加</button></a>
+                        <a href="{{ url('/admin/user/add') }}"><button class="btn-flat"><i class="fa fa-user-plus"> </i> 管理员添加</button></a>
 
                     </div>
                     <!-- /.box-header -->
@@ -80,7 +80,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>管理员名</th>
-                                <th>权限</th>
                                 <th>状态</th>
                                 <th>头像</th>
                                 <th>操作</th>
@@ -92,15 +91,6 @@
                             <tr class="parent">
                                 <td class="ids">{{ $value->id  }}</td>
                                 <td class="name">{{ $value->name }}</td>
-                                <td>
-                                    @if($value->auth == 1)
-                                    超级管理员
-                                    @elseif($value->auth == 2)
-                                    管理员管理员
-                                    @else
-                                    加盟商管理员
-                                    @endif
-                                </td>
                                 <td class="status">
                                     @if($value->status == 1)
                                     启用
