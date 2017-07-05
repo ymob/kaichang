@@ -91,12 +91,30 @@
                             <tr class="parent">
                                 <td class="ids">{{ $value->id  }}</td>
                                 <td class="name">{{ $value->name }}</td>
-                                <td class="status">
-                                    @if($value->status == 1)
-                                    启用
-                                    @else
-                                    禁用
-                                    @endif
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="status_show">
+                                                @if($value->status == 1)
+                                                启用
+                                                @else
+                                                禁用
+                                                @endif
+                                            </span>&nbsp;
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="status_sel" index="admins" href="#">
+                                                    @if($value->status == 1)
+                                                    禁用
+                                                    @else
+                                                    启用
+                                                    @endif
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                                 <td>
                                     <img style="width:50px;height:50px;" src="/uploads/adminUser/{{ $value->pic }}" alt="">
@@ -204,6 +222,39 @@
             $('form').eq(0).submit();
         });
 
+        // 状态开启关闭
+        $('.status_sel').on('click', function(){
+            var index = $(this).attr('index');
+            var id = $(this).parents('.parent').find('.ids').html();
+            var status = $.trim($(this).html());
+
+            $(this).html($(this).parents('.btn-group').find('.status_show').html());
+            $(this).parents('.btn-group').find('.status_show').html(status);
+
+            if(status == '禁用')
+            {
+                var value = 0;
+            }else
+            {
+                var value = 1;
+            }
+
+            $.ajax('/admin/user/ajaxrestatus', {
+                type: 'POST',
+                data: {id: id, table: index, status: value},
+                success: function (data) {
+                    if(data == 0) {
+                        alert('修改失败，稍后重试');
+                    }
+                },
+                error: function (data) {
+                    alert('数据异常，稍后重试');
+                },
+                dataType: 'json'
+            });
+
+        });
+
 
     </script>
 @endsection
@@ -235,5 +286,4 @@
 
     </script>
 
-    @endsection
-
+@endsection
