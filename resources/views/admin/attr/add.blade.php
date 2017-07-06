@@ -6,13 +6,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                分类管理
-                <small>编辑</small>
+                属性管理
+                <small>添加</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-                <li><a href="#">分类管理</a></li>
-                <li class="active">编辑</li>
+                <li><a href="#">属性管理</a></li>
+                <li class="active">添加</li>
             </ol>
         </section>
 
@@ -45,43 +45,22 @@
                 <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">编辑分类</h3>
+                            <h3 class="box-title">添加属性</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" action="{{url('/admin/category/') }}/{{ $data->id }}" method="post" >
-                            {{ method_field('PUT') }}
+                        <form role="form" action="{{url('/admin/attr/insert') }}" method="post" >
                             {{ csrf_field()  }}
                             <div class="box-body">
-
                                 <div class="form-group">
-                                    <label for="exampleInputauth">父分类</label>
-                                    <select name="pid" id="exampleInputauth" class="form-control" >
-                                        <option value="0">根分类</option>
-                                        @foreach($allData as $key=>$value)
-                                            <option value="{{ $value->id }}"
-                                            @if($data->pid == $value->id)
-                                                selected="selected"
-                                            @endif
-                                            @if($data->id == $value->id)
-                                                disabled="disabled"
-                                            @endif
-                                            >{{ $value->typeName }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="exampleInputEmail1">属性名</label>
+                                    <input type="text" name="attrName" value="" class="form-control" id="exampleInputEmail1" placeholder="请输入属性名">
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">分类名</label>
-                                    <input type="text" name="typeName" value="{{ $data->typeName }}" class="form-control" id="exampleInputEmail1">
-                                </div>
-
-
                             </div>
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">更新</button>
+                                <button type="submit" class="btn btn-primary">添加</button>
                             </div>
                         </form>
                     </div>

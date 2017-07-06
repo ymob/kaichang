@@ -4,15 +4,10 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                分类管理
-                <small>分类列表</small>
-            </h1>
-            {{--<ol class="breadcrumb">--}}
-            {{--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--}}
-            {{--<li><a href="#">Tables</a></li>--}}
-            {{--<li class="active">Data tables</li>--}}
-            {{--</ol>--}}
+                    <h1>
+                        分类管理
+                        <small>分类列表</small>
+                    </h1>
         </section>
 
         <!-- Main content -->
@@ -21,7 +16,9 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">分类列表</h3>
+                            <h3 class="box-title">分类列表</h3>&nbsp;
+                            <a href="{{ url('/admin/category/create') }}" class="><button class="btn-flat"><i class="glyphicon glyphicon-plus
+"> </i> 分类添加</button></a>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -37,6 +34,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>分类名</th>
+                                    <th>所含属性</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -45,10 +43,12 @@
                                 @foreach($data as $key=>$value)
                                     <tr class="parent">
                                         <td class="ids">{{ $value->id  }}</td>
-                                        <td class="name">{{ $value->name }}</td>
+                                        <td class="name">{{ $value->typeName }}</td>
+                                        <td>{{ $value->attrIds }}</td>
                                         <td>
                                             <a href="{{ url('/admin/category') }}/{{ $value->id }}/edit">编辑</a>
                                             <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
+                                            <a href="{{ url('/admin/category/addAttr') }}/{{ $value->id }}">添加属性</a>
                                         </td>
 
                                     </tr>
@@ -79,62 +79,6 @@
 
 @section('js')
     <script>
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        //绑定一次双击事件
-        $(".name").one('dblclick',update);
-
-        //双击事件封装函数
-        function update() {
-
-            var td = $(this);
-
-            //获取id
-            var id = $(this).parent('.parent').find('.ids').html();
-
-            //获取原来的值
-            var oldName = $(this).html();
-
-            var inp = $("<input type='text'>");
-            inp.val(oldName);
-            $(this).html(inp);
-
-            //直接选中
-            inp.select();
-
-            inp.on('blur', function () {
-
-                //获取新名
-                var newName = inp.val();
-                //执行ajax
-                $.ajax('/admin/user/ajaxrename', {
-                    type: 'POST',
-                    data: {id: id, name: newName},
-                    success: function (data) {
-                        if (data == '0') {
-                            alert('用户名已经存在');
-                            td.html(oldName);
-                        } else if (data == '1') {
-                            td.html(newName);
-                        } else {
-                            alert('修改失败');
-                        }
-                    },
-                    error: function (data) {
-                        alert('数据异常');
-                    },
-                    dataType: 'json'
-                });
-
-                //再绑定一次双击事件
-                td.one('dblclick', update);
-            });
-        }
 
         //全局变量
         var id=0;

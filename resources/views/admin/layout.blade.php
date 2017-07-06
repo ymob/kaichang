@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap-switch.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/ionicons.min.css') }}">
     <!-- Theme style -->
@@ -316,8 +317,8 @@
                 </div>
                 <div class="pull-left info">
                     <p>{{ session('master')->name }}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> @if(session('master'))
-                                                                              普通管理员
+                    <a href="#"><i class="fa fa-circle text-success"></i> @if(session('master')->auth)
+                                                                                普通管理员
                                                                               @else
                                                                                 超级管理员
                                                                               @endif
@@ -357,79 +358,81 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 分类列表</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> 添加分类</a></li>
+                        <li><a href="{{ url('/admin/attr/index') }}"><i class="fa fa-circle-o"></i> 属性列表</a></li>
                     </ul>
                 </li>
 
 
-
-
-
-                <li>
-                    <a href="pages/widgets.html">
-                        <i class="fa fa-th"></i> <span>Widgets</span>
-                        <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-                    </a>
-                </li>
                 <li class="active treeview">
                     <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>Charts</span>
+                        <i class="fa fa-files-o"></i>
+                        <span>商品管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                        <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                        <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 商品列表</a></li>
+                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
                     </ul>
                 </li>
+
                 <li class="active treeview">
                     <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>UI Elements</span>
+                        <i class="fa fa-files-o"></i>
+                        <span>订单管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-                        <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-                        <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-                        <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
+                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li>
                     </ul>
                 </li>
+
                 <li class="active treeview">
                     <a href="#">
-                        <i class="fa fa-edit"></i> <span>Forms</span>
+                        <i class="fa fa-files-o"></i>
+                        <span>评论管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                        <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                        <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 评论列表</a></li>
+                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
                     </ul>
                 </li>
+
                 <li class="active treeview">
                     <a href="#">
-                        <i class="fa fa-table"></i> <span>Tables</span>
+                        <i class="fa fa-files-o"></i>
+                        <span>轮播图管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                        <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 加盟商轮播图</a></li>
+                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
                     </ul>
                 </li>
+
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>广告管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 广告列表</a></li>
+                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="pages/calendar.html">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
@@ -729,6 +732,7 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap-switch.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/raphael-min.js') }}"></script>
 <script src="{{ asset('/admin/adminlte/plugins/morris/morris.min.js') }}"></script>

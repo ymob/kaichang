@@ -40,6 +40,12 @@ Route::group(['middleware'=>'adminlogin'],function(){
     //分类管理
     Route::resource('/admin/category',"Admin\CategoryController");
     Route::get('/admin/getallCategory',"Admin\CategoryController@get");
+    Route::get('/admin/category/addAttr/{id}','Admin\CategoryController@addAttr');
+
+    //属性管理
+    Route::get('/admin/attr/index','Admin\AttrController@index');
+    Route::get('/admin/attr/add','Admin\AttrController@add');
+    Route::post('/admin/attr/insert','Admin\AttrController@insert');
 
 });
 

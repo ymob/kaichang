@@ -18,13 +18,13 @@ class CategoryController extends Controller
 
         //在查询中使用原始表达式,可以使用 DB::raw
         //select *,concat(path,',',id) as sort_path from category order by sort_path
-        $data=\DB::table('category')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
+        $data=\DB::table('goods_types')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
 
         //处理
         foreach($data as $key=>$value)
         {
             $num=substr_count($value->path,',');
-            $value->name=str_repeat('|---',$num).$value->name;
+            $value->typeName=str_repeat('|---',$num).$value->typeName;
         }
 
         return view('admin.category.index',['title'=>'分类列表','data'=>$data]);
@@ -41,13 +41,13 @@ class CategoryController extends Controller
 
         //在查询中使用原始表达式,可以使用 DB::raw
         //select *,concat(path,',',id) as sort_path from category order by sort_path
-        $data=\DB::table('category')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
+        $data=\DB::table('goods_types')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
 
         //处理
         foreach($data as $key=>$value)
         {
             $num=substr_count($value->path,',');
-            $value->name=str_repeat('|---',$num).$value->name;
+            $value->typeName=str_repeat('|---',$num).$value->typeName;
         }
 
         return view('admin.category.add',['title'=>'分类添加','data'=>$data]);
@@ -73,14 +73,14 @@ class CategoryController extends Controller
         }else
         {
             //查询父path
-            $parent_path=\DB::table('category')->where('id',$data['pid'])->first()->path;
+            $parent_path=\DB::table('goods_types')->where('id',$data['pid'])->first()->path;
 
             //拼接要在其下添加的子分类的path
             $data['path']=$parent_path.','.$data['pid'];
             $data['status']=1;
         }
 
-        $res=\DB::table('category')->insert($data);
+        $res=\DB::table('goods_types')->insert($data);
         if ($res)
         {
             return redirect('/admin/category')->with(['info'=>'添加成功']);
@@ -112,16 +112,16 @@ class CategoryController extends Controller
         //编辑分类//
 
         //要编辑的数据
-        $data=\DB::table('category')->where('id',$id)->first();
+        $data=\DB::table('goods_types')->where('id',$id)->first();
 
         //所有分类
-        $allData=\DB::table('category')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
+        $allData=\DB::table('goods_types')->select('*',\DB::raw("concat(path,',',id) as sort_path"))->orderBy('sort_path')->get();
 
         //处理
         foreach($allData as $key=>$value)
         {
             $num=substr_count($value->path,',');
-            $value->name=str_repeat('|---',$num).$value->name;
+            $value->typeName=str_repeat('|---',$num).$value->typeName;
         }
 
         return view('admin.category.edit',['title'=>'分类编辑','data'=>$data,'allData'=>$allData]);
@@ -148,14 +148,14 @@ class CategoryController extends Controller
         }else
         {
             //查询父path
-            $parent_path=\DB::table('category')->where('id',$data['pid'])->first()->path;
+            $parent_path=\DB::table('goods_types')->where('id',$data['pid'])->first()->path;
 
             //拼接要在其下添加的子分类的path
             $data['path']=$parent_path.','.$data['pid'];
             $data['status']=1;
         }
 
-        $res=\DB::table('category')->where('id',$id)->update($data);
+        $res=\DB::table('goods_types')->where('id',$id)->update($data);
         if ($res)
         {
             return redirect('/admin/category')->with(['info'=>'更新成功']);
@@ -175,13 +175,13 @@ class CategoryController extends Controller
     {
         //执行删除分类//
 
-        $res=\DB::table('category')->where('pid',$id)->first();
+        $res=\DB::table('goods_types')->where('pid',$id)->first();
         if($res)
         {
             return back()->with(['info'=>'有子分类,不允许删除']);
         }
 
-        $res=\DB::table('category')->delete($id);
+        $res=\DB::table('goods_types')->delete($id);
         if ($res)
         {
             return redirect('/admin/category')->with(['info'=>'删除成功']);
@@ -196,7 +196,7 @@ class CategoryController extends Controller
     public function getCategoryByPid($pid)
     {
         //根据 pid 查询子分类
-        $data=\DB::table('category')->where('pid',$pid)->get();
+        $data=\DB::table('goods_types')->where('pid',$pid)->get();
 
         $allData=[];
         foreach($data as $key=>$val)
@@ -211,5 +211,11 @@ class CategoryController extends Controller
     {
         $data=$this->getCategoryByPid(0);
         dd($data);
+    }
+
+    //为分类添加属性
+    public function addAttr($id)
+    {
+        dd($id);
     }
 }

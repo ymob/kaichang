@@ -95,18 +95,14 @@
                                 <td>
                                     @if($value->auth == 1)
                                     超级管理员
-                                    @elseif($value->auth == 2)
-                                    管理员管理员
                                     @else
-                                    加盟商管理员
+                                    普通管理员
                                     @endif
                                 </td>
                                 <td class="status">
-                                    @if($value->status == 1)
-                                    启用
-                                    @else
-                                    禁用
-                                    @endif
+                                    <div class="switch" data-on-label="开启" data-off-label="禁用">
+                                        <input type="checkbox" name="my-checkbox" checked>
+                                    </div>
                                 </td>
                                 <td>
                                     <img style="width:50px;height:50px;" src="/uploads/adminUser/{{ $value->pic }}" alt="">
@@ -143,6 +139,8 @@
 
 @section('js')
     <script>
+
+        $("[name='my-checkbox']").bootstrapSwitch();
 
         $.ajaxSetup({
             headers: {
