@@ -71,21 +71,6 @@
                                 </div>
                                 @if($data->auth != 1)
                                 <div class="form-group">
-                                    <label for="exampleInputauth">用户权限</label>
-                                    <select name="auth" id="exampleInputauth">
-                                        <option value="2"
-                                        @if($data->auth == 2)
-                                        selected
-                                        @endif
-                                        >用户管理员</option>
-                                        <option value="3"
-                                        @if($data->auth == 3)
-                                        selected
-                                        @endif
-                                        >加盟商管理员</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label for="exampleInputstatus">用户状态</label>
                                     <select name="status" id="exampleInputstatus">
                                         <option value="1"

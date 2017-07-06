@@ -37,6 +37,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
     // 用户管理
     Route::get('/admin/homeuser/index','Admin\UserController@hindex')->middleware('adminauth');
 
+
+    // 后台所有用户权限管理
+    Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
+
     //分类管理
     Route::resource('/admin/category',"Admin\CategoryController");
     Route::get('/admin/getallCategory',"Admin\CategoryController@get");

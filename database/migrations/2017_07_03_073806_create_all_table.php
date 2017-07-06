@@ -22,7 +22,7 @@ class CreateAllTable extends Migration
             $table->string('password');
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
-            $table->tinyInteger('auth')->default('1');
+            $table->tinyInteger('auth')->default('2');
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
