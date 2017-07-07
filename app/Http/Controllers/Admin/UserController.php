@@ -184,7 +184,7 @@ class UserController extends Controller
     }
 
 
-    // ajax 修改管理员名称
+    // ajax 修改管理员状态
     public function ajaxrestatus(Request $request)
     {
         $data = $request->all();

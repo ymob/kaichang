@@ -37,19 +37,29 @@ Route::group(['middleware'=>'adminlogin'],function(){
     // 用户管理
     Route::get('/admin/homeuser/index','Admin\UserController@hindex')->middleware('adminauth');
 
-
     // 后台所有用户权限管理
     Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
 
     //分类管理
     Route::resource('/admin/category',"Admin\CategoryController");
+    Route::get('/admin/type/deleteAttr/{typeId}/{attrId}','Admin\CategoryController@deleteAttr');
     Route::get('/admin/getallCategory',"Admin\CategoryController@get");
-    Route::get('/admin/category/addAttr/{id}','Admin\CategoryController@addAttr');
 
     //属性管理
     Route::get('/admin/attr/index','Admin\AttrController@index');
     Route::get('/admin/attr/add','Admin\AttrController@add');
     Route::post('/admin/attr/insert','Admin\AttrController@insert');
+    Route::get('/admin/attr/edit/{id}','Admin\AttrController@edit');
+    Route::get('/admin/attr/deleteval/{attrId}/{valId}','Admin\Attrcontroller@deleteval');
+    Route::post('/admin/attr/update','Admin\AttrController@update');
+    Route::get('/admin/attr/delete/{id}','Admin\AttrController@delete');
+
+    //属性值管理
+    Route::get('/admin/value/index','Admin\ValueController@index');
+    Route::post('/admin/value/insert','Admin\ValueController@insert');
+    Route::post('/admin/value/ajaxRename','Admin\ValueController@ajaxRename');
+    Route::get('/admin/value/delete/{id}','Admin\ValueController@delete');
+
 
 });
 
