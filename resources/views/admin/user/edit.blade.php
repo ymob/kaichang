@@ -9,11 +9,6 @@
                 用户管理
                 <small>编辑</small>
             </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-                <li><a href="#">用户管理</a></li>
-                <li class="active">编辑</li>
-            </ol>
         </section>
 
         <!-- Main content -->
@@ -55,7 +50,7 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">用户名</label>
-                                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1" placeholder="请输入用户名">
+                                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">密码</label>

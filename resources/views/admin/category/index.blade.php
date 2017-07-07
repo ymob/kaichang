@@ -16,15 +16,14 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">分类列表</h3>&nbsp;
-                            <a href="{{ url('/admin/category/create') }}" class="><button class="btn-flat"><i class="glyphicon glyphicon-plus
-"> </i> 分类添加</button></a>
+                            <h3 class="box-title">分类列表</h3>&nbsp;&nbsp;&nbsp;
+                            <a href="{{ url('/admin/category/create') }}" class="><button class="btn-flat"><i class="glyphicon glyphicon-plus"></i> 分类添加</button></a>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
 
                             @if(session('info'))
-                                <div class="alert alert-danger">
+                                <div class="alert alert-info">
                                     {{ session('info') }}
                                 </div>
                             @endif
@@ -43,14 +42,12 @@
                                 @foreach($data as $key=>$value)
                                     <tr class="parent">
                                         <td class="ids">{{ $value->id  }}</td>
-                                        <td class="name">{{ $value->typeName }}</td>
-                                        <td>{{ $value->attrIds }}</td>
+                                        <td class="name">{!! $value->typeName !!}</td>
+                                        <td>{{ $value->attrNames }}</td>
                                         <td>
                                             <a href="{{ url('/admin/category') }}/{{ $value->id }}/edit">编辑</a>
                                             <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
-                                            <a href="{{ url('/admin/category/addAttr') }}/{{ $value->id }}">添加属性</a>
                                         </td>
-
                                     </tr>
                                 @endforeach
 
@@ -59,6 +56,7 @@
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
                                 </form>
+
 
                                 </tbody>
                             </table>

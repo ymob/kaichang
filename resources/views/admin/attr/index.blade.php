@@ -17,14 +17,14 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">属性列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="{{ url('/admin/attr/add') }}" class="><button class="btn-flat"><i class="fa fa-user-plus"> </i> 属性添加</button></a>
+                            <a href="{{ url('/admin/attr/add') }}" class="><button class="btn-flat"><i class="glyphicon glyphicon-plus"></i> 属性添加</button></a>
 
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
 
                             @if(session('info'))
-                                <div class="alert alert-danger">
+                                <div class="alert alert-info">
                                     {{ session('info') }}
                                 </div>
                             @endif
@@ -87,9 +87,8 @@
                                         <td class="name">{{ $value->attrName }}</td>
                                         <td class="name">{{ $value->values }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/attr/edit') }}/{{ $value->id }}">编辑</a>
+                                            <a href="{{ url('/admin/attr/edit') }}/{{ $value->id }}">编辑</a>&nbsp;&nbsp;
                                             <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
-                                            <a href="">添加属性值</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -115,62 +114,6 @@
 @section('js')
     <script>
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        //绑定一次双击事件
-        $(".name").one('dblclick',update);
-
-        //双击事件封装函数
-        function update() {
-
-            var td = $(this);
-
-            //获取id
-            var id = $(this).parent('.parent').find('.ids').html();
-
-            //获取原来的值
-            var oldName = $(this).html();
-
-            var inp = $("<input type='text'>");
-            inp.val(oldName);
-            $(this).html(inp);
-
-            //直接选中
-            inp.select();
-
-            inp.on('blur', function () {
-
-                //获取新名
-                var newName = inp.val();
-                //执行ajax
-                $.ajax('/admin/attr/ajaxrename', {
-                    type: 'POST',
-                    data: {id: id, attrName: newName},
-                    success: function (data) {
-                        if (data == '0') {
-                            alert('管理员名已经存在');
-                            td.html(oldName);
-                        } else if (data == '1') {
-                            td.html(newName);
-                        } else {
-                            alert('修改失败');
-                        }
-                    },
-                    error: function (data) {
-                        alert('数据异常');
-                    },
-                    dataType: 'json'
-                });
-
-                //再绑定一次双击事件
-                td.one('dblclick', update);
-            });
-        }
-
         //全局变量
         var id=0;
 
@@ -178,7 +121,6 @@
 
             id=$(this).parents('.parent').find('.ids').html();
         });
-
 
         // 每页条数下拉框选中事件
         $('#num').on('change', function(){

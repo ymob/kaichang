@@ -362,6 +362,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 分类列表</a></li>
                         <li><a href="{{ url('/admin/attr/index') }}"><i class="fa fa-circle-o"></i> 属性列表</a></li>
+                        <li><a href="{{ url('/admin/value/index') }}"><i class="fa fa-circle-o"></i> 属性值列表</a></li>
                     </ul>
                 </li>
 

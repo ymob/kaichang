@@ -92,17 +92,6 @@
                                 <td class="ids">{{ $value->id  }}</td>
                                 <td class="name">{{ $value->name }}</td>
                                 <td>
-<<<<<<< HEAD
-                                    @if($value->auth == 1)
-                                    超级管理员
-                                    @else
-                                    普通管理员
-                                    @endif
-                                </td>
-                                <td class="status">
-                                    <div class="switch" data-on-label="开启" data-off-label="禁用">
-                                        <input type="checkbox" name="my-checkbox" checked>
-=======
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="status_show">
@@ -125,7 +114,6 @@
                                                 </a>
                                             </li>
                                         </ul>
->>>>>>> 84af337c88dae085f1778c127c3b233607872833
                                     </div>
                                 </td>
                                 <td>

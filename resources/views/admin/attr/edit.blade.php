@@ -6,14 +6,9 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                分类管理
+                属性管理
                 <small>编辑</small>
             </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-                <li><a href="#">分类管理</a></li>
-                <li class="active">编辑</li>
-            </ol>
         </section>
 
         <!-- Main content -->
@@ -45,64 +40,45 @@
                 <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">编辑分类</h3>
+                            <h3 class="box-title">编辑属性</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" action="{{url('/admin/category/') }}/{{ $data->id }}" method="post" >
-                            {{ method_field('PUT') }}
+                        <form role="form" action="{{url('/admin/attr/update') }}" method="post">
                             {{ csrf_field()  }}
+                            <input type="hidden" name="id" value="{{ $data->id }}">
                             <div class="box-body">
-
                                 <div class="form-group">
-                                    <label for="exampleInputauth">父分类</label>
-                                    <select name="pid" id="exampleInputauth" class="form-control" >
-                                        <option value="0">根分类</option>
-                                        @foreach($allData as $key=>$value)
-                                            <option value="{{ $value->id }}"
-                                            @if($data->pid == $value->id)
-                                                selected="selected"
-                                            @endif
-                                            @if($data->id == $value->id)
-                                                disabled="disabled"
-                                            @endif
-                                            >{{ $value->typeName }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="exampleInputEmail1"><h4>属性名称:</h4></label>
+                                    <input type="text" name="attrName" value="{{ $data->attrName }}" class="form-control" id="exampleInputEmail1" >
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">分类名</label>
-                                    <input type="text" name="typeName" value="{{ $data->typeName }}" class="form-control" id="exampleInputEmail1">
-                                </div>
-
                                 <div>
-                                    <label for=""><h4>所含属性:</h4></label>
+                                    <label for=""><h4>所含属性值:</h4></label>
                                     <table class="table table-bordered">
-                                        <th>属性</th>
-                                        <th>属性ID</th>
+                                        <th>属性值</th>
+                                        <th>属性值ID</th>
                                         <th>操作</th>
-                                        @foreach($data->attrs as $k=>$v)
+                                        @foreach($data->value as $k=>$v)
                                             <tr>
                                                 <td>{{ $v }}</td>
-                                                <td>{{ $data->attrIds[$k] }}</td>
-                                                <td><a href="{{ url('/admin/type/deleteAttr') }}/{{ $data->id }}/{{ $data->attrIds[$k] }}">删除</a></td>
+                                                <td>{{ $data->valueId[$k] }}</td>
+                                                <td><a href="{{ url('/admin/attr/deleteval') }}/{{ $data->id }}/{{ $data->valueId[$k] }}">删除</a></td>
                                             </tr>
                                         @endforeach
                                     </table>
                                 </div>
                                 <div>
-                                    <label for=""><h4>添加属性:</h4></label>
+                                    <label for=""><h4>添加属性值:</h4></label>
                                     <table id="vtable" class="table table-bordered">
-                                        <th>可选属性</th>
-                                        <th>已选属性</th>
+                                        <th>可选属性值</th>
+                                        <th>已选属性值</th>
                                         <tr>
                                             <td>
-                                                @foreach($allAttrs as $val)
-                                                    <input class="btn btn-default btn-sm" type="button" value="{{ $val->attrName }}">
+                                                @foreach($values as $val)
+                                                    <input class="btn btn-default btn-sm" type="button" value="{{ $val->value }}">
                                                 @endforeach
                                             </td>
-                                            <td><textarea name="addAttr" id="selval" cols="40" rows="10" readonly style="resize:none;"></textarea></td>
+                                            <td><textarea name="addval" id="selval" cols="40" rows="10" readonly style="resize:none;"></textarea></td>
                                         </tr>
                                     </table>
 
