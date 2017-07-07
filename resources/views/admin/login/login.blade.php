@@ -83,6 +83,7 @@
 <!-- iCheck -->
 <script src="{{ asset('/admin/adminlte//plugins/iCheck/icheck.min.js') }}"></script>
 <script>
+    // 记住密码框
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
@@ -90,6 +91,7 @@
             increaseArea: '20%' // optional
         });
     });
+    // 验证码
     function re_captcha() {
         $url = "{{ URL('kit/captcha') }}";
         $url = $url + "/" + Math.random();

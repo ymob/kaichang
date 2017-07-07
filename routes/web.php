@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-//路由群组
+// 路由群组 后台
 Route::group(['middleware'=>'adminlogin'],function(){
 
     //后台主页
@@ -61,3 +61,12 @@ Route::get('/admin/logout','Admin\LoginController@logout');
 //生成验证码
 Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
+
+// ========= 前台 ==================================================
+
+
+Route::get('/', 'Home\IndexController@index');
+
+// 执行登录
+Route::post('/login', 'Home\LoginController@doLogin');
+Route::get('/logout', 'Home\LoginController@doLogout');
