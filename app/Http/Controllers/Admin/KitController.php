@@ -19,7 +19,6 @@ class KitController extends Controller
     {
         //清除缓冲区内容
         ob_get_clean();
-
         //生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
         //可以设置图片宽高及字体
@@ -34,7 +33,5 @@ class KitController extends Controller
         header('Content-Type: image/jpeg');
         $builder->output();
     }
-
-
 
 }

@@ -5,8 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            用户管理
-            <small>用户列表</small>
+            评论管理
+            <small>评论列表</small>
         </h1>
         {{--<ol class="breadcrumb">--}}
             {{--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--}}
@@ -20,19 +20,17 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">用户列表</h3>
-                    </div>
+    
                     <!-- /.box-header -->
                     <div class="box-body">
 
                         @if(session('info'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-info">
                                 {{ session('info') }}
                             </div>
                         @endif
 
-                        <form action="/admin/homeuser/index" method="get">
+                        <form action="/admin/comment/index" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -60,6 +58,7 @@
                                         </select>
                                     </div>
                                 </div>
+                              
                                 <div class="col-md-4 col-md-offset-6">
                                     <div class="input-group input-group">
                                         <input type="text" name="keywords" value="{{ $request['keywords'] or '' }}" class="form-control">
@@ -75,45 +74,48 @@
 
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>用户名</th>
-                                <th>Email</th>
-                                <th>手机号</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
+                            
+                                <th class="text-center">ID</th>
+                                <th class="text-center">用户名称</th>
+                                <th class="text-center">商品名称&nbsp<div style="width:15px;height:15px;background:#f00;" class="glyphicon glyphicon-sort"></div></th>
+                                <th class="text-center">评论内容</th>
+                                <th class="text-center">评论时间</i></th>
+                                <th class="text-center">修改时间</i></th>
+                                <th class="text-center">操作</th>
+                           
                             </thead>
                             <tbody>
-
+                            <!-- 遍历 -->
                             @foreach($data as $key=>$value)
-                            <tr class="parent">
-                                <td class="ids">{{ $value->id  }}</td>
-                                <td>{{ $value->name }}</td>
-                                <td>{{ $value->email }}</td>
-                                <td>{{ $value->phone }}</td>
-                                <td class="status">
-                                    @if($value->status == 1)
-                                    启用
-                                    @else
-                                    禁用
-                                    @endif
-                                </td>
+
+                            <!-- 显示没有放入回收站的评论 -->
+                            @if($value->status==1)
+                           
+                            <tr class="parent" width="800px">
+                                <td class="ids">{{ $value->id}}</td>
+                                <td class="name">{{ $value->username }}</td>
+                                <td class="name">{{ $value->goodname}}</td>
+                                <td class="name" ><div id="sort" style='width: 300px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->content }}</div></td>
+                                <!-- <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td> -->
+                                <td class="name">{{date('y-m-d h:i:s',$value->created_at)  }}</td>
+                                <td class="name">{{ date('y-m-d h:i:s',$value->updated_at) }}</td>
+                               
+                              
                                 <td>
-                                    {{-- <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
-                                    <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a> --}}
-                                    <a href="#">编辑</a>
-                                    <a href="#">删除</a>
+                                    <a href="{{ url('/admin/comment/edit') }}/{{ $value->id }}">编辑</a>
+                                    |<a href="#" data-toggle="modal" data-target="#myModal" class="recy">加入回收站</a>
                                 </td>
 
                             </tr>
+                            
+                            @endif
+
                             @endforeach
 
                             </tbody>
                         </table>
 
                         {{ $data->appends($request)->links() }}
-                        
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -126,15 +128,32 @@
     <!-- /.content -->
 </div>
 
-@endsection
+    @endsection
 
 @section('js')
     <script>
+
+        //全局变量
+        var id=0;
+
+        $(".recy").click(function(){
+
+            id=$(this).parents('.parent').find('.ids').html();
+        });
 
 
         // 每页条数下拉框选中事件
         $('#num').on('change', function(){
             $('form').eq(0).submit();
+        });
+
+        //排序
+        var sort = 1;
+        $('#sort').on('click',function(){
+           alert(111);
+           $.session.set('order',sort);
+           sort = !sort;
+           window.location.href('admin/comment/index');
         });
 
 
@@ -150,19 +169,22 @@
                     <h4 class="modal-title" id="myModalLabel">提示信息</h4>
                 </div>
                 <div class="modal-body">
-                    确定要删除此条数据吗?
+                    确定要加入回收站吗?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="delete">确认删除</button>
+                    <button type="button" class="btn btn-primary" id="recycle">确认</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        $("#delete").click(function(){
-            location.href="/admin/user/delete/"+id;
+    <script !src="">
+
+        $("#recycle").click(function(){
+            location.href="/admin/comment/recycle/"+id;
         });
+
     </script>
 @endsection
+

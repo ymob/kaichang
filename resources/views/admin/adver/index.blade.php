@@ -5,8 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            用户管理
-            <small>用户列表</small>
+            广告管理
+            <small>广告列表</small>
         </h1>
         {{--<ol class="breadcrumb">--}}
             {{--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--}}
@@ -21,18 +21,21 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">用户列表</h3>
-                    </div>
+                        <h3 class="box-title">广告列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{{ url('/admin/adver/add') }}"><button class="btn-flat"><i class="fa fa-user-plus"> </i> 广告添加</button></a>
+
+                    </div>    
+    
                     <!-- /.box-header -->
                     <div class="box-body">
 
                         @if(session('info'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-info">
                                 {{ session('info') }}
                             </div>
                         @endif
 
-                        <form action="/admin/homeuser/index" method="get">
+                        <form action="/admin/adver/index" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -60,6 +63,7 @@
                                         </select>
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-4 col-md-offset-6">
                                     <div class="input-group input-group">
                                         <input type="text" name="keywords" value="{{ $request['keywords'] or '' }}" class="form-control">
@@ -75,45 +79,42 @@
 
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>用户名</th>
-                                <th>Email</th>
-                                <th>手机号</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
+                            
+                                <th class="text-center">ID</th>
+                                <th class="text-center">标题</th>
+                                <th class="text-center">附加信息</th>
+                                <th class="text-center">图片</th>
+                                <th class="text-center">链接地址</th>
+                                <th class="text-center">操作</th>
                             </thead>
                             <tbody>
-
+                            <!-- 遍历 -->
                             @foreach($data as $key=>$value)
-                            <tr class="parent">
-                                <td class="ids">{{ $value->id  }}</td>
-                                <td>{{ $value->name }}</td>
-                                <td>{{ $value->email }}</td>
-                                <td>{{ $value->phone }}</td>
-                                <td class="status">
-                                    @if($value->status == 1)
-                                    启用
-                                    @else
-                                    禁用
-                                    @endif
-                                </td>
+                           
+                            <tr class="parent" width="800px">
+                                <td class="ids">{{ $value->id}}</td>
+                                <td class="name">{{ $value->title }}</td>
+                             
+                                <td class="name" ><div style='width: 300px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->content }}</div></td>
+                                <!-- <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td> -->
+                                <td class="name">{{ $value->pic}}</td>
+                                <td class="name">{{ $value->url}}</td>
+                               
                                 <td>
-                                    {{-- <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
-                                    <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a> --}}
-                                    <a href="#">编辑</a>
-                                    <a href="#">删除</a>
+                                    <a href="{{ url('/admin/adver/edit') }}/{{ $value->id }}">编辑</a>
+                                    |<a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
                                 </td>
 
                             </tr>
+                            
+                         
+
                             @endforeach
 
                             </tbody>
                         </table>
 
                         {{ $data->appends($request)->links() }}
-                        
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -126,10 +127,18 @@
     <!-- /.content -->
 </div>
 
-@endsection
+    @endsection
 
 @section('js')
     <script>
+
+        //全局变量
+        var id=0;
+
+        $(".del").click(function(){
+
+            id=$(this).parents('.parent').find('.ids').html();
+        });
 
 
         // 每页条数下拉框选中事件
@@ -150,19 +159,22 @@
                     <h4 class="modal-title" id="myModalLabel">提示信息</h4>
                 </div>
                 <div class="modal-body">
-                    确定要删除此条数据吗?
+                    确定要删除吗?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="delete">确认删除</button>
+                    <button type="button" class="btn btn-primary" id="del">确认</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        $("#delete").click(function(){
-            location.href="/admin/user/delete/"+id;
+    <script !src="">
+
+        $("#del").click(function(){
+            location.href="/admin/adver/delete/"+id;
         });
+
     </script>
 @endsection
+

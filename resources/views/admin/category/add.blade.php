@@ -58,14 +58,14 @@
                                     <select name="pid" id="exampleInputauth" class="form-control">
                                         <option value="0">根分类</option>
                                         @foreach($data as $key=>$value)
-                                            <option value="{{ $value->id }}">{{ $value->typeName }}</option>
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">分类名</label>
-                                    <input type="text" name="typeName" value="{{ old('typeName')  }}" class="form-control" id="exampleInputEmail1" placeholder="请输入用户名">
+                                    <input type="text" name="name" value="{{ old('name')  }}" class="form-control" id="exampleInputEmail1" placeholder="请输入用户名">
                                 </div>
 
                             </div>

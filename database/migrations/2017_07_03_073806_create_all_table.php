@@ -22,7 +22,7 @@ class CreateAllTable extends Migration
             $table->string('password');
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
-            $table->tinyInteger('auth')->default('2');
+            $table->tinyInteger('auth')->default('1');
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
@@ -63,14 +63,14 @@ class CreateAllTable extends Migration
             $table->integer('pid');
             $table->string('path')->default('0');
             $table->tinyInteger('status')->default('1');
-            $table->string('attrIds')->nullable();
+            $table->string('attrs')->default('0');
         });
 
         //商品属性表
         Schema::create('goods_attrs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('attrName');
-            $table->string('valueIds')->nullable();
+            $table->string('attrIds');
         });
 
         //商品属性值表
@@ -132,7 +132,7 @@ class CreateAllTable extends Migration
             $table->integer('gid');
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
-            $table->integer('ended_at');
+            $table->integer('ended_at')->default('0');
         });
 
         //评论表
@@ -141,9 +141,9 @@ class CreateAllTable extends Migration
             $table->integer('uid');
             $table->integer('gid');
             $table->longText('content');
-            $table->tinyinteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
+            $table->integer('status')->default('1');
         });
 
         //购物车表
@@ -176,7 +176,7 @@ class CreateAllTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('content');
-            $table->string('pic');
+            $table->string('pic')->default('default.jpg');
             $table->string('url');
         });
 

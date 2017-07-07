@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="/home/index/index"><b>{{ config('app.name') }}</b></a>
+        <a href="../../index2.html"><b>{{ config('app.name') }}</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -42,11 +42,11 @@
         <form action="/admin/login" method="post">
             {{ csrf_field() }}
             <div class="form-group has-feedback">
-                <input type="text" name="name" class="form-control" placeholder="请输入用户名" value="{{ $master->name or '' }}">
+                <input type="text" name="name" class="form-control" placeholder="请输入用户名">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="请输入密码" value="">
+                <input type="password" name="password" class="form-control" placeholder="请输入密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
@@ -83,7 +83,6 @@
 <!-- iCheck -->
 <script src="{{ asset('/admin/adminlte//plugins/iCheck/icheck.min.js') }}"></script>
 <script>
-    // 记住密码框
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
@@ -91,7 +90,6 @@
             increaseArea: '20%' // optional
         });
     });
-    // 验证码
     function re_captcha() {
         $url = "{{ URL('kit/captcha') }}";
         $url = $url + "/" + Math.random();

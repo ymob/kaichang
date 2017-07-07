@@ -120,18 +120,26 @@ class UserController extends Controller
 
         $valid = [
             'name' => 'required|min:6|max:18',
+            'email' => 'email',
         ];
 
         $validInfo = [
             'name.required' => '用户名不能为空。',
             'name.min' => '用户名最少 6 个字符。',
             'name.max' => '用户名最多 18 个字符。',
+            'email.email' => '请输入正确的邮箱，推荐您使用新浪邮箱。',
         ];
 
         if($oldDate->name != $data['name'])
         {
             $valid['name'] = $valid['name'].'|unique:users';
             $validInfo['name.unique'] = '用户名已存在。';
+        }
+
+        if($oldDate->email != $data['email'])
+        {
+            $valid['email'] = $valid['email'].'|unique:users';
+            $validInfo['email.unique'] = '邮箱已存在。';
         }
 
         $this->validate($request, $valid, $validInfo);
@@ -181,23 +189,6 @@ class UserController extends Controller
         {
             return back()->with(['info'=>'删除失败']);
         }
-    }
-
-
-    // ajax 修改管理员状态
-    public function ajaxrestatus(Request $request)
-    {
-        $data = $request->all();
-
-        $res=\DB::table($data['table'])->where('id', $data['id'])->update(['status' => $data['status']]);
-        
-        if($res)
-        {
-            return response()->json(1);
-        }else{
-            return response()->json(0);
-        }
-        
     }
 
     // 加盟商列表

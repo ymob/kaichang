@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function doLogin(Request $request)
     {
         $data=$request->except('_token');
-
+//        dd($data);
         //是否记住我
         $remember_token=\Cookie::get('remember_me');
         if($remember_token)
@@ -64,13 +64,7 @@ class LoginController extends Controller
     //退出登录
     public function logout(Request $request)
     {
-        if(\Cookie::get('remember_token'))
-        {
-            return view('admin.login.login',['master'=>session('master'), 'title'=>'登录']);
-        }
-
         $request->session()->forget('master');
-
         return redirect('/admin/login')->with(['info'=>'退出成功']);
     }
 }

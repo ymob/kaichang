@@ -11,11 +11,11 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// 路由群组 后台
+//路由群组
 Route::group(['middleware'=>'adminlogin'],function(){
 
     //后台主页
@@ -37,29 +37,48 @@ Route::group(['middleware'=>'adminlogin'],function(){
     // 用户管理
     Route::get('/admin/homeuser/index','Admin\UserController@hindex')->middleware('adminauth');
 
-    // 后台所有用户权限管理
-    Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
-
     //分类管理
     Route::resource('/admin/category',"Admin\CategoryController");
-    Route::get('/admin/type/deleteAttr/{typeId}/{attrId}','Admin\CategoryController@deleteAttr');
     Route::get('/admin/getallCategory',"Admin\CategoryController@get");
 
-    //属性管理
-    Route::get('/admin/attr/index','Admin\AttrController@index');
-    Route::get('/admin/attr/add','Admin\AttrController@add');
-    Route::post('/admin/attr/insert','Admin\AttrController@insert');
-    Route::get('/admin/attr/edit/{id}','Admin\AttrController@edit');
-    Route::get('/admin/attr/deleteval/{attrId}/{valId}','Admin\Attrcontroller@deleteval');
-    Route::post('/admin/attr/update','Admin\AttrController@update');
-    Route::get('/admin/attr/delete/{id}','Admin\AttrController@delete');
 
-    //属性值管理
-    Route::get('/admin/value/index','Admin\ValueController@index');
-    Route::post('/admin/value/insert','Admin\ValueController@insert');
-    Route::post('/admin/value/ajaxRename','Admin\ValueController@ajaxRename');
-    Route::get('/admin/value/delete/{id}','Admin\ValueController@delete');
 
+    //评论管理
+    Route::get('admin/comment/index',"Admin\CommentController@index");
+    //编辑评论
+    Route::get('admin/comment/edit/{id}','Admin\CommentController@edit');
+    //执行评论修改动作
+    Route::post('admin/comment/update','Admin\CommentController@update');
+    //将评论加入回收站
+    Route::get('admin/comment/recycle/{id}','Admin\CommentController@recycle');
+    //加载回收站页面
+    Route::get('admin/comment/recover/','Admin\CommentController@recover');
+    //执行恢复
+    Route::get('admin/comment/reback/{id}','Admin\CommentController@reback');
+
+
+
+    //广告管理
+    //加载广告列表
+    Route::get('admin/adver/index',"Admin\AdverController@index");
+    //加载编辑广告页面
+    Route::get('admin/adver/edit/{id}','Admin\AdverController@edit');
+    //执行广告编辑动作
+    Route::post('admin/adver/update','Admin\AdverController@update');
+    //删除广告
+    Route::get('admin/adver/delete/{id}','Admin\AdverController@delete');
+    //加载添加广告页面
+    Route::get('admin/adver/add','Admin\AdverController@add');
+    //执行添加广告动作
+    Route::post('admin/adver/insert','Admin\AdverController@insert');
+
+    //订单管理
+    Route::get('admin/order/index',"Admin\AdverControllr@index");
+
+
+
+    //缓存
+    Route::get('admin/cache/cache','Admin\CacheController@cache');
 
 });
 
@@ -71,12 +90,3 @@ Route::get('/admin/logout','Admin\LoginController@logout');
 //生成验证码
 Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
-
-// ========= 前台 ==================================================
-
-
-Route::get('/', 'Home\IndexController@index');
-
-// 执行登录
-Route::post('/login', 'Home\LoginController@doLogin');
-Route::get('/logout', 'Home\LoginController@doLogout');

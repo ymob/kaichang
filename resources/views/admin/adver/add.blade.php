@@ -6,12 +6,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                分类管理
+                广告管理
                 <small>编辑</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-                <li><a href="#">分类管理</a></li>
+                <li><a href="#">广告管理</a></li>
                 <li class="active">编辑</li>
             </ol>
         </section>
@@ -40,49 +40,40 @@
                                 @endforeach
                             </ul>
                         </div>
-                @endif
+                    @endif
 
                 <!-- general form elements -->
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">编辑分类</h3>
-                        </div>
+                    <div class="box box-primary col-md-6">
+                       
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" action="{{url('/admin/category/') }}/{{ $data->id }}" method="post" >
-                            {{ method_field('PUT') }}
+                        <form role="form" action="{{url('/admin/adver/insert') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field()  }}
                             <div class="box-body">
-
                                 <div class="form-group">
-                                    <label for="exampleInputauth">父分类</label>
-                                    <select name="pid" id="exampleInputauth" class="form-control" >
-                                        <option value="0">根分类</option>
-                                        @foreach($allData as $key=>$value)
-                                            <option value="{{ $value->id }}"
-                                            @if($data->pid == $value->id)
-                                                selected="selected"
-                                            @endif
-                                            @if($data->pid == $value->id)
-                                                disabled="disabled"
-                                            @endif
-                                            >{{ $value->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="exampleInputEmail1">广告名称</label>
+                                    <input type="text"name="title" value="" class="form-control" id="exampleInputEmail1" >
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">分类名</label>
-                                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1">
+                                    <label for="exampleInputEmail1">广告内容</label>
+                                   <textarea name="content" style="width:480px; height:100px;resize:none" ></textarea>
                                 </div>
-
-
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">广告链接</label>
+                                    <input type="text" name="url" value="" class="form-control" id="exampleInputEmail1" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">广告图片</label>
+                                    <input type="file"name="pic" value="" class="form-control" id="exampleInputEmail1" >
+                                </div>
+                       
                             </div>
                             <!-- /.box-body -->
 
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">更新</button>
+                            <div class="box-footer col-md-offset-5">
+                                <button type="submit" class="btn btn-primary">添加</button>
                             </div>
+                           
                         </form>
                     </div>
                     <!-- /.box -->
@@ -98,3 +89,4 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
+
