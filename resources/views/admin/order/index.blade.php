@@ -21,8 +21,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">广告列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ url('/admin/adver/add') }}"><button class="btn-flat"><i class="fa fa-user-plus"> </i> 广告添加</button></a>
+                        <h3 class="box-title">定单列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
 
                     </div>    
     
@@ -97,7 +96,7 @@
                                 <td class="name">{{ $value->number }}</td>
                              
                                 <td class="name" ><div style='width: 300px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->content }}</div></td>
-                                <!-- <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td> -->
+                                <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td>
                                 <td class="name">{{ $value->pic}}</td>
                                 <td class="name">{{ $value->url}}</td>
                                

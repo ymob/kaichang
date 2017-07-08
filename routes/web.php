@@ -44,6 +44,7 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
 
     //评论管理
+    //加载评论管理页面
     Route::get('admin/comment/index',"Admin\CommentController@index");
     //编辑评论
     Route::get('admin/comment/edit/{id}','Admin\CommentController@edit');
@@ -72,8 +73,11 @@ Route::group(['middleware'=>'adminlogin'],function(){
     //执行添加广告动作
     Route::post('admin/adver/insert','Admin\AdverController@insert');
 
+
+
     //订单管理
-    Route::get('admin/order/index',"Admin\AdverControllr@index");
+    //加载定单管理页面
+    Route::get('admin/order/index',"Admin\OrderController@index");
 
 
 
