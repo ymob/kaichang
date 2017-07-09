@@ -10,6 +10,6 @@ class IndexController extends Controller
     // index
     public function index()
     {
-    	return view('home.index.index');
+    	return view('home.index.index',['title'=>'首页']);
     }
 }
