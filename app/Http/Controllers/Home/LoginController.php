@@ -36,7 +36,7 @@ class LoginController extends Controller
         }
 
         //对密码解密
-        $password=decrypt($admin->password);
+        $password = decrypt($admin->password);
         if($password != $data['password'])
         {
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);

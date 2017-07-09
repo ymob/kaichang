@@ -23,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">首页</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">首页</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     
@@ -47,7 +47,7 @@
                         <li>
                             <a href="#">我的开场 <span class="glyphicon glyphicon-user"></span></a>
                             <ul>
-                                <li><a href="#">开场</a></li>
+                                <li><a href="{{ url('/usercenter/index') }}">个人中心</a></li>
                                 <li><a href="#">开场</a></li>
                             </ul>
                         </li>
@@ -72,6 +72,10 @@
                                 商家中心
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>
+                            <ul>
+                                <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
+                                <li><a href="{{ url('/shoper') }}">商户入驻</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#">
@@ -210,8 +214,13 @@
 @yield('js')
 
 @yield('modaljs');
+
     <script>
-        @if(session('code') == 1)
+        $('a[href="#"]').on('click', function(){
+            retrun false;
+        });
+
+        @if(session('code') == 1 && !session('user'))
             var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),
             $form_modal_tab = $('.cd-switcher'),
