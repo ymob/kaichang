@@ -175,6 +175,11 @@
                             </ul>
                         </div>
                     @endif
+                    @if(session('info'))
+                        <div class="alert alert-danger">
+                            {{ session('info') }}
+                        </div>
+                    @endif
                     <div class="form-group has-feedback">
                         <input type="text" name="name" class="form-control form_my" placeholder="请输入用户名" value="{{ old('name')  }}" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
@@ -290,13 +295,9 @@
                 data:{phone:phone},
                 success: function (data) {
                     console.log(data);
-//                    alert(data);
-//                    if (data == '1') {
-//                        alert('生成手机验证码失败');
-//                    }
                 },
                 error: function (data) {
-                    alert('数据异常');
+                    alert('发送手机验证码失败');
                 },
                 dataType: 'json'
             });
