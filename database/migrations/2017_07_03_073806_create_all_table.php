@@ -128,8 +128,10 @@ class CreateAllTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('number')->unique();
-            $table->integer('sid');
-            $table->integer('gid');
+            $table->integer('uid')->unique();
+            $table->string('sids');
+            $table->string('gids');
+            $table->decimal('price', 8, 2);
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('ended_at');
@@ -204,10 +206,10 @@ class CreateAllTable extends Migration
     public function down()
     {
 
-        Schema::dropIfExists('admins');
+        // Schema::dropIfExists('admins');
 
-        Schema::dropIfExists('users');
+        // Schema::dropIfExists('users');
         
-        Schema::dropIfExists('shopkeepers');
+        // Schema::dropIfExists('shopkeepers');
     }
 }

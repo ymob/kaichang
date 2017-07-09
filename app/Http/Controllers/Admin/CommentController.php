@@ -116,7 +116,6 @@ class CommentController extends Controller
 
       }
 
-  
         //加载评论显示模板
         return view('admin.comment.recycle',['title'=>'评论回收站列表','request'=>$request->all(),'data'=>$data]);
 
