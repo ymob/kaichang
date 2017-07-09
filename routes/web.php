@@ -77,7 +77,7 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
     //订单管理
     //加载定单管理页面
-    Route::get('admin/order/index',"Admin\OrderController@index");
+    Route::get('admin/order/index/{status}',"Admin\OrderController@index");
 
 
 

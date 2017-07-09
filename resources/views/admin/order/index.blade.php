@@ -34,7 +34,7 @@
                             </div>
                         @endif
 
-                        <form action="/admin/adver/index" method="get">
+                        <form action="/admin/order/index/{{ $status }}" method="get" id="form">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -63,12 +63,19 @@
                                     </div>
                                 </div>
                                
-                                <div class="col-md-4 col-md-offset-6">
+                                <div class="col-md-6 col-md-offset-3">
                                     <div class="input-group input-group">
-                                        <input type="text" name="keywords" value="{{ $request['keywords'] or '' }}" class="form-control">
+                                        <!-- <input type="text" name="keywords" value="{{ $request['keywords'] or '' }}" class="form-control">
                                         <span class="input-group-btn">
                                         <button type="submit" class="btn btn-info btn-flat">搜索</button>
-                                        </span>
+                                        </span> -->
+                                        <button type="button" class="btn btn-default sta">全部订单</button>
+                                        <button type="button" class="btn btn-default sta">未付款</button>
+                                        <button type="button" class="btn btn-default sta" >未接单</button>
+                                        <button type="button" class="btn btn-default sta">使用中</button>
+                                        <button type="button" class="btn btn-default sta">定单取消</button>
+                                        <button type="button" class="btn btn-default sta">使用完成</button>
+                                       
                                     </div>
 
                                 </div>
@@ -83,6 +90,7 @@
                                 <th class="text-center">订单号</th>
                                 <th class="text-center">加盟商名称</th>
                                 <th class="text-center">商品名称</th>
+                                <th class="text-center">商品属性</th>
                                 <th class="text-center">订单状态</th>
                                 <th class="text-center">定单开始时间</th>
                                 <th class="text-center">定单结束时间</th>
@@ -91,20 +99,28 @@
                             <!-- 遍历 -->
                             @foreach($data as $key=>$value)
                            
-                            <tr class="parent" width="800px">
+                            <tr class="parent text-center" width="800px">
                                 <td class="ids">{{ $value->id}}</td>
                                 <td class="name">{{ $value->number }}</td>
-                             
-                                <td class="name" ><div style='width: 300px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->content }}</div></td>
-                                <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td>
-                                <td class="name">{{ $value->pic}}</td>
-                                <td class="name">{{ $value->url}}</td>
-                               
-                                <td>
-                                    <a href="{{ url('/admin/adver/edit') }}/{{ $value->id }}">编辑</a>
-                                    |<a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
+                                <td class="name">{{ $value->number }}</td>
+                                <td class="name">{{ $value->goodsname }}</td>
+                                <td class="name">{{ $value->value }}</td>
+                                <td class="name">
+                                @if($value->status==1)
+                                未付款 
+                                @elseif($value->status==2)
+                                未接单
+                                @elseif($value->status==3)
+                                使用中
+                                @elseif($value->status==4)
+                                定单取消
+                                @elseif($value->status==5)
+                                使用完成
+                                @endif
                                 </td>
-
+                                <td class="name">{{ $value->created_at}}</td>
+                                <td class="name">{{ $value->ended_at}}</td>
+                            
                             </tr>
                             
                          
@@ -146,6 +162,30 @@
             $('form').eq(0).submit();
         });
 
+        //根据定单状态的筛选
+          $(".sta").on('click', function(){
+            switch($(this).html())
+            {   
+                case '全部订单':
+                    location.href="/admin/order/index/0";
+                break;
+                case '未付款':
+                    location.href="/admin/order/index/1";
+                break;
+                case '未接单':
+                    location.href="/admin/order/index/2";
+                break;
+                case '使用中':
+                    location.href="/admin/order/index/3";
+                break;
+                case '定单取消':
+                    location.href="/admin/order/index/4";
+                break;
+                case '使用完成':
+                    location.href="/admin/order/index/5";
+                break;
+            }
+        });
 
     </script>
 @endsection
@@ -174,6 +214,7 @@
         $("#del").click(function(){
             location.href="/admin/adver/delete/"+id;
         });
+
 
     </script>
 @endsection

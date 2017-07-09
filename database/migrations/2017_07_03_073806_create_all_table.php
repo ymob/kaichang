@@ -128,11 +128,13 @@ class CreateAllTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('number')->unique();
-            $table->integer('sid');
-            $table->integer('gid');
+            $table->string('gids');
+            $table->string('value');
+            $table->decimal('price', 10, 2);
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('ended_at')->default('0');
+
         });
 
         //评论表
