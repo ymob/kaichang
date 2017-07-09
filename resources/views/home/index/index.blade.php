@@ -11,7 +11,7 @@
                     <ul>
                         <li class="city">
                             <a href="#">
-                                <div class="form-my border-ccc">
+                                <div class="form-my border-blue fixedWidth">
                                     <span index="city"> 地区不限 </span>
                                     <input type="hidden" name="city">
                                     <span class="glyphicon glyphicon-menu-down">
@@ -35,10 +35,10 @@
                             </div>
                         </li>
                         <li>
-                            <input type="text" name="keywords" size="50" class="form-my">
+                            <input type="text" name="keywords" size="49" class="form-my border-blue" placeholder="  场 地 或 地 标 关 键 词">
                         </li>
                         <li>
-                            <select name="number" class="form-my">
+                            <select name="number" class="form-my border-blue fixedWidth">
                                 <option value="0">人数不限</option>
                                 <option value="1">50-100</option>
                                 <option value="2">100-200</option>
@@ -48,7 +48,7 @@
                         </li>
                         <li>
                             <button>
-                                <img src="{{ asset('/home/images/search.png') }}">
+                                <img src="{{ asset('/home/images/search.png') }}" >
                             </button>
                         </li>
                     </ul>
@@ -64,7 +64,7 @@
                                     <ul>
                                         <li class="city">
                                             <a href="#">
-                                                <div class="form-my border-ccc">
+                                                <div class="form-my border-ccc fixedWidth">
                                                     <span index="city"> 地区不限 </span>
                                                     <input type="hidden" name="city">
                                                     <span class="glyphicon glyphicon-menu-down">
@@ -170,7 +170,7 @@
                 <a href="">
                     <span class="glyphicon glyphicon-menu-down"></span><br>
                     <span class="glyphicon glyphicon-menu-down"></span><br>
-                    <font>高级搜索</font>
+                    <font color="#0E6EB8" size="4px">高级搜索</font>
                 </a>
             </div>
         </div>

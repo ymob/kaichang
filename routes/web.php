@@ -77,6 +77,10 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 Route::get('/', 'Home\IndexController@index');
 
-// 执行登录
+//注册
+Route::post('/regist','Home\RegistController@regist');
+
+// 登录
 Route::post('/login', 'Home\LoginController@doLogin');
 Route::get('/logout', 'Home\LoginController@doLogout');
+Route::post('/storePhoneCode','Home\RegistController@storePhoneCode');

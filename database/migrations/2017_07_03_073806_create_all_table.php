@@ -48,7 +48,7 @@ class CreateAllTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('email')->unique();
-            $table->integer('phone')->unique();
+            $table->string('phone')->unique();
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
             $table->tinyInteger('status')->default('1');
@@ -84,7 +84,7 @@ class CreateAllTable extends Migration
             $table->increments('id');
             $table->integer('sid');
             $table->string('title');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('license');
             $table->integer('typeId');
             $table->tinyInteger('status')->default('1');
@@ -116,7 +116,7 @@ class CreateAllTable extends Migration
             $table->increments('id');
             $table->integer('sid')->unique();
             $table->string('name')->unique();
-            $table->integer('phone');
+            $table->string('phone');
             $table->integer('postcode');
             $table->string('address');
             $table->string('license');
@@ -190,7 +190,7 @@ class CreateAllTable extends Migration
             $table->integer('bankNumber');
             $table->string('adderss');
             $table->integer('taxNumber');
-            $table->integer('phone');
+            $table->string('phone');
         });
 
 
