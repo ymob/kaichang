@@ -168,7 +168,7 @@
             </div>
 
             <div id="cd-signup"> <!-- 注册表单 -->
-                <form class="cd-form" action="/regist" method="post">
+                <form class="cd-form" action="{{ url('/regist') }}" method="post">
                     {{ csrf_field() }}
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -235,9 +235,7 @@
 @yield('modaljs');
 
     <script>
-        $('a[href="#"]').on('click', function(){
-            retrun false;
-        });
+    
 
 
         var $form_modal = $('.cd-user-modal'),
