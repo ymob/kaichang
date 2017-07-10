@@ -40,7 +40,35 @@ class RegistController extends Controller
         }
 
         //比对手机验证码
+        $cookiePhonecode = \Cookie::get('phonecode');
+        $inputPhonecode = $request->input('phonecode');
+//        dd($cookiePhonecode.','.$inputPhonecode);
+        if($cookiePhonecode != $inputPhonecode)
+        {
+            return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
+        }
 
+        $data=$request->except('_token','re_password','phonecode');
+
+        $data['password'] = \Hash::make($data['password']);
+
+        //生成不重复的 remember_token
+        do
+        {
+            $data['remember_token'] = str_random(50);
+        }while($users = \DB::table('users')->where('remember_token', $data['remember_token'])->first());
+
+        $time = time();
+        $data['created_at'] = $time;
+        $data['updated_at'] = $time;
+
+        $res=\DB::table('users')->insert($data);
+
+        if($res){
+            return redirect('/')->with(['code' => '1', 'name' => $data['name']]);
+        }else{
+            return back()->with(['code'=>'2','info'=>'注册失败']);
+        }
 
     }
 
@@ -77,12 +105,8 @@ class RegistController extends Controller
         }
 
         $res = curl_exec($curl);
-//        $res = $res->showapi_res_body->successCounts;
         return response()->json($res);
-//        if($res != '1')
-//        {
-//            return response()->json('1');
-//        }
+
 
     }
 }

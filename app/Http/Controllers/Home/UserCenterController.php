@@ -11,8 +11,7 @@ class UserCenterController extends Controller
 	public function index(Request $request)
 	{	
 		$code = ($request->status)?$request->status:1;
-		// dd($code);
-		// dd(session('user'));
+
 		$data = \DB::table('orders')->where([
 				['uid', session('user')->id],
 				['status', $code]
@@ -22,10 +21,8 @@ class UserCenterController extends Controller
 			$arr = explode(',', $val->sids);
 			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
 			$val->snames = $res;
-			// dd($data->snames);
 		}
 
-		// dd($data);
 		return view('home.usercenter.index', ['code' => $code, 'data' => $data]);
 	}
 
@@ -41,7 +38,7 @@ class UserCenterController extends Controller
 	public function updetail(Request $request)
 	{
 		$data = $request->except('_token');
-		// dd($data);
+
 		$id = session('user')->id;
 
 		$oldDate = \DB::table('users')->where('id', $id)->first();
@@ -136,14 +133,12 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
-		$oldpass = decrypt(session('user')->password);
-		// dd($password);
-		if($oldpass != $data['oldpass'])
+		if(\Hash::check($data['password'], $data['oldpass']))
 		{
 			return back()->with(['info'=>'原密码不正确']);
 		}
 
-		$password = encrypt($data['password']);
+		$password = \Hash::make($data['password']);
 
 		$res = \DB::table('users')->where('id', session('user')->id)->update(['password' => $password]);
 
