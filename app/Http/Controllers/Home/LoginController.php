@@ -35,15 +35,13 @@ class LoginController extends Controller
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
-        //对密码解密
-        $password=decrypt($admin->password);
-        if($password != $data['password'])
+        if(\Hash::check($data['password'], $admin->password))
         {
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
         //将管理员用户的所有数据存入session
-        session(['user'=>$admin]);
+        session(['user' => $admin]);
 
         //写入cookie
         if($request->has('remember_me')) {

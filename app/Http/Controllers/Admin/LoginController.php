@@ -38,12 +38,12 @@ class LoginController extends Controller
         $admin=\DB::table('admins')->where('name',$data['name'])->first();
         if(!$admin)
         {
-            return back()->with(['info'=>'该管理员不存在']);
+            return back()->with(['info'=>'用户名或者密码错误']);
         }
 
         //对密码解密
-        $password=decrypt($admin->password);
-        if($password != $data['password'])
+        
+        if(\Hash::check($data['password'], $admin->password))
         {
             return back()->with(['info'=>'用户名或者密码错误']);
         }
@@ -66,7 +66,7 @@ class LoginController extends Controller
     {
         if(\Cookie::get('remember_token'))
         {
-            return view('admin.login.login',['master'=>session('master'), 'title'=>'登录']);
+            return view('admin.login.login', ['master'=>session('master'), 'title'=>'登录']);
         }
 
         $request->session()->forget('master');

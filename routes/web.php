@@ -121,10 +121,12 @@ Route::get('/', 'Home\IndexController@index');
 
 //注册
 Route::post('/regist','Home\RegistController@regist');
+Route::post('/storePhoneCode','Home\RegistController@storePhoneCode');
 
 // 登录
 Route::post('/login', 'Home\LoginController@doLogin');
 Route::get('/logout', 'Home\LoginController@doLogout');
+
 Route::post('/storePhoneCode','Home\RegistController@storePhoneCode');
 
 //订单详情
@@ -132,3 +134,15 @@ Route::get('/home/order/order',"Home\OrderController@index");
 
 //支付
 Route::get('/home/pay/pay',"Home\PayController@index");
+
+// 个人中心
+Route::get('/usercenter/index', 'Home\UserCenterController@index');
+Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
+Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
+Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
+Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
+
+
+// 商户中心
+Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
+

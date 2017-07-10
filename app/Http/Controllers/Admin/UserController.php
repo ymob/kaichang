@@ -46,7 +46,7 @@ class UserController extends Controller
 
         $data=$request->except('_token','re_password');
 
-        $data['password']=encrypt($data['password']);
+        $data['password'] = \Hash::make($data['password']);
 
         if($request->hasFile('pic')){
             if($request->file('pic')->isValid()){
@@ -112,11 +112,9 @@ class UserController extends Controller
     // 管理员信息修改
     public function update(Request $request)
     {
-        $data=$request->except('_token','id');
-
-        $oldDate = \DB::table('users')->where('id', $request->id)->first();
-
-        $oldPic = $oldDate->pic;
+        $data = $request->except('_token','id');
+        // dd($data);
+        $oldDate = \DB::table('admins')->where('id', $request->id)->first();
 
         $valid = [
             'name' => 'required|min:6|max:18',
@@ -130,7 +128,7 @@ class UserController extends Controller
 
         if($oldDate->name != $data['name'])
         {
-            $valid['name'] = $valid['name'].'|unique:users';
+            $valid['name'] = $valid['name'].'|unique:admins';
             $validInfo['name.unique'] = '用户名已存在。';
         }
 
@@ -141,6 +139,9 @@ class UserController extends Controller
 
             if($request->file('pic')->isValid())
             {
+
+                $oldPic = $oldDate->pic;
+
                 $ext=$request->file('pic')->extension();
                 
                 $filename=time().mt_rand(10000000,99999999).'.'.$ext;
@@ -156,7 +157,7 @@ class UserController extends Controller
             }
         }
 
-        $data['password'] = encrypt($data['password']);
+        $data['password'] = \Hash::make($data['password']);
 
         $res=\DB::table('admins')->where('id',$request->id)->update($data);
 

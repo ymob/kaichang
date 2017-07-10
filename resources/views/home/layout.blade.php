@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">首页</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">首页</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     
@@ -48,7 +48,7 @@
                         <li>
                             <a href="#">我的开场 <span class="glyphicon glyphicon-user"></span></a>
                             <ul>
-                                <li><a href="#">开场</a></li>
+                                <li><a href="{{ url('/usercenter/index') }}">个人中心</a></li>
                                 <li><a href="#">开场</a></li>
                             </ul>
                         </li>
@@ -73,6 +73,10 @@
                                 商家中心
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>
+                            <ul>
+                                <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
+                                <li><a href="{{ url('/shoper') }}">商户入驻</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#">
@@ -164,7 +168,7 @@
             </div>
 
             <div id="cd-signup"> <!-- 注册表单 -->
-                <form class="cd-form" action="/regist" method="post">
+                <form class="cd-form" action="{{ url('/regist') }}" method="post">
                     {{ csrf_field() }}
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -173,6 +177,11 @@
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
+                        </div>
+                    @endif
+                    @if(session('info'))
+                        <div class="alert alert-danger">
+                            {{ session('info') }}
                         </div>
                     @endif
                     <div class="form-group has-feedback">
@@ -226,6 +235,8 @@
 @yield('modaljs');
 
     <script>
+    
+
 
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),
@@ -290,13 +301,9 @@
                 data:{phone:phone},
                 success: function (data) {
                     console.log(data);
-//                    alert(data);
-//                    if (data == '1') {
-//                        alert('生成手机验证码失败');
-//                    }
                 },
                 error: function (data) {
-                    alert('数据异常');
+                    alert('发送手机验证码失败');
                 },
                 dataType: 'json'
             });
