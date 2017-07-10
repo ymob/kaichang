@@ -50,7 +50,7 @@ class RegistController extends Controller
 
         $data=$request->except('_token','re_password','phonecode');
 
-        $data['password']=encrypt($data['password']);
+        $data['password'] = \Hash::make($data['password']);
 
         //生成不重复的 remember_token
         do

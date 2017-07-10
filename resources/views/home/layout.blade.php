@@ -170,7 +170,7 @@
             </div>
 
             <div id="cd-signup"> <!-- 注册表单 -->
-                <form class="cd-form" action="/regist" method="post">
+                <form class="cd-form" action="{{ url('/regist') }}" method="post">
                     {{ csrf_field() }}
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -237,6 +237,11 @@
 @yield('modaljs');
 
     <script>
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> 51095e7d09532b7a0949aea6d09e10651c8c106e
 
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),

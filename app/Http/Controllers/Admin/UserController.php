@@ -46,7 +46,7 @@ class UserController extends Controller
 
         $data=$request->except('_token','re_password');
 
-        $data['password']=encrypt($data['password']);
+        $data['password'] = \Hash::make($data['password']);
 
         if($request->hasFile('pic')){
             if($request->file('pic')->isValid()){
@@ -157,7 +157,7 @@ class UserController extends Controller
             }
         }
 
-        $data['password'] = encrypt($data['password']);
+        $data['password'] = \Hash::make($data['password']);
 
         $res=\DB::table('admins')->where('id',$request->id)->update($data);
 
