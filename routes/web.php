@@ -60,6 +60,48 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::post('/admin/value/ajaxRename','Admin\ValueController@ajaxRename');
     Route::get('/admin/value/delete/{id}','Admin\ValueController@delete');
 
+    
+    //评论管理
+    //加载评论管理页面
+    Route::get('admin/comment/index',"Admin\CommentController@index");
+    //编辑评论
+    Route::get('admin/comment/edit/{id}','Admin\CommentController@edit');
+    //执行评论修改动作
+    Route::post('admin/comment/update','Admin\CommentController@update');
+    //将评论加入回收站
+    Route::get('admin/comment/recycle/{id}','Admin\CommentController@recycle');
+    //加载回收站页面
+    Route::get('admin/comment/recover/','Admin\CommentController@recover');
+    //执行恢复
+    Route::get('admin/comment/reback/{id}','Admin\CommentController@reback');
+
+
+
+    //广告管理
+    //加载广告列表
+    Route::get('admin/adver/index',"Admin\AdverController@index");
+    //加载编辑广告页面
+    Route::get('admin/adver/edit/{id}','Admin\AdverController@edit');
+    //执行广告编辑动作
+    Route::post('admin/adver/update','Admin\AdverController@update');
+    //删除广告
+    Route::get('admin/adver/delete/{id}','Admin\AdverController@delete');
+    //加载添加广告页面
+    Route::get('admin/adver/add','Admin\AdverController@add');
+    //执行添加广告动作
+    Route::post('admin/adver/insert','Admin\AdverController@insert');
+
+
+
+    //订单管理
+    //加载定单管理页面
+    Route::get('admin/order/index/{status}',"Admin\OrderController@index");
+
+
+
+    //缓存
+    Route::get('admin/cache/cache','Admin\CacheController@cache');
+
 
 });
 
@@ -84,3 +126,9 @@ Route::post('/regist','Home\RegistController@regist');
 Route::post('/login', 'Home\LoginController@doLogin');
 Route::get('/logout', 'Home\LoginController@doLogout');
 Route::post('/storePhoneCode','Home\RegistController@storePhoneCode');
+
+//订单详情
+Route::get('/home/order/order',"Home\OrderController@index");
+
+//支付
+Route::get('/home/pay/pay',"Home\PayController@index");

@@ -390,7 +390,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
+                        <li><a href="{{ url('/admin/order/index/0') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
                         <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li>
                     </ul>
                 </li>
@@ -404,8 +404,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 评论列表</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
+                        <li><a href="{{ url('/admin/comment/index') }}"><i class="fa fa-circle-o"></i> 评论列表</a></li>
+                        <li><a href=""><i class="fa fa-circle-o"></i> ......</a></li>
                     </ul>
                 </li>
 
@@ -424,7 +424,7 @@
                 </li>
 
                 <li class="active treeview">
-                    <a href="#">
+                    <a href="">
                         <i class="fa fa-files-o"></i>
                         <span>广告管理</span>
                         <span class="pull-right-container">
@@ -432,7 +432,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 广告列表</a></li>
+                        <li><a href="{{ url('/admin/adver/index') }}"><i class="fa fa-circle-o"></i> 广告列表</a></li>
                         <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
                     </ul>
                 </li>
