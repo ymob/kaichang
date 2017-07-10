@@ -5,8 +5,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} - {{ $title  }} </title>
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
+
+    @yield('head')
+
     <style>
         .form_my{width: 100%;height: 50px;}
         .form_ico{font-size:20px;line-height:50px;margin-right: 10px;}
@@ -15,7 +17,7 @@
 </head>
 <body>
 	<header>
-		<nav class="bg-nav navbar navbar-default ">
+		<nav class="bg-nav navbar navbar-default" style="height:25px;">
 			<div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -235,10 +237,6 @@
 @yield('modaljs');
 
     <script>
-        $('a[href="#"]').on('click', function(){
-            retrun false;
-        });
-
 
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),

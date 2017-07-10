@@ -96,3 +96,8 @@ Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
 // 商户中心
 Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
 
+//场地搜索结果列表
+Route::get('/list','Home\ListController@index');
+
+//场地搜索结果详情
+Route::get('/details','Home\DetailsController@index');
