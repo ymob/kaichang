@@ -10,7 +10,9 @@ class ShopCenterController extends Controller
     // index
     public function index()
     {
-
+    	$shopkeeper = session('shopkeeper');
+    	
+    	return view('home.shopercenter.index', ['title' => '商户中心']);
     }
 
     // login

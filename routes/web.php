@@ -77,22 +77,57 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 Route::get('/', 'Home\IndexController@index');
 
-//注册
+Route::get('/404', function(){
+    return view('404');
+});
+
+
+// 忘记密码
+Route::get('/forgot', 'Home\ForgotController@index');
+Route::post('/forgot/email', 'Home\ForgotController@email');
+
+// 重置密码
+Route::get('/forgot/resetpass/{token}', 'Home\ForgotController@resetpass');
+Route::post('/forgot/resetpass/{token}', 'Home\ForgotController@update');
+
+
+// 前台用户
+Route::group(['middleware' => 'homeuser'], function(){
+
+    // 个人中心
+    Route::get('/usercenter/index', 'Home\UserCenterController@index');
+    Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
+    Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
+    Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
+    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
+
+});
+
+// 用户注册
 Route::post('/regist','Home\RegistController@regist');
 Route::post('/storePhoneCode','Home\RegistController@storePhoneCode');
 
-// 登录
+// 用户登录
 Route::post('/login', 'Home\LoginController@doLogin');
 Route::get('/logout', 'Home\LoginController@doLogout');
 
-// 个人中心
-Route::get('/usercenter/index', 'Home\UserCenterController@index');
-Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
-Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
-Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
 
 
 // 商户中心
-Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
+Route::group(['middleware' => 'homeshoper'], function(){
 
+    Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
+
+
+});
+
+// 商户登录
+Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
+Route::post('/shopcenter/dologin', 'Home\ShopLoginController@dologin');
+
+// 加盟商注册
+Route::get('/shopcenter/regist/index', 'Home\ShopRegistController@index');
+Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
+Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');
+Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
+Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');

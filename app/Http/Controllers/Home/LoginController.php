@@ -28,7 +28,7 @@ class LoginController extends Controller
             return back()->with(['code' => '1', 'info'=>'验证码错误!', 'name' => $data['name']]);
         }
 
-        //查询管理员是否已注册·
+        //查询用户是否已注册·
         $admin=\DB::table('users')->where('name', $data['name'])->first();
         if(!$admin)
         {
@@ -40,7 +40,7 @@ class LoginController extends Controller
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
-        //将管理员用户的所有数据存入session
+        //将用户的所有数据存入session
         session(['user' => $admin]);
 
         //写入cookie
@@ -48,7 +48,6 @@ class LoginController extends Controller
             \Cookie::queue('remember_token', $admin->remember_token, 10); //10分钟
         }
 
-        //跳转后台主页
         return redirect('/')->with(['info'=>'登录成功']);
     }
 

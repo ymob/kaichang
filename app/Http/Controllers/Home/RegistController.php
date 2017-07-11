@@ -18,6 +18,7 @@ class RegistController extends Controller
             're_password' => 'same:password',
             'email' => 'required|email|unique:users',
             'phone' => 'required|numeric',
+            'phonecode' => 'required'
         ],[
             'name.required' => '用户名不能为空',
             'name.unique' => '用户名已经被注册',
@@ -29,7 +30,8 @@ class RegistController extends Controller
             'email.email' => '邮箱格式不正确',
             'email.unique' => '该邮箱已注册',
             'phone.required' => '手机号不能为空',
-            'phone.numeric' => '手机号格式错误'
+            'phone.numeric' => '手机号格式错误',
+            'phonecode.required' => '输入手机验证码'
         ]);
 
         if ($validator->fails()) {
@@ -42,7 +44,7 @@ class RegistController extends Controller
         //比对手机验证码
         $cookiePhonecode = \Cookie::get('phonecode');
         $inputPhonecode = $request->input('phonecode');
-//        dd($cookiePhonecode.','.$inputPhonecode);
+        
         if($cookiePhonecode != $inputPhonecode)
         {
             return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
@@ -105,8 +107,8 @@ class RegistController extends Controller
         }
 
         $res = curl_exec($curl);
-        return response()->json($res);
 
+        return response()->json($res);
 
     }
 }
