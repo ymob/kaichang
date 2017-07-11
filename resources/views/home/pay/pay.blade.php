@@ -1,5 +1,10 @@
 @extends('home.layout2')
-@section('content')
+
+@section('header')
+	<link rel="stylesheet" href="{{ asset('/home/css/index/index2.css') }}">
+@endsection
+
+@section('con')
 	<div class="row bg-progress" >
 		<div class="col-md-2 "></div>
 		<div class="col-md-8" ><span>首页>订单支付</span></div>
