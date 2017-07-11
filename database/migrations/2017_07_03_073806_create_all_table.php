@@ -51,7 +51,8 @@ class CreateAllTable extends Migration
             $table->string('phone')->unique();
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
-            $table->tinyInteger('status')->default('1');
+            // 0：禁用，1：正常，2：没有详情，3：详情没有通过；
+            $table->tinyInteger('status')->default('2');
             $table->integer('created_at');
             $table->integer('updated_at');
         });

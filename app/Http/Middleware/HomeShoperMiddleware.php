@@ -22,14 +22,13 @@ class HomeShoperMiddleware
 
         $shopkeeper = session('shopkeeper');
         
-        $res = \DB::table('shopdetails')->where('sid', $shopkeeper->id)->first();
 
-        if(!$res)
+        if($shopkeeper->status == 2)
         {
             return redirect('/shopcenter/regist/detail/'.$shopkeeper->remember_token);
         }
 
-        if($res->status != 1)
+        if($shopkeeper->status == 3)
         {
             return redirect('/shopcenter/regist/status/'.$shopkeeper->remember_token);
         }

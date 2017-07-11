@@ -21,6 +21,7 @@ class ShopLoginController extends Controller
         $remember_token=\Cookie::get('remember_me');
         if($remember_token)
         {
+            $request->session()->forget('user');
             $shopkeeper=\DB::table('shopkeepers')->where('remember_token', $remember_token)->first();
             session('shopkeeper',$shopkeeper);
             return redirect('/')->with(['info'=>'登录成功']);
@@ -40,13 +41,15 @@ class ShopLoginController extends Controller
             return back()->with(['info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
-        if(\Hash::check($data['password'], $shopkeeper->password))
+        if(!\Hash::check($data['password'], $shopkeeper->password))
         {
             return back()->with(['info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
         //将用户的所有数据存入session
         session(['shopkeeper' => $shopkeeper]);
+        
+        $request->session()->forget('user');
 
         //写入cookie
         if($request->has('remember_me')) {
@@ -57,9 +60,9 @@ class ShopLoginController extends Controller
     }
 
     // 执行退出
-    public function doLogout(Request $request)
+    public function logout(Request $request)
     {
-        $request->session()->forget('shopkeepers');
+        $request->session()->forget('shopkeeper');
         return redirect('/')->with(['info' => '退出成功']);
     }
 }

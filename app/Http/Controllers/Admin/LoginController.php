@@ -43,7 +43,7 @@ class LoginController extends Controller
 
         //对密码解密
         
-        if(\Hash::check($data['password'], $admin->password))
+        if(!\Hash::check($data['password'], $admin->password))
         {
             return back()->with(['info'=>'用户名或者密码错误']);
         }

@@ -136,7 +136,7 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
-		if(\Hash::check($data['password'], $data['oldpass']))
+		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
 		}
