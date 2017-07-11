@@ -390,7 +390,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/order/index/0') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
+                        <li><a href="{{ url('/admin/order/index/0
+                        ') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
                         <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li>
                     </ul>
                 </li>
@@ -405,7 +406,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/comment/index') }}"><i class="fa fa-circle-o"></i> 评论列表</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> ......</a></li>
+                        <li><a href="{{ url('admin/comment/recover') }}"><i class="fa fa-circle-o"></i> 回收站</a></li>
                     </ul>
                 </li>
 

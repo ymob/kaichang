@@ -188,7 +188,7 @@
                         </div>
                     @endif
                     <div class="form-group has-feedback">
-                        <input type="text" name="name" class="form-control form_my" placeholder="请输入用户名" value="{{ old('name')  }}" style="padding-left: 20px;">
+                        <input type="text" name="name" class="form-control form_my" id="name" placeholder="请输入用户名" value="{{ old('name')  }}" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
@@ -330,7 +330,7 @@
             var res = patt.test(phone);
             if(!res)
             {
-                alert('请输入正确的手机号')
+                alert('请输入正确的手机号');
                 return false;
             }else
             {
@@ -366,6 +366,21 @@
                 },
                 dataType: 'json'
             });
+        });
+
+        //验证首页注册用户名
+        $("#name").blur(function(){
+
+            var name = $(this).val();
+            var patt = /d{8,20}/;
+            var res = patt.test(name);
+            if(!res)
+            {
+//                $.session.set('code',2);
+                $.session.set('info','213232323');
+                window.location.href='/';
+//                $(location).attr('href','/');
+            }
         });
 
     </script>

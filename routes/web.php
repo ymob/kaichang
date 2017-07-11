@@ -112,9 +112,10 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // ========= 前台 ==================================================
 
-
+//前台首页
 Route::get('/', 'Home\IndexController@index');
 
+//错误页面
 Route::get('/404', function(){
     return view('404');
 });
