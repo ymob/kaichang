@@ -5,10 +5,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} - {{ $title  }} </title>
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/home/css/index/index2.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
-
-    @yield('head')
-
+    <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/font-awesome.min.css') }}">
     <style>
         .form_my{width: 100%;height: 50px;}
         .form_ico{font-size:20px;line-height:50px;margin-right: 10px;}
@@ -17,7 +16,7 @@
 </head>
 <body>
 	<header>
-		<nav class="bg-nav navbar navbar-default" style="height:25px;">
+		<nav class="bg-nav navbar navbar-default ">
 			<div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -26,7 +25,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">首页</a>
+                    <a class="navbar-brand" href="#">首页</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     
@@ -50,7 +49,7 @@
                         <li>
                             <a href="#">我的开场 <span class="glyphicon glyphicon-user"></span></a>
                             <ul>
-                                <li><a href="{{ url('/usercenter/index') }}">个人中心</a></li>
+                                <li><a href="#">开场</a></li>
                                 <li><a href="#">开场</a></li>
                             </ul>
                         </li>
@@ -75,10 +74,6 @@
                                 商家中心
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>
-                            <ul>
-                                <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
-                                <li><a href="{{ url('/shopcenter/regist/index') }}">商户入驻</a></li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#">
@@ -103,6 +98,72 @@
 			</div>
 		</nav>
 	</header>
+
+    <article>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div id="logo_big">
+                    <img src="{{ asset('/home/images/logo.png') }}" width="80">
+                    </div>
+
+                    <div id="search_e">
+
+                        <form action="" method="" >
+                            <ul>
+                                <li class="city">
+
+                                    <a href="#">
+                                        <div class="form-my border-blue fixedWidth">
+                                            <span index="city"> 地区不限 </span>
+                                            <input type="hidden" name="city">
+                                            <span class="glyphicon glyphicon-menu-down">
+                                        </div>
+                                    </a>
+                                    <div>
+                                        <span class="border">华东</span>
+                                        <ul>
+                                            <li><a href="">北京</a></li>
+                                            <li><a href="">北京</a></li>
+                                            <li><a href="">北京</a></li>
+                                            <li><a href="">北京</a></li>
+                                        </ul>
+                                        <div class="hr"></div>
+                                        <span class="border">华东</span>
+                                        <ul>
+                                            <li><a href="">北京</a></li>
+                                            <li><a href="">北京</a></li>
+                                            <li><a href="">北京</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <input type="text" name="keywords" size="30" class="form-my border-blue" placeholder="  场 地 或 地 标 关 键 词">
+                                </li>
+                                <li>
+                                    <select name="number" class="form-my border-blue fixedWidth">
+                                        <option value="0">人数不限</option>
+                                        <option value="1">50-100</option>
+                                        <option value="2">100-200</option>
+                                        <option value="3">200-300</option>
+                                        <option value="4">300-400</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="{{ asset('/home/images/search.png') }}" >
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            
+        </div>
+    </article>
 
 @yield('content')
 
@@ -130,7 +191,7 @@
             </ul>
 
             <div id="cd-login"> <!-- 登录表单 -->
-                <form class="cd-form" action="{{ url('/login') }}" method="post">
+                <form class="cd-form" action="/login" method="post">
                     {{ csrf_field() }}
                     @if (session('info'))
                     <div class="form-group alert alert-danger">
@@ -160,7 +221,7 @@
                             </div>
                         </div>
                         <div class="col-xs-5" style="height: 50px;margin-top: 10px;">
-                            <a href="{{ url('/forgot?t=1') }}" class="text-muted font_size_15">忘记密码？</a>
+                            <a href="" class="text-muted font_size_15">忘记密码？</a>
                         </div>
                         <div class="col-xs-4">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
@@ -170,7 +231,7 @@
             </div>
 
             <div id="cd-signup"> <!-- 注册表单 -->
-                <form class="cd-form" action="{{ url('/regist') }}" method="post">
+                <form class="cd-form" action="/regist" method="post">
                     {{ csrf_field() }}
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -179,11 +240,6 @@
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
-                        </div>
-                    @endif
-                    @if(session('info'))
-                        <div class="alert alert-danger">
-                            {{ session('info') }}
                         </div>
                     @endif
                     <div class="form-group has-feedback">
@@ -232,20 +288,60 @@
 	<script src="{{ asset('/home/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/home/js/index/main.js') }}"></script>
 
+    <script>
+        var map = $("[index='city']").parents('a');
+        map.on('click', function(){
+            var status = $(this).next().css('display');
+            if(status == 'block')
+            {
+                $(this).next().css('display', 'none');
+            }else
+            {
+                $(this).next().css('display', 'block');
+            }
+            return false;
+        });
+        $('.city div li').on('click', function(){
+            var val = $(this).find('a').html();
+            // alert(val);
+            $(this).parents('form').find("[index='city']").html('&nbsp;&nbsp;'+val);
+            $(this).parents('form').find("[name='city']").attr('value', val);
+            map.next().css('display', 'none');
+            return false;
+        });
+        $('#down_up a').on('click', function(){
+            console.log(h);
+            $(this).find('span').toggleClass("glyphicon-menu-down");
+            $(this).find('span').toggleClass("glyphicon-menu-up");
+            var h = $('#search_d').css('height');
+            if(h == '1px')
+            {
+                $('#search_d').animate({'height': '350px','opacity': 'show'}, 1000);
+            }else
+            {
+                $('#search_d').animate({'height': '1px','opacity': 'show'}, 1000);
+            }
+            return false;
+        });
+        $('#hotel').on('change', function(){
+            var status = $.trim($('#star').html());
+            if(status == '')
+            {
+                var html = $('#star_model').html();
+                $('#star').html(html);
+            }else
+            {
+                $('#star').html('');
+            }
+        });
+    </script>
+
 @yield('js')
 
 @yield('modaljs');
 
     <script>
-<<<<<<< HEAD
-=======
-    
-<<<<<<< HEAD
-=======
 
->>>>>>> 51095e7d09532b7a0949aea6d09e10651c8c106e
-
->>>>>>> cc14022462ca769cba4f9e315ed9bcc3c3a5876f
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),
             $form_signup = $form_modal.find('#cd-signup'),
@@ -271,8 +367,7 @@
         @endif
 
         // 登陆 验证码
-        function re_captcha()
-        {
+        function re_captcha() {
             $url = "{{ URL('kit/captcha') }}";
             $url = $url + "/" + Math.random();
             document.getElementById('c2c98f0de5a04167a9e427d883690ff6').src=$url;
@@ -287,18 +382,6 @@
         // 注册 获取验证码按钮倒计时
         $("#getcode").click(function () {
 
-            var phone = $("#phone").val();
-            var patt = /^1[3578]\d{9}$/;
-            var res = patt.test(phone);
-            if(!res)
-            {
-                alert('请输入正确的手机号')
-                return false;
-            }else
-            {
-                $("#phone").attr('readonly', true);
-            }
-
             var num = 60;
             var inte = setInterval(function(){
                 $("#getcode").html(num+' s');
@@ -311,65 +394,24 @@
                 {
                     $("#getcode").attr('disabled',false);
                     $("#getcode").html('获取验证码');
-                    $("#phone").attr('readonly', false);
                     clearInterval(inte);
                 }
             },1000);
 
             //手机验证
+            var phone = $("#phone").val();
             $.ajax('/storePhoneCode', {
                 type: 'POST',
-                data:{phone: phone},
+                data:{phone:phone},
                 success: function (data) {
                     console.log(data);
+//                    alert(data);
+//                    if (data == '1') {
+//                        alert('生成手机验证码失败');
+//                    }
                 },
                 error: function (data) {
-                    alert('发送手机验证码失败');
-                },
-                dataType: 'json'
-            });
-        });
-
-        $("#getcode2").click(function () {
-
-            var phone = $("#phone2").val();
-            var patt = /^1[3578]\d{9}$/;
-            var res = patt.test(phone);
-            if(!res)
-            {
-                alert('请输入正确的手机号')
-                return false;
-            }else
-            {
-                $("#phone2").attr('readonly', true);
-            }
-
-            var num = 60;
-            var inte = setInterval(function(){
-                $("#getcode2").html(num+' s');
-                $("#getcode2").attr('disabled','disabled');
-                if(num >= 1)
-                {
-                    num--;
-                }
-                if(num == 0)
-                {
-                    $("#getcode2").attr('disabled',false);
-                    $("#getcode2").html('获取验证码');
-                    $("#phone2").attr('readonly', false);
-                    clearInterval(inte);
-                }
-            },1000);
-
-            //手机验证
-            $.ajax('/storePhoneCode', {
-                type: 'POST',
-                data:{phone: phone},
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (data) {
-                    alert('发送手机验证码失败');
+                    alert('数据异常');
                 },
                 dataType: 'json'
             });

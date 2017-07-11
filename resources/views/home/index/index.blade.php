@@ -1,5 +1,9 @@
 @extends('home.layout')
 
+@section('head')
+    <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
+@endsection
+
 @section('content')
     <article>
         <div class="container text-center">
