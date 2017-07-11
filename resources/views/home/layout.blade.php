@@ -77,7 +77,7 @@
                             </a>
                             <ul>
                                 <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
-                                <li><a href="{{ url('/shoper') }}">商户入驻</a></li>
+                                <li><a href="{{ url('/shopcenter/regist/index') }}">商户入驻</a></li>
                             </ul>
                         </li>
                         <li>
@@ -130,7 +130,7 @@
             </ul>
 
             <div id="cd-login"> <!-- 登录表单 -->
-                <form class="cd-form" action="/login" method="post">
+                <form class="cd-form" action="{{ url('/login') }}" method="post">
                     {{ csrf_field() }}
                     @if (session('info'))
                     <div class="form-group alert alert-danger">
@@ -160,7 +160,7 @@
                             </div>
                         </div>
                         <div class="col-xs-5" style="height: 50px;margin-top: 10px;">
-                            <a href="" class="text-muted font_size_15">忘记密码？</a>
+                            <a href="{{ url('/forgot?t=1') }}" class="text-muted font_size_15">忘记密码？</a>
                         </div>
                         <div class="col-xs-4">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
@@ -237,11 +237,6 @@
 @yield('modaljs');
 
     <script>
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> 51095e7d09532b7a0949aea6d09e10651c8c106e
 
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),
@@ -268,7 +263,8 @@
         @endif
 
         // 登陆 验证码
-        function re_captcha() {
+        function re_captcha()
+        {
             $url = "{{ URL('kit/captcha') }}";
             $url = $url + "/" + Math.random();
             document.getElementById('c2c98f0de5a04167a9e427d883690ff6').src=$url;
@@ -283,6 +279,18 @@
         // 注册 获取验证码按钮倒计时
         $("#getcode").click(function () {
 
+            var phone = $("#phone").val();
+            var patt = /^1[3578]\d{9}$/;
+            var res = patt.test(phone);
+            if(!res)
+            {
+                alert('请输入正确的手机号')
+                return false;
+            }else
+            {
+                $("#phone").attr('readonly', true);
+            }
+
             var num = 60;
             var inte = setInterval(function(){
                 $("#getcode").html(num+' s');
@@ -295,15 +303,60 @@
                 {
                     $("#getcode").attr('disabled',false);
                     $("#getcode").html('获取验证码');
+                    $("#phone").attr('readonly', false);
                     clearInterval(inte);
                 }
             },1000);
 
             //手机验证
-            var phone = $("#phone").val();
             $.ajax('/storePhoneCode', {
                 type: 'POST',
-                data:{phone:phone},
+                data:{phone: phone},
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+                    alert('发送手机验证码失败');
+                },
+                dataType: 'json'
+            });
+        });
+
+        $("#getcode2").click(function () {
+
+            var phone = $("#phone2").val();
+            var patt = /^1[3578]\d{9}$/;
+            var res = patt.test(phone);
+            if(!res)
+            {
+                alert('请输入正确的手机号')
+                return false;
+            }else
+            {
+                $("#phone2").attr('readonly', true);
+            }
+
+            var num = 60;
+            var inte = setInterval(function(){
+                $("#getcode2").html(num+' s');
+                $("#getcode2").attr('disabled','disabled');
+                if(num >= 1)
+                {
+                    num--;
+                }
+                if(num == 0)
+                {
+                    $("#getcode2").attr('disabled',false);
+                    $("#getcode2").html('获取验证码');
+                    $("#phone2").attr('readonly', false);
+                    clearInterval(inte);
+                }
+            },1000);
+
+            //手机验证
+            $.ajax('/storePhoneCode', {
+                type: 'POST',
+                data:{phone: phone},
                 success: function (data) {
                     console.log(data);
                 },

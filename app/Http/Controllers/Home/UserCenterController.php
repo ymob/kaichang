@@ -83,7 +83,10 @@ class UserCenterController extends Controller
 
                 $ext=$request->file('pic')->extension();
                 
-                $filename=time().mt_rand(10000000,99999999).'.'.$ext;
+                do
+	            {
+	                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+	            }while(file_exists('./uploads/shoper/license/'.$filename));
 
                 $request->file('pic')->move('./uploads/user',$filename);
 
