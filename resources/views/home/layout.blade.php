@@ -237,15 +237,7 @@
 @yield('modaljs');
 
     <script>
-<<<<<<< HEAD
-=======
-    
-<<<<<<< HEAD
-=======
 
->>>>>>> 51095e7d09532b7a0949aea6d09e10651c8c106e
-
->>>>>>> cc14022462ca769cba4f9e315ed9bcc3c3a5876f
         var $form_modal = $('.cd-user-modal'),
             $form_login = $form_modal.find('#cd-login'),
             $form_signup = $form_modal.find('#cd-signup'),
