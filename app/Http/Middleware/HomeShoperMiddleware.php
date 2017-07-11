@@ -20,19 +20,25 @@ class HomeShoperMiddleware
             return redirect('/shopcenter/login')->with(['info' => '未登录!']);
         }
 
+        if(session('shopkeeper')->status == 0)
+        {
+            return redirect('/shopcenter/login')->with(['info' => '账号已被禁用,请联系管理员!']);
+
+        }
+
         $shopkeeper = session('shopkeeper');
         
-        $res = \DB::table('shopdetails')->where('sid', $shopkeeper->id)->first();
-
-        if(!$res)
+        //注册未填详情
+        if($shopkeeper->status == 2)
         {
             return redirect('/shopcenter/regist/detail/'.$shopkeeper->remember_token);
         }
 
-//        if($res->status != 1)
-//        {
-//            return redirect('/shopcenter/regist/status/'.$shopkeeper->remember_token);
-//        }
+        //未审核
+        if($shopkeeper->status == 3)
+        {
+            return redirect('/shopcenter/regist/status/'.$shopkeeper->remember_token);
+        }
 
         return $next($request);
     }

@@ -23,7 +23,7 @@ class UserCenterController extends Controller
 			$val->snames = $res;
 		}
 
-		return view('home.usercenter.index', ['code' => $code, 'data' => $data]);
+		return view('home.usercenter.index', ['title'=>'用户中心首页','code' => $code, 'data' => $data]);
 	}
 
 
@@ -86,7 +86,7 @@ class UserCenterController extends Controller
                 do
 	            {
 	                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
-	            }while(file_exists('./uploads/shoper/license/'.$filename));
+	            }while(file_exists('./uploads/user/'.$filename));
 
                 $request->file('pic')->move('./uploads/user',$filename);
 
@@ -136,7 +136,7 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
-		if(\Hash::check($data['password'], $data['oldpass']))
+		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
 		}
