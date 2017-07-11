@@ -214,11 +214,13 @@
                                     </div>
                                     <div class="right"><span class="s_reserve"><button class="btn btn-danger">添加购物车</button></span></div>
                                 </div>
+                                <div style="clear:both;"></div>
                             </li>
+
                             <!--第二条-->
                             <li>
                                 <div class="search_title" style="margin:0 auto;">
-                                    <h4>大宴会厅</h4>
+                                    <h4>休息室</h4>
                                     <div class="s_grade"><span>4.8分</span>/5分</div>
                                 </div>
                                 <div>
@@ -312,6 +314,7 @@
                                     </div>
                                     <div class="right"><span class="s_reserve"><button class="btn btn-danger">添加购物车</button></span></div>
                                 </div>
+                                <div style="clear:both;"></div>
                             </li>
 
                         </ul>

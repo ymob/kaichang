@@ -29,10 +29,10 @@ class HomeShoperMiddleware
             return redirect('/shopcenter/regist/detail/'.$shopkeeper->remember_token);
         }
 
-        if($res->status != 1)
-        {
-            return redirect('/shopcenter/regist/status/'.$shopkeeper->remember_token);
-        }
+//        if($res->status != 1)
+//        {
+//            return redirect('/shopcenter/regist/status/'.$shopkeeper->remember_token);
+//        }
 
         return $next($request);
     }
