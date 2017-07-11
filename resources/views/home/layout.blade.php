@@ -5,6 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} - {{ $title  }} </title>
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="/home/css/index/index.css">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
 
     @yield('head')
