@@ -1,4 +1,4 @@
-@extends('home.layoutsearch')
+@extends('home.layout2')
 
 @section('header')
     <link rel="stylesheet" href="/home/css/index/list.css">
