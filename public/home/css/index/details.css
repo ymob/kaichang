@@ -18,7 +18,7 @@
 .search_title ul li a{color:#999}
 .search_title p{margin-top: 8px;color: #666666;font-size: 10px;}
 .search_title p .a_h3{font-size: 18px;padding-right: 8px;}
-.search_title h4{font-weight:bold;color:#2D7FBE;float:left;}
+
 
 /*横幅*/
 .banner{display: flex}
@@ -31,8 +31,9 @@
 
 /*场地内容*/
 .seek_result_show{width:100%;}
-.pos1{margin:5px;}
-.pos2{margin:5px;width:600px;}
+.search_title h4{font-weight:bold;color:#2D7FBE;float:left;}
+.pos1{margin:8px;}
+.pos2{margin:8px;width:600px;}
 .s_main li{margin: 10px 0 ;font-size: 14px;}
 .s_main2 li{margin: 10px 0 ;font-size: 14px;float:right;}
 .s_main li a {padding: 2px 4px ;margin-right: 6px;font-weight: 600;color:#2D7FBE;}
@@ -40,34 +41,18 @@
 .s_grade{float: right;font-weight: 600;font-size: 18px;}
 .s_grade span{font-size: 25px;}
 .s_price{font-size: 22px!important;color: red;transform: translate(-18px,-131px);font-weight:600!important}
-.s_reserve button{transform:translate(-18px,-45px);width: 96px;height: 27px;line-height: 14px}
+.s_reserve button{transform:translate(-18px,-10px);width: 96px;height: 27px;line-height: 14px}
 table tr{height:40px;}
 table th{text-align:right;width:250px;}
 table td{text-align:center;width:100px;}
 
-
-
-.show_ask{display: flex;height: 50px;line-height: 50px;background-color: #F7F7F7;box-shadow: 0 0 12px 0 #c3c3c3;padding-left: 20px;}
-.c_box{margin-left: 40px;}
-.c_box input{margin-top: 18px;}
-
-/*搜索结果*/
+/*搜索结果详情*/
 .seek_result{display: flex}
-.a_show>ul>li{ margin-top: 15px;box-shadow: 1px 0px 5px 0px #ccc,-1px 0 0px 0px #ccc;}
+.a_show>ul>li{ margin-top: 20px;box-shadow: 1px 0px 5px 0px #ccc,-1px 0 0px 0px #ccc;}
 .a_show ul li dl dt{width: 500px;margin-right: 20px;}
 .a_show ul li dl dd{position: relative}
 
-
-.s_standard ul li dl dt{width: 85px}
-.s_standard ul li dl dd{margin-left: 100px;}
-.f_color{color: red;}
-.f_color_c{color: #ccc;font-size: 10px;}
-.a_empty{width: 110px;height: 27px;line-height: 15px;float: right}
-.s_selected{color: #2D7FBE}
-.s_selected ul li{box-shadow: 0 0 12px 1px #ccc;padding: 2px 4px;}
-.a_s{margin-right: 6px;}
-
-
+/*评论*/
 .a_section {box-shadow: 0 0 12px 0 #ccc;padding: 0 16px;margin-top: 8px;}
 .a_section ol>li{border-bottom:1px dashed #ccc;}
 .a_section ol li>dl li{margin: 12px 0;color: #999;font-size: 10px;}
@@ -75,8 +60,6 @@ table td{text-align:center;width:100px;}
 .a_section ol li>dl dt img{border-radius: 5%;}
 .a_section ol li>dl dd{margin-left: 100px; }
 .a_section h5{text-align: center}
-
-
 
 /*广告推广*/
 .a_generalize ul{box-shadow: 0 0 10px 0 #999 ;border-radius: 5px;padding: 15px 0 ;}

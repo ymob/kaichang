@@ -5,8 +5,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} - {{ $title  }} </title>
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="/home/css/index/index.css">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
 
     @yield('head')
 
@@ -38,6 +38,15 @@
                             <a href="">{{ session('user')->name }}</a>
                             <ul>
                                 <li><a href="{{ url('/logout') }}">退出</a></li>
+                            </ul>
+                        </li>
+                    @elseif(session('shopkeeper'))
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="#">全国</a></li>
+                        <li>
+                            <a href="">{{ session('shopkeeper')->name }}</a>
+                            <ul>
+                                <li><a href="{{ url('/shopcenter/logout') }}">退出</a></li>
                             </ul>
                         </li>
                     @else
@@ -79,6 +88,9 @@
                             <ul>
                                 <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
                                 <li><a href="{{ url('/shopcenter/regist/index') }}">商户入驻</a></li>
+                                @if(session('shopkeeper'))
+                                <li><a href="{{ url('/shopcenter/logout') }}">退出</a></li>
+                                @endif
                             </ul>
                         </li>
                         <li>

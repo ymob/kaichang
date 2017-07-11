@@ -157,26 +157,22 @@ Route::get('/home/order/order',"Home\OrderController@index");
 //支付
 Route::get('/home/pay/pay',"Home\PayController@index");
 
-// 个人中心
-Route::get('/usercenter/index', 'Home\UserCenterController@index');
-Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
-Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
-Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
-
-
 // 商户中心
 Route::group(['middleware' => 'homeshoper'], function(){
 
     Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
+    Route::get('/shopcenter/detail', 'Home\ShopCenterController@detail');
+    Route::post('/shopcenter/updetail', 'Home\ShopCenterController@updetail');
+    Route::post('/shopcenter/uppassword', 'Home\ShopCenterController@uppassword');
 
 });
 
 // 商户登录
 Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
 Route::post('/shopcenter/dologin', 'Home\ShopLoginController@dologin');
+Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
 
-// 加盟商注册
+// 商户注册
 Route::get('/shopcenter/regist/index', 'Home\ShopRegistController@index');
 Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
 Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');

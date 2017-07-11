@@ -18,6 +18,7 @@ class LoginController extends Controller
         {
             $admin=\DB::table('users')->where('remember_token', $remember_token)->first();
             session('master',$admin);
+            $request->session()->forget('shopkeeper');
             return redirect('/')->with(['info'=>'登录成功']);
         }
 
@@ -35,13 +36,14 @@ class LoginController extends Controller
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
-        if(\Hash::check($data['password'], $admin->password))
+        if(!\Hash::check($data['password'], $admin->password))
         {
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
         //将用户的所有数据存入session
         session(['user' => $admin]);
+        $request->session()->forget('shopkeeper');
 
         //写入cookie
         if($request->has('remember_me')) {

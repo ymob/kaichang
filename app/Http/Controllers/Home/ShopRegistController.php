@@ -21,7 +21,7 @@ class ShopRegistController extends Controller
             'password' => 'required',
             're_password' => 'same:password',
             'email' => 'required|email|unique:shopkeepers',
-            'phone' => 'required|numeric|unique:shopkeepers',
+            'phone' => 'required|numeric|unique:shopkeepers|digits:11',
             'phonecode' => 'required'
         ],[
             'name.required' => '用户名不能为空',
@@ -35,6 +35,7 @@ class ShopRegistController extends Controller
             'email.unique' => '该邮箱已注册',
             'phone.required' => '手机号不能为空',
             'phone.numeric' => '手机号格式错误',
+            'phone.digits' => '手机号格式错误',
             'phone.unique' => '该手机号已注册',
             'phonecode.required' => '输入手机验证码'
         ]);
@@ -147,6 +148,7 @@ class ShopRegistController extends Controller
         $res=\DB::table('shopdetails')->insert($data);
 
         if($res){
+            \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 1]);
             return redirect('/shopcenter/regist/status/')->with(['info' => '提交成功！']);
         }else{
             return back()->withInput()->with(['info' => '提交失败！']);

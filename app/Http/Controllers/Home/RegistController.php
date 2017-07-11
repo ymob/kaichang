@@ -36,7 +36,7 @@ class RegistController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()
+            return redirect('/')
                 ->withErrors($validator)
                 ->with(['code'=>'2'])
                 ->withInput();
@@ -71,7 +71,7 @@ class RegistController extends Controller
         if($res){
             return redirect('/')->with(['code' => '1', 'name' => $data['name']]);
         }else{
-            return back()->with(['code'=>'2','info'=>'注册失败']);
+            return redirect('/')->with(['code'=>'2','info'=>'注册失败']);
         }
 
     }
