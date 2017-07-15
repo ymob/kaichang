@@ -33,6 +33,6 @@ class OrderController extends Controller
         // dd($data);
   
         //加载评论显示模板
-        return view('admin.order.index',['title'=>'评论列表','request'=>$request->all(),'data'=>$data,'status'=>$status]);
+        return view('admin.order.index',['title'=>'订单列表','request'=>$request->all(),'data'=>$data,'status'=>$status]);
     }
 }

@@ -24,7 +24,7 @@ class ShopCenterController extends Controller
                 
             }
         }
-        dd($data);
+//        dd($data);
 
     	return view('home.shopercenter.index', ['title' => '商户中心首页']);
     }
