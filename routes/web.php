@@ -150,10 +150,10 @@ Route::post('/login', 'Home\LoginController@doLogin');
 Route::get('/logout', 'Home\LoginController@doLogout');
 
 
-//订单详情
+// 订单详情
 Route::get('/home/order/order',"Home\OrderController@index");
 
-//支付
+// 支付
 Route::get('/home/pay/pay',"Home\PayController@index");
 
 // 商户中心
@@ -163,6 +163,11 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::get('/shopcenter/detail', 'Home\ShopCenterController@detail');
     Route::post('/shopcenter/updetail', 'Home\ShopCenterController@updetail');
     Route::post('/shopcenter/uppassword', 'Home\ShopCenterController@uppassword');
+    //商户场地管理
+    Route::get('/shopcenter/release','Home\ShopPlacesController@add');
+    Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
+    Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
+    Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
 
 });
 

@@ -24,7 +24,6 @@ class ShopCenterController extends Controller
                 
             }
         }
-        dd($data);
 
     	return view('home.shopercenter.index', ['title' => '商户中心首页']);
     }
@@ -157,4 +156,5 @@ class ShopCenterController extends Controller
 			return back()->with(['info'=>'更新失败']);
 		}
 	}
+
 }

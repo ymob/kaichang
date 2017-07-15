@@ -9,7 +9,7 @@ class UserCenterController extends Controller
 {
     // index
 	public function index(Request $request)
-	{	
+	{
 		$code = ($request->status)?$request->status:1;
 
 		$data = \DB::table('orders')->where([
@@ -30,7 +30,7 @@ class UserCenterController extends Controller
 	// detail
 	public function detail()
 	{
-		return view('home.usercenter.detail', ['user' => session('user')]);
+		return view('home.usercenter.detail', ['title'=>'我的信息','user' => session('user')]);
 	}
 
 
@@ -173,6 +173,6 @@ class UserCenterController extends Controller
 			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
 			$val->snames = $res;
 		}
-		return view('home.usercenter.orders', ['data' => $data, 'request' => $request->all()]);
+		return view('home.usercenter.orders', ['title'=>'我的订单', 'data' => $data, 'request' => $request->all()]);
 	}
 }

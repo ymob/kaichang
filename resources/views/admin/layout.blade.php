@@ -11,12 +11,8 @@
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap-switch.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/ionicons.min.css') }}">
-    <!-- switch -->
-    <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/bootstrap-switch.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/dist/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -739,8 +735,6 @@
 <script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap-switch.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/raphael-min.js') }}"></script>
-<!-- switch -->
-<script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap-switch.min.js') }}"></script>
 <script src="{{ asset('/admin/adminlte/plugins/morris/morris.min.js') }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset('/admin/adminlte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>

@@ -136,7 +136,7 @@ class CreateAllTable extends Migration
             $table->integer('uid')->unique();
             $table->string('sids');
             $table->string('gids');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 10, 2);
             // 1：未付款 2：未接单 3：交易中 4：交易完成 5：交易终止
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');

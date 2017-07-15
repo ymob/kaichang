@@ -81,7 +81,7 @@
                             </a>
                             </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/shopcenter/index') }}">
                                 商家中心
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>

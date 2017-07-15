@@ -149,7 +149,7 @@ class ShopRegistController extends Controller
 
         if($res){
             \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 1]);
-            return redirect('/shopcenter/regist/status/')->with(['info' => '提交成功！']);
+            return redirect('/shopcenter/regist/status/'.$token)->with(['info' => '商家信息审核通过,请登录 进入商家中心发布场地！']);
         }else{
             return back()->withInput()->with(['info' => '提交失败！']);
         }
@@ -165,6 +165,7 @@ class ShopRegistController extends Controller
             return redirect('/404');
         }
         
-        return view('home.shopercenter.status', ['title' => '等待审核']);
+//        return view('home.shopercenter.status', ['title' => '等待审核']);
+        return view('home.shopercenter.login', ['title' => '商家登录'])->with(['info'=>'商家信息审核通过,请登录 进入商家中心发布场地']);
     }
 }
