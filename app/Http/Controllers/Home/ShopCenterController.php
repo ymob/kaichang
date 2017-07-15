@@ -21,7 +21,6 @@ class ShopCenterController extends Controller
             }else
             {
                 $res = explode(',', $val->gids);
-                
             }
         }
 

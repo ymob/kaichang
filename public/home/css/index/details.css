@@ -41,10 +41,17 @@
 .s_grade{float: right;font-weight: 600;font-size: 18px;}
 .s_grade span{font-size: 25px;}
 .s_price{font-size: 22px!important;color: red;transform: translate(-18px,-131px);font-weight:600!important}
+<<<<<<< HEAD
+.s_reserve button{transform:translate(-18px,-45px);width: 96px;height: 27px;line-height: 14px}
+.a_show table tr{height:40px;}
+.a_show table th{text-align:right;width:250px;}
+.a_show table td{text-align:center;width:100px;}
+=======
 .s_reserve button{transform:translate(-18px,-10px);width: 96px;height: 27px;line-height: 14px}
 table tr{height:40px;}
 table th{text-align:right;width:250px;}
 table td{text-align:center;width:100px;}
+>>>>>>> b7d15bdc6452911dd83db624685c651d951a1f24
 
 /*搜索结果详情*/
 .seek_result{display: flex}

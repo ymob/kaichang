@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 class UserCenterController extends Controller
 {
     // index
+    //用户个人中心首页
 	public function index(Request $request)
 	{
 		$code = ($request->status)?$request->status:1;
@@ -23,54 +24,67 @@ class UserCenterController extends Controller
 			$val->snames = $res;
 		}
 
-		return view('home.usercenter.index', ['title'=>'用户中心首页','code' => $code, 'data' => $data]);
+		return view('home.usercenter.index', ['title' => '用户中心首页', 'code' => $code, 'data' => $data]);
+
 	}
 
 
 	// detail
-	public function detail()
+    //加载用户修改信息页面
+	public function details()
 	{
-		return view('home.usercenter.detail', ['title'=>'我的信息','user' => session('user')]);
+//		return view('home.usercenter.detail', ['title' => '我的信息', 'user' => session('user')]);
+		return view('home.usercenter.details', ['user' => session('user'),'title'=>'用户个人中心']);
+
 	}
 
 
 	// updetail
-	public function updetail(Request $request)
+    //执行个人用户信息修改
+	public function updetails(Request $request)
 	{
+	    //获取修改后的数据
 		$data = $request->except('_token');
 
+		//从缓存中获取用户id
 		$id = session('user')->id;
 
+		//查询用户原始数据
 		$oldDate = \DB::table('users')->where('id', $id)->first();
 
+		//表单验证
         $valid = [
+            'name'=>'required|',
             'email' => 'required|email',
             'phone' => 'required|numeric|digits:11'
         ];
 
+        //错误信息提示
         $validInfo = [
+            'name.required'=>'用户名不能为空',
             'email.required' => '请填写邮箱。',
             'email.email' => '邮箱格式不正确。',
             'phone.required' => '请填写手机号',
-            'phone.numeric' => '手机号个格式不正确。',
-            'phone.digits' => '手机号个格式不正确。'
+            'phone.numeric' => '手机号格式不正确。',
+            'phone.digits' => '手机号格式不正确。'
         ];
 
+        //判断邮箱是否已经存在
         if($oldDate->email != $data['email'])
         {
             $valid['email'] = $valid['email'].'|unique:users';
-            $validInfo['name.unique'] = '用户名已存在。';
+            $validInfo['email.unique'] = '邮箱已存在。';
         }
 
+        //判断电话是否已经存在
         if($oldDate->phone != $data['phone'])
         {
         	$valid['phone'] = $valid['phone'].'|unique:users';
-            $validInfo['phone.unique'] = '手机号已存在已存在。';
+            $validInfo['phone.unique'] = '手机号已存在。';
         }
 
         // 处理图片
         if($request->hasFile('pic')){
-
         	$valid['pic'] = 'image';
             $validInfo['pic.image'] = '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。';
 
@@ -82,7 +96,7 @@ class UserCenterController extends Controller
                 $oldPic = $oldDate->pic;
 
                 $ext=$request->file('pic')->extension();
-                
+
                 do
 	            {
 	                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
@@ -112,11 +126,12 @@ class UserCenterController extends Controller
         }else
         {
             return back()->with(['info'=>'更新失败']);
-        }	
+        }
 	}
 
 
 	// uppassword
+    //修改密码
 	public function uppassword(Request $request)
 	{
 		$data = $request->except('_token');
@@ -136,6 +151,7 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
+// dd(session('user')->password);
 		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
@@ -155,24 +171,36 @@ class UserCenterController extends Controller
 	}
 
 	// orders
-	public function orders(Request $request)
+    //个人用户订单
+	public function order( Request $request,$status)
 	{
-		$num = $request->input('num',10);
-		$status = $request->input('status', false);
-		
-		if($status)
-		{
-			$data = \DB::table('orders')->where('uid', session('user')->id)->where('status', $status)->orderBy('created_at', 'desc')->paginate($num);
-		}else
-		{
-			$data = \DB::table('orders')->where('uid', session('user')->id)->orderBy('created_at', 'desc')->paginate($num);
-		}
-		// dd($data);
-		foreach ($data as $key => $val) {
-			$arr = explode(',', $val->sids);
-			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
-			$val->snames = $res;
-		}
-		return view('home.usercenter.orders', ['title'=>'我的订单', 'data' => $data, 'request' => $request->all()]);
+        //获取每页显示的数据条数
+        $num = 10;
+
+        if(!$status || $status==0)
+        {
+            $data=\DB::table('orders')->paginate($num);
+        }else
+        {
+            $data=\DB::table('orders')->where('status',$status)->paginate($num);
+        }
+
+
+	    //遍历
+        foreach($data as $key=>$val){
+
+            //查询商户表
+            $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
+
+            $data[$key]->keepername = $name;
+
+        }
+
+
+		return view('home.usercenter.order',['title'=>'我的订单','request'=>$request->all(),'data'=>$data,'status'=>$status]);
 	}
+
+
+
+
 }

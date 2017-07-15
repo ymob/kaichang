@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/ionicons.min.css') }}">
+<<<<<<< HEAD
     <!-- Theme style -->
+=======
+    <!-- switch -->
+    <!-- Theme style -->                    
+>>>>>>> e4b54d5f73c70cc48a3d400d206588cdd9df8ac2
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/dist/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
@@ -337,8 +342,8 @@
                         <i class="fa fa-dashboard"></i>
                         <span>用户管理</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/user/index') }}"><i class="fa fa-user-secret"></i> 管理员列表</a></li>
@@ -348,12 +353,27 @@
                 </li>
 
                 <li class="active treeview">
+                    <a href="{{ url('/admin/places/index') }}">
+                        <i class="fa fa-dashboard"></i>
+                        <span>场地管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('/admin/places/index') }}"><i class="fa fa-user-secret"></i> 场地列表</a></li>
+                        <li><a href="{{ url('/admin/meetplaces/index') }}"><i class="fa fa-user-md"></i> 会场列表</a></li>
+                        <li><a href="{{ url('/admin/facilities/index') }}"><i class="fa fa-users"></i> 配套服务列表</a></li>
+                    </ul>
+                </li>
+
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span>分类管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 分类列表</a></li>
@@ -368,8 +388,8 @@
                         <i class="fa fa-files-o"></i>
                         <span>商品管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 商品列表</a></li>
@@ -382,11 +402,12 @@
                         <i class="fa fa-files-o"></i>
                         <span>订单管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/order/index/0') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
+                        <li><a href="{{ url('/admin/order/index/0
+                        ') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
                         <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li>
                     </ul>
                 </li>
@@ -396,12 +417,12 @@
                         <i class="fa fa-files-o"></i>
                         <span>评论管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/comment/index') }}"><i class="fa fa-circle-o"></i> 评论列表</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> ......</a></li>
+                        <li><a href="{{ url('admin/comment/recover') }}"><i class="fa fa-circle-o"></i> 回收站</a></li>
                     </ul>
                 </li>
 
@@ -410,8 +431,8 @@
                         <i class="fa fa-files-o"></i>
                         <span>轮播图管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 加盟商轮播图</a></li>
@@ -424,8 +445,8 @@
                         <i class="fa fa-files-o"></i>
                         <span>广告管理</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/adver/index') }}"><i class="fa fa-circle-o"></i> 广告列表</a></li>
@@ -437,9 +458,9 @@
                     <a href="pages/calendar.html">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
                         <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
-            </span>
+                          <small class="label pull-right bg-red">3</small>
+                          <small class="label pull-right bg-blue">17</small>
+                        </span>
                     </a>
                 </li>
                 <li>
@@ -732,9 +753,12 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap-switch.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/raphael-min.js') }}"></script>
+<<<<<<< HEAD
+=======
+<!-- switch -->
+>>>>>>> e4b54d5f73c70cc48a3d400d206588cdd9df8ac2
 <script src="{{ asset('/admin/adminlte/plugins/morris/morris.min.js') }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset('/admin/adminlte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>

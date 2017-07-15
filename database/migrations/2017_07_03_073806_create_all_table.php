@@ -145,6 +145,7 @@ class CreateAllTable extends Migration
 
         // 订单商品表
         Schema::create('order_goods', function (Blueprint $table) {
+
             $table->increments('id');
             $table->integer('oid');
             $table->integer('gid');

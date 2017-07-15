@@ -13,7 +13,7 @@ class RegistController extends Controller
     {
         //表单验证
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:users|min:3|max:50',
+            'name' => 'required|unique:users|min:8|max:20',
             'password' => 'required',
             're_password' => 'same:password',
             'email' => 'required|email|unique:users',
@@ -22,9 +22,10 @@ class RegistController extends Controller
         ],[
             'name.required' => '用户名不能为空',
             'name.unique' => '用户名已经被注册',
-            'name.min' => '用户名最少3个字符',
-            'name.max' => '用户名最多个50个字符',
+            'name.min' => '用户名最少8个字符',
+            'name.max' => '用户名最多个20个字符',
             'password.required' => '密码不能为空',
+            'password.alpha_num'=>'密码必须是字母数字的组合',
             're_password.same' => '确认密码不一致',
             'email.required' => '邮箱不能为空',
             'email.email' => '邮箱格式不正确',
@@ -41,14 +42,14 @@ class RegistController extends Controller
                 ->withInput();
         }
 
-        //比对手机验证码
-        $cookiePhonecode = \Cookie::get('phonecode');
-        $inputPhonecode = $request->input('phonecode');
+        // //比对手机验证码
+        // $cookiePhonecode = \Cookie::get('phonecode');
+        // $inputPhonecode = $request->input('phonecode');
         
-        if($cookiePhonecode != $inputPhonecode)
-        {
-            return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
-        }
+        // if($cookiePhonecode != $inputPhonecode)
+        // {
+        //     return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
+        // }
 
         $data=$request->except('_token','re_password','phonecode');
 
@@ -80,7 +81,7 @@ class RegistController extends Controller
     {
         $phone = $request->input('phone');
         $code = mt_rand(100000,999999);
-        \Cookie::queue('phonecode', $code, 5); //5分钟
+        \Cookie::queue('phonecode', $code, 30); //30分钟
 
         //使用阿里云市场 三网短信: https://market.aliyun.com/products/57126001/cmapi017136.html?spm=5176.730005.0.0.l8VBA9#sku=yuncode1113600000
         //此 appcode 目前可发送注册短信 200条
@@ -90,7 +91,7 @@ class RegistController extends Controller
         $appcode = "b9eb42adea7d49f986cca6c59475c061";
         $headers = array();
         array_push($headers, "Authorization:APPCODE " . $appcode);
-        $querys = 'content={"code":"'.$code.'","minute":5,"comName":"开场网"}&mobile='.$phone.'&tNum=T150606060601';
+        $querys = 'content={"code":"'.$code.'","minute":30,"comName":"开场网"}&mobile='.$phone.'&tNum=T150606060601';
         $bodys = "";
         $url = $host . $path . "?" . $querys;
 
