@@ -152,8 +152,6 @@
 @section('js')
     <script>
 
-        $("[name='my-checkbox']").bootstrapSwitch();
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

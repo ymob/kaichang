@@ -12,4 +12,8 @@ class DetailsController extends Controller
     {
         return view('home.index.details',['title'=>'详情页']);
     }
+    public function indexs()
+    {
+        return view('home.index.detail',['title'=>'详情页']);
+    }
 }

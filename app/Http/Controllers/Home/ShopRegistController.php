@@ -32,7 +32,7 @@ class ShopRegistController extends Controller
             're_password.same' => '确认密码不一致',
             'email.required' => '邮箱不能为空',
             'email.email' => '邮箱格式不正确',
-            'email.unique' => '该邮箱已注册',
+            'email.unique' => '该邮箱已注册2',
             'phone.required' => '手机号不能为空',
             'phone.numeric' => '手机号格式错误',
             'phone.digits' => '手机号格式错误',
@@ -46,14 +46,14 @@ class ShopRegistController extends Controller
                 ->withInput();
         }
 
-        //比对手机验证码
-        $cookiePhonecode = \Cookie::get('phonecode');
-        $inputPhonecode = $request->input('phonecode');
+        // //比对手机验证码
+        // $cookiePhonecode = \Cookie::get('phonecode');
+        // $inputPhonecode = $request->input('phonecode');
         
-        if($cookiePhonecode != $inputPhonecode)
-        {
-            return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
-        }
+        // if($cookiePhonecode != $inputPhonecode)
+        // {
+        //     return back()->with(['info'=>'手机验证码错误'])->withInput();
+        // }
 
         $data = $request->except('_token','re_password','phonecode');
 
@@ -82,8 +82,8 @@ class ShopRegistController extends Controller
     {
         // dd($token);
         $res = \DB::table('shopkeepers')->where('remember_token', $token)->first();
-
-        if(!$res)
+        
+        if(!$res || $res->status != 2)
         {
             return redirect('/404');
         }
@@ -144,12 +144,12 @@ class ShopRegistController extends Controller
         $time = time();
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
-        // dd($data);
+        
         $res=\DB::table('shopdetails')->insert($data);
 
         if($res){
             \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 3]);
-            return redirect('/shopcenter/regist/status/')->with(['info' => '提交成功！']);
+            return redirect('/shopcenter/regist/status/'.$token)->with(['info' => '提交成功！']);
         }else{
             return back()->withInput()->with(['info' => '提交失败！']);
         }
@@ -160,7 +160,7 @@ class ShopRegistController extends Controller
     {
         $res = \DB::table('shopkeepers')->where('remember_token', $token)->first();
 
-        if(!$res)
+        if(!$res || $res->status != 3)
         {
             return redirect('/404');
         }

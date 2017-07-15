@@ -22,7 +22,9 @@ class CreateAllTable extends Migration
             $table->string('password');
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
-            $table->tinyInteger('auth')->default('2');
+            // 0：超级管理员 1：普通管理员
+            $table->tinyInteger('auth')->default('1');
+            // 0：禁用 1：启用
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
@@ -34,9 +36,10 @@ class CreateAllTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('email')->unique();
-            $table->integer('phone')->unique();
+            $table->string('phone')->unique();
             $table->string('pic')->default('default.jpg');
             $table->string('remember_token')->unique();
+            // 0：禁用 1：启用
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
@@ -63,6 +66,7 @@ class CreateAllTable extends Migration
             $table->string('typeName');
             $table->integer('pid');
             $table->string('path')->default('0');
+            // 0：禁用 1：启用
             $table->tinyInteger('status')->default('1');
             $table->string('attrIds')->nullable();
         });
@@ -133,9 +137,19 @@ class CreateAllTable extends Migration
             $table->string('sids');
             $table->string('gids');
             $table->decimal('price', 8, 2);
+            // 1：未付款 2：未接单 3：交易中 4：交易完成 5：交易终止
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
             $table->integer('ended_at');
+        });
+
+        // 订单商品表
+         Schema::create('order_goods', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('oid');
+            $table->integer('gid');
+            $table->string('g_aids');
+            $table->string('g_vids');
         });
 
         //评论表

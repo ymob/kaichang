@@ -6,9 +6,9 @@
 
 @section('con')
     <div class="bg-gray">
-        <div class="title col-md-8 col-md-offset-2">首页 > 场地搜索 > 北京四川五粮液龙爪树宾馆</div>
+        <div class="title col-xs-8 col-xs-offset-2">首页 > 场地搜索 > 北京四川五粮液龙爪树宾馆</div>
     </div>
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-xs-8 col-xs-offset-2">
 
         <div class="margin-top">
 
@@ -141,7 +141,36 @@
                                                 <span>  ,共____天</span>
                                             </li>
                                             <li>会议日期
-                                                <input type="date">
+                                                <div class="border-blue form-my">
+                                                    <a id="input_trigger_demo_index" href="#">
+                                                    <span id="date_demo_index"></span>
+                                                    <input type="hidden" name="time">
+                                                    <span class="caret"></span>
+                                                    </a>
+                                                </div>
+                                                <script type="text/javascript">
+
+                                                    var dateRange = new pickerDateRange('date_demo_index', {
+                                                        aRecent7Days : 'aRecent7DaysDemo2', //最近7天
+                                                        isTodayValid : false,
+                                                        startDate : '2013-04-14',
+                                                        endDate : '2013-04-21',
+                                                        disCertainDate : [true, 4, 2],
+                                                        //needCompare : true,
+                                                        //isSingleDay : true,
+                                                        //shortOpr : true,
+                                                        dayRangeMax : '999', // 日期最大范围(以天计算)
+                                                        startDateId : 'startDate',
+                                                        endDateId : 'endDate',
+                                                        defaultText : ' 至 ',
+                                                        inputTrigger : 'input_trigger_demo_index',
+                                                        theme : 'ta',
+                                                        success : function(obj) {
+                                                            $('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);
+                                                            // console.log(obj);                            
+                                                        }
+                                                    });
+                                                </script>
                                             </li>
                                         </ol>
                                     </div>

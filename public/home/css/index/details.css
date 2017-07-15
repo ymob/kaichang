@@ -41,9 +41,9 @@
 .s_grade span{font-size: 25px;}
 .s_price{font-size: 22px!important;color: red;transform: translate(-18px,-131px);font-weight:600!important}
 .s_reserve button{transform:translate(-18px,-45px);width: 96px;height: 27px;line-height: 14px}
-table tr{height:40px;}
-table th{text-align:right;width:250px;}
-table td{text-align:center;width:100px;}
+.a_show table tr{height:40px;}
+.a_show table th{text-align:right;width:250px;}
+.a_show table td{text-align:center;width:100px;}
 
 
 

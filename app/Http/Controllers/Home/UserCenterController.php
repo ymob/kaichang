@@ -23,14 +23,14 @@ class UserCenterController extends Controller
 			$val->snames = $res;
 		}
 
-		return view('home.usercenter.index', ['code' => $code, 'data' => $data]);
+		return view('home.usercenter.index', ['title' => '用户中心首页', 'code' => $code, 'data' => $data]);
 	}
 
 
 	// detail
 	public function detail()
 	{
-		return view('home.usercenter.detail', ['user' => session('user')]);
+		return view('home.usercenter.detail', ['title' => '我的信息', 'user' => session('user')]);
 	}
 
 
@@ -136,6 +136,7 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
+// dd(session('user')->password);
 		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
@@ -173,6 +174,6 @@ class UserCenterController extends Controller
 			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
 			$val->snames = $res;
 		}
-		return view('home.usercenter.orders', ['data' => $data, 'request' => $request->all()]);
+		return view('home.usercenter.orders', ['title' => '我的订单', 'data' => $data, 'request' => $request->all()]);
 	}
 }

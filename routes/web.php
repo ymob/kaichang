@@ -11,9 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 // 路由群组 后台
 Route::group(['middleware'=>'adminlogin'],function(){
@@ -39,6 +36,13 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
     // 后台所有用户权限管理
     Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
+
+
+    // ++++++ 场地管理 ++++++
+
+    Route::get('/admin/places/index', 'Admin\PlacesController@index');
+
+    // ++++++++++++++++++++++
 
     //分类管理
     Route::resource('/admin/category',"Admin\CategoryController");
@@ -159,6 +163,7 @@ Route::get('/home/pay/pay',"Home\PayController@index");
 // 商户中心
 Route::group(['middleware' => 'homeshoper'], function(){
 
+    // 商户信息修改
     Route::get('/shopcenter/index', 'Home\ShopCenterController@index');
     Route::get('/shopcenter/detail', 'Home\ShopCenterController@detail');
     Route::post('/shopcenter/updetail', 'Home\ShopCenterController@updetail');
@@ -173,6 +178,8 @@ Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
 
 // 商户注册
 Route::get('/shopcenter/regist/index', 'Home\ShopRegistController@index');
+
+
 Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
 Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
@@ -184,3 +191,4 @@ Route::get('/list','Home\ListController@index');
 
 //场地搜索结果详情
 Route::get('/details','Home\DetailsController@index');
+Route::get('/detail','Home\DetailsController@indexs');

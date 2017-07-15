@@ -137,9 +137,40 @@
                                             </select>
                                         </li>
                                         <li>
+                                            <span class="form-my">起止时间：</span>
+                                        </li>
+                                        <li>
                                             <label>
-                                                <span>开始时间：</span>
-                                                <input type="date" class="form-my">
+                                                <div class="border-blue form-my">
+                                                    <a id="input_trigger_demo_index" href="#">
+                                                    <span id="date_demo_index"></span>
+                                                    <input type="hidden" name="time">
+                                                    <span class="caret"></span>
+                                                    </a>
+                                                </div>
+                                                <script type="text/javascript">
+
+                                                    var dateRange = new pickerDateRange('date_demo_index', {
+                                                        aRecent7Days : 'aRecent7DaysDemo2', //最近7天
+                                                        isTodayValid : false,
+                                                        startDate : '2013-04-14',
+                                                        endDate : '2013-04-21',
+                                                        disCertainDate : [true, 4, 2],
+                                                        //needCompare : true,
+                                                        //isSingleDay : true,
+                                                        //shortOpr : true,
+                                                        dayRangeMax : '999', // 日期最大范围(以天计算)
+                                                        startDateId : 'startDate',
+                                                        endDateId : 'endDate',
+                                                        defaultText : ' 至 ',
+                                                        inputTrigger : 'input_trigger_demo_index',
+                                                        theme : 'ta',
+                                                        success : function(obj) {
+                                                            $('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);
+                                                            // console.log(obj);                            
+                                                        }
+                                                    });
+                                                </script>
                                             </label>
                                         </li>
                                     </ul>
