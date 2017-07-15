@@ -97,6 +97,7 @@
                             </thead>
                             <tbody>
                             <!-- 遍历 -->
+
                             @foreach($data as $key=>$value)
                            
                             <tr class="parent text-center" width="800px">
@@ -127,6 +128,7 @@
 
                             @endforeach
 
+
                             </tbody>
                         </table>
 
@@ -143,7 +145,7 @@
     <!-- /.content -->
 </div>
 
-    @endsection
+@endsection
 
 @section('js')
     <script>

@@ -143,8 +143,11 @@ class UserController extends Controller
                 $oldPic = $oldDate->pic;
 
                 $ext=$request->file('pic')->extension();
-                
-                $filename=time().mt_rand(10000000,99999999).'.'.$ext;
+
+                do
+                {
+                    $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                }while(file_exists('./uploads/adminUser/'.$filename));
 
                 $request->file('pic')->move('./uploads/adminUser',$filename);
 

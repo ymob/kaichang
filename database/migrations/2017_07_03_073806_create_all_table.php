@@ -144,7 +144,11 @@ class CreateAllTable extends Migration
         });
 
         // 订单商品表
+<<<<<<< HEAD
          Schema::create('order_goods', function (Blueprint $table) {
+=======
+        Schema::create('order_goods', function (Blueprint $table) {
+>>>>>>> b7d15bdc6452911dd83db624685c651d951a1f24
             $table->increments('id');
             $table->integer('oid');
             $table->integer('gid');
@@ -224,7 +228,7 @@ class CreateAllTable extends Migration
         // Schema::dropIfExists('admins');
 
         // Schema::dropIfExists('users');
-        
+
         // Schema::dropIfExists('shopkeepers');
     }
 }

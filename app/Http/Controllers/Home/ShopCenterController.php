@@ -24,9 +24,13 @@ class ShopCenterController extends Controller
                 
             }
         }
+<<<<<<< HEAD
         // dd($data);
+=======
+//        dd($data);
+>>>>>>> b7d15bdc6452911dd83db624685c651d951a1f24
 
-    	return view('home.shopercenter.index', ['title' => '商户中心']);
+    	return view('home.shopercenter.index', ['title' => '商户中心首页']);
     }
 
     // detail

@@ -148,8 +148,13 @@ class ShopRegistController extends Controller
         $res=\DB::table('shopdetails')->insert($data);
 
         if($res){
+<<<<<<< HEAD
             \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 3]);
             return redirect('/shopcenter/regist/status/'.$token)->with(['info' => '提交成功！']);
+=======
+            \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 1]);
+            return redirect('/shopcenter/regist/status/')->with(['info' => '提交成功！']);
+>>>>>>> b7d15bdc6452911dd83db624685c651d951a1f24
         }else{
             return back()->withInput()->with(['info' => '提交失败！']);
         }

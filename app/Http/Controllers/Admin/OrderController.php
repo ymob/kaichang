@@ -26,16 +26,13 @@ class OrderController extends Controller
         foreach($data as $key=>$value)
         {   
 
-
             //查询商品表
             $data[$key]->goodsname = \DB::table('goods')->where('id',$value->gids)->value('title');
 
-
         }
         // dd($data);
-
   
         //加载评论显示模板
-        return view('admin.order.index',['title'=>'评论列表','request'=>$request->all(),'data'=>$data,'status'=>$status]);
+        return view('admin.order.index',['title'=>'订单列表','request'=>$request->all(),'data'=>$data,'status'=>$status]);
     }
 }

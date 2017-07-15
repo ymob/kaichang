@@ -116,9 +116,10 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // ========= 前台 ==================================================
 
-
+//前台首页
 Route::get('/', 'Home\IndexController@index');
 
+//错误页面
 Route::get('/404', function(){
     return view('404');
 });
@@ -134,16 +135,34 @@ Route::post('/forgot/resetpass/{token}', 'Home\ForgotController@update');
 
 
 // 前台用户
+//路由组
 Route::group(['middleware' => 'homeuser'], function(){
 
     // 个人中心
+    //个人中心主页面
     Route::get('/usercenter/index', 'Home\UserCenterController@index');
+    //用户个人中心详细信息加载页面
+    Route::get('/usercenter/details', 'Home\UserCenterController@details');
+    //执行个人用户修改个人信息和修改密码
+    Route::post('/usercenter/updetails','Home\UserCenterController@updetails');
+    //修改密码
+    Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
+    //个人用户订单查询
+    Route::get('usercenter/order/{status}','Home\UserCenterController@order');
+
+
     Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
+    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
     Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
     Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
     Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
 
 });
+
+
+
+
+
 
 // 用户注册
 Route::post('/regist','Home\RegistController@regist');
@@ -169,7 +188,9 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::post('/shopcenter/updetail', 'Home\ShopCenterController@updetail');
     Route::post('/shopcenter/uppassword', 'Home\ShopCenterController@uppassword');
 
+
 });
+
 
 // 商户登录
 Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
@@ -180,6 +201,7 @@ Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
 Route::get('/shopcenter/regist/index', 'Home\ShopRegistController@index');
 
 
+// 商户注册
 Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
 Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
