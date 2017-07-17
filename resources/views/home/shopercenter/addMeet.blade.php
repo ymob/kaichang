@@ -243,7 +243,7 @@
                     <tr>
                         <td colspan="2">
                             <button type="submit" class="btn btn-primary">完成</button><span>&nbsp;&nbsp;&nbsp;</span>
-                            <a class="btn btn-primary" href="#" role="button" style="color:white;">提交并继续添加会场</a>
+                            <button type="button" id="addMeetAgain" class="btn btn-primary">提交并继续添加会场</button>
                         </td>
                     </tr>
                 </table>
@@ -289,6 +289,13 @@
             obj.css('display','block');
 
             $("#container").append(obj);
+
+        });
+
+        $("#addMeetAgain").on('click',function(){
+
+            $("#form").attr('action','/shopcenter/insertMeetAgain');
+            $("#form").submit();
 
         });
 

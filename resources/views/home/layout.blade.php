@@ -134,8 +134,8 @@
                 <a href="">友情链接</a> | 
                 <a href="">隐私政策</a>
             </p>
-            <p>COPYRIGHT &copy; 2007 - 2013 ALL RIGHTS RESERVED 开场网 版权所有</p>
-            <p>经营许可证编号 : 京ICP证100040 号</p>
+            <p>COPYRIGHT &copy; 2017 - 2023 ALL RIGHTS RESERVED 开场网 版权所有</p>
+            <p>经营许可证编号 : 京ICP证160741号 京ICP备11042446号-5</p>
         </div>
     </footer>
 

@@ -118,6 +118,7 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 //前台首页
 Route::get('/', 'Home\IndexController@index');
+Route::post('/indexSearch','Home\IndexController@indexSearch');
 
 //错误页面
 Route::get('/404', function(){
@@ -187,6 +188,7 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
+    Route::post('/shopcenter/insertMeetAgain','Home\ShopPlacesController@insertMeetAgain');
 
 
 });
