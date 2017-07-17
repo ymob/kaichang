@@ -5,12 +5,32 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Model\Place;
+use App\Model\Meetplace;
+use App\Model\Facilitie;
+
 class ShopPlacesController extends Controller
 {
     //场地列表
-    public function index()
+    public function index(Request $request)
     {
+        $num = $request->input('num', 10);
 
+        $keywords = $request->input('keywords', '');
+
+        $data = \DB::table('places')
+            ->where('title','like','%'.$keywords.'%')
+            ->where('sid', session('shopkeeper')->id)
+            ->paginate($num);
+        foreach ($data as $key => $val) {
+            $arr1 = explode(',', $val->freeService);
+            $val->freeService = $arr1;
+            $arr2 = explode(',', $val->supportService);
+            $val->supportService = $arr2;
+            $arr3 = explode(',', $val->pic);
+            $val->pic = $arr3;
+        }
+        return view('home.shopercenter.places',['title'=>'场地列表','request'=>$request->all(),'data'=>$data]);
     }
 
     //加载添加场地页面
@@ -154,6 +174,10 @@ class ShopPlacesController extends Controller
             $arr['supportKeys'] = [];
         }
 
+        //将 pid $arr 存入 session 以便添加多个会场
+        session('pid',$pid);
+        session('arr',$arr);
+
         return view('home.shopercenter.addMeet',['title'=>'添加会场', 'pid'=>$pid ,'arr'=>$arr]);
     }
 
@@ -262,12 +286,116 @@ class ShopPlacesController extends Controller
         }else{
             return back()->with(['info'=>'添加会场失败']);
         }
+    }
 
 
+    public function insertMeetAgain(Request $request)
+    {
+        //表单验证
+        $validator = \Validator::make($request->all(), [
+            'title' => 'required',
+            'price' => 'required'
+        ],[
+            'title.required' => '会场标题不能为空',
+            'price.required' => '会场价格不能为空'
+        ]);
 
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        $data = $request->except('_token');
 
+        // 添加会场
+        $meet = [];
+        $meet['pid'] = $data['pid'];
+        $meet['title'] = $data['title'];
+        $meet['area'] = $data['area'];
+        $meet['deskPeople'] = $data['deskPeople'];
+        $meet['dinnerPeople'] = $data['dinnerPeople'];
+        $meet['price'] = $data['price'];
+        if(array_key_exists('freeService',$data))
+        {
+            $meet['freeService'] = implode(',',$data['freeService']);
+        }
+        if($data['supportService'])
+        {
+            $arr = explode(',',$data['supportService']);
+            unset($arr[0]);
+            $arr = array_unique($arr);
+            $meet['supportService'] = implode(',',$arr);
+        }else{
+            $meet['supportService'] = '';
+        }
+        if($request->file('pic')->isValid())
+        {
 
+            $ext=$request->file('pic')->extension();
 
+            do
+            {
+                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+            }while(file_exists('./uploads/shoper/places/meetplaces'.$filename));
+
+            $request->file('pic')->move('./uploads/shoper/places/meetplaces',$filename);
+
+            $meet['pic'] = $filename;
+        }
+        $time = time();
+        $meet['created_at'] = $time;
+        $meet['updated_at'] = $time;
+
+        //返回添加成功的 会场id
+        $mid = \DB::table('meetplaces')->insertGetId($meet);
+        if($mid)
+        {
+            // 添加会场下的 配套服务 最多50个
+            for($i=1;$i<=50;$i++) {
+
+                $key = 'type' . $i;
+                if (array_key_exists($key, $data)) {
+
+                    $facility = [];
+                    $price = 'price' . $i;
+                    $supportType = 'supportType' . $i;
+                    $pic = 'pic' . $i;
+
+                    $facility['mid'] = $mid;
+                    $facility['supportType'] = $data[$supportType];
+                    $facility['type'] = $data[$key];
+                    $facility['price'] = $data[$price];
+                    $facility['created_at'] = time();
+                    $facility['updated_at'] = time();
+                    if(array_key_exists($pic,$data))
+                    {
+                        $ext = $request->file($pic)->extension();
+                        do {
+                            $filename = time() . mt_rand(10000000, 99999999) . '.' . $ext;
+                        } while (file_exists('./uploads/shoper/places/facilities' . $filename));
+
+                        $request->file($pic)->move('./uploads/shoper/places/facilities', $filename);
+
+                        $facility['pic'] = $filename;
+                    }
+
+                    $res = \DB::table('facilities')->insert($facility);
+                    //var_dump($res);
+                    if(!$res)
+                    {
+                        return back()->with(['info' => '添加会场失败']);
+                    }
+
+                }
+            }
+
+            //继续添加当前场地下的 会场
+            $pid = session('pid');
+            $arr = session('arr');
+            return view('home.shopercenter.addMeet',['title'=>'继续添加会场', 'pid'=>$pid ,'arr'=>$arr]);
+        }else{
+            return back()->with(['info'=>'添加会场失败']);
+        }
     }
 }

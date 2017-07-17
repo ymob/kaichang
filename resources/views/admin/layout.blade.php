@@ -13,12 +13,7 @@
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/bootstrap/css/ionicons.min.css') }}">
-<<<<<<< HEAD
-    <!-- Theme style -->
-=======
-    <!-- switch -->
-    <!-- Theme style -->                    
->>>>>>> e4b54d5f73c70cc48a3d400d206588cdd9df8ac2
+    
     <link rel="stylesheet" href="{{ asset('/admin/adminlte/dist/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->

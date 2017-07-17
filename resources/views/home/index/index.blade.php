@@ -11,7 +11,8 @@
                 <img src="{{ asset('/home/images/logo.png') }}" width="120">
             </div>
             <div id="search_e">
-                <form action="" method="" >
+
+                <form action="/indexSearch" method="post" >
                     <ul>
                         <li class="city">
                             <a href="#">
@@ -121,6 +122,7 @@
                         </li>
                     </ul>
                 </form>
+
             </div>
             <div id="search_d">
                 <div class="">
@@ -245,9 +247,12 @@
                                 <td>
                                     <ul>
                                         <li><label><input type="checkbox" id="hotel"> 酒店</label></li>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 会议中心</label></li>
+                                        <li><label><input type="checkbox" > 体育馆</label></li>
+                                        <li><label><input type="checkbox" > 展览馆</label></li>
+                                        <li><label><input type="checkbox" > 酒吧/餐厅/会所</label></li>
+                                        <li><label><input type="checkbox" > 艺术中心/剧院</label></li>
+                                        <li><label><input type="checkbox" > 咖啡厅/茶室</label></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -269,36 +274,41 @@
                                         </li>
                                         <li>
                                             <label>
-                                                <div class="border-blue form-my">
-                                                    <a id="input_trigger_demo_index" href="#">
-                                                    <span id="date_demo_index"></span>
-                                                    <input type="hidden" name="time">
-                                                    <span class="caret"></span>
-                                                    </a>
-                                                </div>
-                                                <script type="text/javascript">
 
-                                                    var dateRange = new pickerDateRange('date_demo_index', {
-                                                        aRecent7Days : 'aRecent7DaysDemo2', //最近7天
-                                                        isTodayValid : false,
-                                                        startDate : '2013-04-14',
-                                                        endDate : '2013-04-21',
-                                                        disCertainDate : [true, 4, 2],
-                                                        //needCompare : true,
-                                                        //isSingleDay : true,
-                                                        //shortOpr : true,
-                                                        dayRangeMax : '999', // 日期最大范围(以天计算)
-                                                        startDateId : 'startDate',
-                                                        endDateId : 'endDate',
-                                                        defaultText : ' 至 ',
-                                                        inputTrigger : 'input_trigger_demo_index',
-                                                        theme : 'ta',
-                                                        success : function(obj) {
-                                                            $('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);
-                                                            // console.log(obj);                            
-                                                        }
-                                                    });
-                                                </script>
+                                                {{--<div class="border-blue form-my">--}}
+                                                    {{--<a id="input_trigger_demo_index" href="#">--}}
+                                                    {{--<span id="date_demo_index"></span>--}}
+                                                    {{--<input type="hidden" name="time">--}}
+                                                    {{--<span class="caret"></span>--}}
+                                                    {{--</a>--}}
+                                                {{--</div>--}}
+                                                {{--<script type="text/javascript">--}}
+
+                                                    {{--var dateRange = new pickerDateRange('date_demo_index', {--}}
+                                                        {{--aRecent7Days : 'aRecent7DaysDemo2', //最近7天--}}
+                                                        {{--isTodayValid : false,--}}
+                                                        {{--startDate : '2013-04-14',--}}
+                                                        {{--endDate : '2013-04-21',--}}
+                                                        {{--disCertainDate : [true, 4, 2],--}}
+                                                        {{--//needCompare : true,--}}
+                                                        {{--//isSingleDay : true,--}}
+                                                        {{--//shortOpr : true,--}}
+                                                        {{--dayRangeMax : '999', // 日期最大范围(以天计算)--}}
+                                                        {{--startDateId : 'startDate',--}}
+                                                        {{--endDateId : 'endDate',--}}
+                                                        {{--defaultText : ' 至 ',--}}
+                                                        {{--inputTrigger : 'input_trigger_demo_index',--}}
+                                                        {{--theme : 'ta',--}}
+                                                        {{--success : function(obj) {--}}
+                                                            {{--$('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);--}}
+                                                            {{--// console.log(obj);                            --}}
+                                                        {{--}--}}
+                                                    {{--});--}}
+                                                {{--</script>--}}
+                                                <input type="date">
+
+                                                {{--<input type="date" name="startime" class="form-my">--}}
+
                                             </label>
                                         </li>
                                     </ul>
@@ -311,9 +321,12 @@
                                 <th>酒店星级：</th>
                                 <td>
                                     <ul>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
-                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 三星以下</label></li>
+                                        <li><label><input type="checkbox" > 三星级</label></li>
+                                        <li><label><input type="checkbox" > 四星级</label></li>
+                                        <li><label><input type="checkbox" > 五星级</label></li>
+                                        <li><label><input type="checkbox" > 六星级</label></li>
+                                        <li><label><input type="checkbox" > 七星级</label></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -342,6 +355,7 @@
 
 @section('js')
     <script>
+
         var map = $("[index='city']").parents('a');
         map.on('click', function(){
             var status = $(this).next().css('display');
@@ -363,9 +377,16 @@
             return false;
         });
         $('#down_up a').on('click', function(){
-            console.log(h);
             $(this).find('span').toggleClass("glyphicon-menu-down");
             $(this).find('span').toggleClass("glyphicon-menu-up");
+            var status = $('#search_d').css('overflow');
+            if(status == 'hidden')
+            {
+                $('#search_d').css('overflow', 'visible');
+            }else
+            {
+                $('#search_d').css('overflow', 'hidden');
+            }
             var h = $('#search_d').css('height');
             if(h == '1px')
             {
