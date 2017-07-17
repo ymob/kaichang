@@ -201,6 +201,24 @@ class UserCenterController extends Controller
 	}
 
 
+    //个人中心购物车
+    public function shopcart()
+    {   
 
+        //获取每页显示的数据条数
+        $num = 10;
+
+            //查询表中数据
+            $data = \DB::table('shopcart')
+            ->join('users', 'users.id', '=', 'shopcart.uid')
+            ->join('goods', 'goods.id', '=', 'shopcart.gid')
+            ->select('shopcart.*', 'users.name', 'goods.title')
+            ->get();
+            // dd($data);
+
+       
+
+        return view('home.usercenter.shopcart',['title'=>'购物车']);
+    }
 
 }

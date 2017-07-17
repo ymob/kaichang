@@ -151,12 +151,9 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/order/{status}','Home\UserCenterController@order');
 
 
-    Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
-    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
-    Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
-    Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
-
+    //个人中心购物车
+    Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+  
 });
 
 // 用户注册
