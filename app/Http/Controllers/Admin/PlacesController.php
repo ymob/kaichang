@@ -42,7 +42,7 @@ class PlacesController extends Controller
 			$val->meetplace = $meetplace;
         }
         // dd($data);
-        return view('admin.places.index',['title'=>'管理员列表','request'=>$request->all(),'data'=>$data]);
+        return view('admin.places.index',['title'=>'场地列表','request'=>$request->all(),'data'=>$data]);
     }
 
 

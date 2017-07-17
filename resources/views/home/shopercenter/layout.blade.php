@@ -16,7 +16,7 @@
 						<a href="{{ url('/shopcenter/index') }}" class="list-group-item active">商户中心</a>
 						<a href="{{ url('/shopcenter/detail') }}" class="list-group-item">我的资料</a>
 						<a href="{{ url('/shopcenter/release') }}" class="list-group-item">发布场地</a>
-						<a href="{{ url('/shopcenter/orders') }}" class="list-group-item">我的订单</a>
+						<a href="{{ url('/shopcenter/places') }}" class="list-group-item">管理场地</a>
 						<a href="{{ url('/shopcenter/place/add') }}" class="list-group-item">商品发布</a>
 						<a href="#" class="list-group-item">我的足迹</a>
 					</div>

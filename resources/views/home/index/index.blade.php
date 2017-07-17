@@ -269,36 +269,7 @@
                                         </li>
                                         <li>
                                             <label>
-                                                <div class="border-blue form-my">
-                                                    <a id="input_trigger_demo_index" href="#">
-                                                    <span id="date_demo_index"></span>
-                                                    <input type="hidden" name="time">
-                                                    <span class="caret"></span>
-                                                    </a>
-                                                </div>
-                                                <script type="text/javascript">
-
-                                                    var dateRange = new pickerDateRange('date_demo_index', {
-                                                        aRecent7Days : 'aRecent7DaysDemo2', //最近7天
-                                                        isTodayValid : false,
-                                                        startDate : '2013-04-14',
-                                                        endDate : '2013-04-21',
-                                                        disCertainDate : [true, 4, 2],
-                                                        //needCompare : true,
-                                                        //isSingleDay : true,
-                                                        //shortOpr : true,
-                                                        dayRangeMax : '999', // 日期最大范围(以天计算)
-                                                        startDateId : 'startDate',
-                                                        endDateId : 'endDate',
-                                                        defaultText : ' 至 ',
-                                                        inputTrigger : 'input_trigger_demo_index',
-                                                        theme : 'ta',
-                                                        success : function(obj) {
-                                                            $('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);
-                                                            // console.log(obj);                            
-                                                        }
-                                                    });
-                                                </script>
+                                                <input type="date" name="startime" class="form-my">
                                             </label>
                                         </li>
                                     </ul>
@@ -363,9 +334,16 @@
             return false;
         });
         $('#down_up a').on('click', function(){
-            console.log(h);
             $(this).find('span').toggleClass("glyphicon-menu-down");
             $(this).find('span').toggleClass("glyphicon-menu-up");
+            var status = $('#search_d').css('overflow');
+            if(status == 'hidden')
+            {
+                $('#search_d').css('overflow', 'visible');
+            }else
+            {
+                $('#search_d').css('overflow', 'hidden');
+            }
             var h = $('#search_d').css('height');
             if(h == '1px')
             {

@@ -188,6 +188,8 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
 
+    Route::get('/shopcenter/places', 'Home\ShopPlacesController@index');
+    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@index');
 
 });
 
