@@ -183,13 +183,15 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::get('/shopcenter/detail', 'Home\ShopCenterController@detail');
     Route::post('/shopcenter/updetail', 'Home\ShopCenterController@updetail');
     Route::post('/shopcenter/uppassword', 'Home\ShopCenterController@uppassword');
-    //商户场地管理
+    // 商户发布场地
     Route::get('/shopcenter/release','Home\ShopPlacesController@add');
     Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
     Route::post('/shopcenter/insertMeetAgain','Home\ShopPlacesController@insertMeetAgain');
-
+    // 商户管理场地
+    Route::get('/shopcenter/places', 'Home\ShopPlacesController@index');
+    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@index');
 
 });
 

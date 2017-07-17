@@ -9,6 +9,7 @@
 
 @section('content')
 
+
 			<div class="container">
 				<div class="row">
 
@@ -37,7 +38,7 @@
 								</li>
 								<li>
 									<i class="glyphicon glyphicon-gift"></i>
-									<a href="{{asset('/shopcenter/release')}}"  class="left-list">场地管理</a>
+									<a href="{{asset('/shopcenter/places')}}"  class="left-list">管理场地</a>
 								</li>
 								<li>
 									<i class="glyphicon glyphicon-queen"></i>
@@ -46,6 +47,7 @@
 
 							</ul>
 						</div>
+
 					</div>
 				</div>
 				<div class="col-xs-9">

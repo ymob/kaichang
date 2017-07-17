@@ -274,6 +274,7 @@
                                         </li>
                                         <li>
                                             <label>
+
                                                 {{--<div class="border-blue form-my">--}}
                                                     {{--<a id="input_trigger_demo_index" href="#">--}}
                                                     {{--<span id="date_demo_index"></span>--}}
@@ -305,6 +306,9 @@
                                                     {{--});--}}
                                                 {{--</script>--}}
                                                 <input type="date">
+
+                                                {{--<input type="date" name="startime" class="form-my">--}}
+
                                             </label>
                                         </li>
                                     </ul>
@@ -373,9 +377,16 @@
             return false;
         });
         $('#down_up a').on('click', function(){
-            console.log(h);
             $(this).find('span').toggleClass("glyphicon-menu-down");
             $(this).find('span').toggleClass("glyphicon-menu-up");
+            var status = $('#search_d').css('overflow');
+            if(status == 'hidden')
+            {
+                $('#search_d').css('overflow', 'visible');
+            }else
+            {
+                $('#search_d').css('overflow', 'hidden');
+            }
             var h = $('#search_d').css('height');
             if(h == '1px')
             {

@@ -5,12 +5,32 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Model\Place;
+use App\Model\Meetplace;
+use App\Model\Facilitie;
+
 class ShopPlacesController extends Controller
 {
     //场地列表
-    public function index()
+    public function index(Request $request)
     {
+        $num = $request->input('num', 10);
 
+        $keywords = $request->input('keywords', '');
+
+        $data = \DB::table('places')
+            ->where('title','like','%'.$keywords.'%')
+            ->where('sid', session('shopkeeper')->id)
+            ->paginate($num);
+        foreach ($data as $key => $val) {
+            $arr1 = explode(',', $val->freeService);
+            $val->freeService = $arr1;
+            $arr2 = explode(',', $val->supportService);
+            $val->supportService = $arr2;
+            $arr3 = explode(',', $val->pic);
+            $val->pic = $arr3;
+        }
+        return view('home.shopercenter.places',['title'=>'场地列表','request'=>$request->all(),'data'=>$data]);
     }
 
     //加载添加场地页面
@@ -267,6 +287,7 @@ class ShopPlacesController extends Controller
             return back()->with(['info'=>'添加会场失败']);
         }
     }
+
 
     public function insertMeetAgain(Request $request)
     {

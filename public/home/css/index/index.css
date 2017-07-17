@@ -23,18 +23,9 @@ input{padding:2px;}
 .hr{width: 90%;border-top: 1px solid #ccc;float: left;margin: 0px 5%;}
 #search_d{height: 1px;overflow: hidden;}
 #search_d>div{width: 760px;border: 1px solid #ccc;border-radius: 5px;box-shadow: 2px 2px 2px #ccc;margin: 1px auto;padding: 30px 10px;}
-<<<<<<< HEAD
 #search_d table{width: 750px;}
 #search_d table tr{height: 50px;}
 #search_d table tr th{width: 125px;font-size: 18px;padding: 15px;}
 #search_d table li{float: left;margin-right: 20px;font-size: 18px;}
 #search_d table>tr>td{line-height: 50px;}
 #search_d table label{font-weight: normal;}
-=======
-table{width: 750px;}
-table tr{height: 50px;}
-table tr th{width: 125px;font-size: 18px;padding: 15px;}
-table li{float: left;margin-right: 20px;font-size: 18px;}
-table>tr>td{line-height: 50px;}
-table label{font-weight: normal;}
->>>>>>> b7d15bdc6452911dd83db624685c651d951a1f24
