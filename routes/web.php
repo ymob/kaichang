@@ -152,12 +152,9 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/order/{status}','Home\UserCenterController@order');
 
 
-    Route::get('/usercenter/detail', 'Home\UserCenterController@detail');
-    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
-    Route::post('/usercenter/updetail', 'Home\UserCenterController@updetail');
-    Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-    Route::get('/usercenter/orders', 'Home\UserCenterController@orders');
-
+    //个人中心购物车
+    Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+  
 });
 
 // 用户注册
@@ -185,13 +182,20 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::post('/shopcenter/uppassword', 'Home\ShopCenterController@uppassword');
     // 商户发布场地
     Route::get('/shopcenter/release','Home\ShopPlacesController@add');
+    //ajax城市联动
+    Route::get('shopcenter/city','Home\ShopPlacesController@city');
     Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
     Route::post('/shopcenter/insertMeetAgain','Home\ShopPlacesController@insertMeetAgain');
+    
     // 商户管理场地
     Route::get('/shopcenter/places', 'Home\ShopPlacesController@index');
-    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@index');
+    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@places');
+    Route::post('/shopcenter/places/detail', 'Home\ShopPlacesController@upplaces');
+    // 会场
+    Route::get('/shopcenter/meetplaces', 'Home\ShopPlacesController@meetplaces');
+    Route::get('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@meet_detail');
 
 });
 
