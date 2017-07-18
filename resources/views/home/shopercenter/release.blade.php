@@ -70,12 +70,13 @@
                            <select name="address1" class="s left select" >
                                <option value="">请选择</option>
                            </select>
-                           <select name="address2" class="s left s选择</option>
-                           </select>
-                          <select name="address3" claelect" >
-                               <option value="">请ss="s left select" >
+                           <select name="address2" class="s left select" >
                                <option value="">请选择</option>
                            </select>
+                           <select name="address3" class="s left select" >
+                               <option value="">请选择</option>
+                           </select>
+                          
 
                        </td>
                    </tr>
