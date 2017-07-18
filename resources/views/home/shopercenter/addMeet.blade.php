@@ -4,7 +4,7 @@
     <style>
         .top{width:100%;height:30px;background:#00c0ef;line-height:30px;font-size:16px;font-weight:bold;}
         form table{width:100%;}
-        form table tr td{padding:0px 10px;}
+        form table tr td{padding:6px 10px;}
         .tright{text-align:right;width:200px;}
         .ss{width:80px;height:30px;margin:0px 10px;}
         .s{width:130px;height:30px;margin:0px 10px;}

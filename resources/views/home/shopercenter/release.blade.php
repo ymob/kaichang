@@ -4,7 +4,7 @@
     <style>
         .top{width:100%;height:30px;background:#00c0ef;line-height:30px;font-size:16px;font-weight:bold;}
         form table{width:100%;}
-        form table tr td{padding:0px 10px;}
+        #form table tr td{padding:6px 10px;}
         .tright{text-align:right;width:200px;}
         .ss{width:80px;height:30px;margin:0px 10px;}
         .s{width:130px;height:30px;margin:0px 10px;}
@@ -33,9 +33,9 @@
                    {{ session('info') }}
                </div>
            @endif
-           <form action="/shopcenter/insert" method="POST" enctype="multipart/form-data">
+           <form id="form" action="/shopcenter/insert" method="POST" enctype="multipart/form-data">
                {{ csrf_field() }}
-               <table border="0">
+               <table border="1">
                    <tr>
                        <td class="tright">
                         * 场地类型:
