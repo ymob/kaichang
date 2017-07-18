@@ -11,7 +11,7 @@ use App\Model\Facilitie;
 
 class ShopPlacesController extends Controller
 {
-    //场地列表
+    // 场地列表
     public function index(Request $request)
     {
         $num = $request->input('num', 10);
@@ -31,6 +31,209 @@ class ShopPlacesController extends Controller
             $val->pic = $arr3;
         }
         return view('home.shopercenter.places',['title'=>'场地列表','request'=>$request->all(),'data'=>$data]);
+    }
+
+    // 场地详情
+    public function places(Request $request)
+    {
+        $id = $request->id;
+        $res = Place::where('id', $id)->where('sid', session('shopkeeper')->id)->first();
+        if(!$res)
+        {
+            return redirect('404');
+        }
+        $arr1 = explode(',', $res->freeService);
+        $res->freeService = $arr1;
+        $arr2 = explode(',', $res->supportService);
+        $res->supportService = $arr2;
+        $arr3 = explode(',', $res->pic);
+        $res->pic = $arr3;
+
+        return view('home.shopercenter.places_detail', ['title' => '场地详情页', 'data' => $res]);
+    }
+
+    // 场地详情修改
+    public function upplaces(Request $request)
+    {
+        $valid = [
+            'typeId' => 'required',
+            'title' => 'required',
+            'address3' => 'required',
+            'phone' => 'required',
+            'evidencePic' => 'image',
+            'price' => 'required'
+        ];
+        $validInfo = [
+            'typeId.required' => '未选择场地类型',
+            'title.required' => '场地标题不能为空',
+            'address3.required' => '地址不能为空',
+            'phone.required' => '联系电话不能为空',
+            'evidencePic.image' => '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。',
+            'price.required' => '场地起价不能为空'
+        ];
+        
+        if(isset($request->pic[0]))
+        {
+            $valid['pic.0'] = 'image';
+            $validInfo['pic.0.image'] = '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。';
+        }
+        if(isset($request->pic[1]))
+        {
+            $valid['pic.1'] = 'image';
+            $validInfo['pic.1.image'] = '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。';
+        }
+        if(isset($request->pic[2]))
+        {
+            $valid['pic.2'] = 'image';
+            $validInfo['pic.2.image'] = '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。';
+        }
+
+        $this->validate($request, $valid, $validInfo);
+        $data = $request->except('_token', 'id');
+        $id = $request->id;
+
+        $res = Facilitie::where('mid', $id)->get();
+        foreach ($res as $key => $val) {
+            if(!in_array($val['supportType'], $data['supportService']))
+            {
+                return back()->with(['info' => '本场地下存在该附属服务，不能取消该选项。']);
+            }
+        }
+
+        if($data['typeId'] != 1)
+        {
+            $data['hotelStar'] = '';
+        }
+        // dd($data);
+        if($request->pic)
+        {
+            foreach ($data['pic'] as $key => $val) {
+                if($request->file('pic.'.$key)->isValid())
+                {
+                    $ext=$request->file('pic.'.$key)->extension();
+
+                    do
+                    {
+                        $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                    }while(file_exists('./uploads/shoper/places/places/'.$filename));
+
+                    $request->file('pic.'.$key)->move('./uploads/shoper/places/places',$filename);
+
+                    $data['pic'][$key] = $filename;
+                }
+            }
+        }
+
+        $oldData = Place::where('id', $id)->first();
+        $oldPic = explode(',', $oldData->pic);
+        
+        if($request->file('pic'))   
+        {
+            foreach ($data['pic'] as $key => $val) {
+                if($key == 0)
+                {
+                    if(file_exists('./uploads/shoper/places/places/'.$oldPic[0]) && $oldPic[0] != 'default_place.jpg')
+                    {
+                        unlink('./uploads/shoper/places/places/'.$oldPic[0]);
+                    }
+                    $oldPic[0] = $val;
+                }
+                if($key == 1)
+                {
+                    if(file_exists('./uploads/shoper/places/places/'.$oldPic[1]) && $oldPic[1] != 'default_place.jpg')
+                    {
+                        unlink('./uploads/shoper/places/places/'.$oldPic[1]);
+                    }
+                    $oldPic[1] = $val;
+                }
+                if($key == 2)
+                {
+                    if(file_exists('./uploads/shoper/places/places/'.$oldPic[2]) && $oldPic[2] != 'default_place.jpg')
+                    {
+                        unlink('./uploads/shoper/places/places/'.$oldPic[2]);
+                    }
+                    $oldPic[2] = $val;
+                }
+            }
+            $data['pic'] = implode(',', $oldPic);
+        }
+
+        if($request->file('evidencePic'))
+        {
+            if($request->file('evidencePic')->isValid())
+            {
+                $ext=$request->file('evidencePic')->extension();
+
+                do
+                {
+                    $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                }while(file_exists('./uploads/shoper/places/evidence/'.$filename));
+
+                if(file_exists('./uploads/shoper/places/evidence/'.$oldData->evidencePic) && $oldData->evidencePic != 'default_place.jpg')
+                {
+                    unlink('./uploads/shoper/places/evidence/'.$oldData->evidencePic);
+                }
+
+                $request->file('evidencePic')->move('./uploads/shoper/places/evidence', $filename);
+
+                $data['evidencePic'] = $filename;
+            }
+        }
+        if($request->has('freeService'))
+        {
+            $data['freeService'] = implode(',',$data['freeService']);
+        }else{
+            $data['freeService'] = '';
+        }
+        if($request->has('supportService'))
+        {
+            $data['supportService'] = implode(',',$data['supportService']);
+        }else{
+            $data['supportService'] = '';
+        }
+        $data['address'] = $data['address1'].','.$data['address2'].','.$data['address3'];
+        unset($data['address1']);
+        unset($data['address2']);
+        unset($data['address3']);
+        // dd($data);
+        $data['updated_at'] = time();
+        $res = Place::where('id', $id)->update($data);
+        if($res)
+        {
+            return back()->with(['info' => '修改成功']);
+        }else
+        {
+            return back()->with(['info' => '修改失败']);
+        }
+    }
+
+    // 会场列表
+    public function meetplaces(Request $request)
+    {
+        $pid = $request->id;
+        $sid = session('shopkeeper')->id;
+        $res = Place::where([['id', $pid], ['sid', $sid]])->first();
+        if(!$res)
+        {
+            return redirect('404');
+        }
+        $data = Meetplace::where('pid', $pid)->get();
+
+        foreach ($data as $key => $val) {
+            $arr1 = explode(',', $val->freeService);
+            $val->freeService = $arr1;
+            $arr2 = explode(',', $val->supportService);
+            $val->supportService = $arr2;
+        }
+
+        return view('home.shopercenter.meetplaces', ['title' => '会场列表页', 'data' => $data]);
+    }
+
+    // 会场详情
+    public function meet_detail(Request $request)
+    {
+        $mid = $request->id;
+        dd($mid);
     }
 
     //加载添加场地页面

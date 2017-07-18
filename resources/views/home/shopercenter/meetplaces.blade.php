@@ -17,7 +17,8 @@
                             </div>
                         @endif
 
-                        <form action="/admin/user/index" method="get">
+                        {{--
+                            <form action="/admin/user/index" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -56,6 +57,7 @@
                                 </div>
                             </div>
                         </form>
+                        --}}
 
 
                         <table id="example2" class="table table-bordered table-hover">
@@ -63,93 +65,74 @@
                             <tr>
                                 <th>ID</th>
                                 <th>场地名称</th>
-                                <th>场地类型</th>
                                 <th>可提供免费服务</th>
                                 <th>可提供配套服务</th>
                                 <th>价格</th>
-                                <th width="45">上，下架</th>
-                                <th width="45">状态</th>
-                                <th width="45">操作</th>
+                                <th>状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             @foreach($data as $key => $val)
-                            <tr class="parent">
-                                <td class="ids">{{ $loop->index + 1  }}</td>
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $val->title }}</td>
                                 <td>
-                                	@if($val->typeId == 1)
-									酒店
-                                	@elseif($val->typeId == 2)
-									会议中心
-                                	@elseif($val->typeId == 3)
-                                	体育馆
-                                	@elseif($val->typeId == 4)
-                                	展览馆
-                                	@elseif($val->typeId == 5)
-                                	酒吧/餐厅/会所
-                                	@elseif($val->typeId == 6)
-                                	艺术中心/剧院
-                                	@else
-                                	咖啡厅/茶室
-                                	@endif
-                                </td>
-                                <td>
-    								@foreach($val->freeService as $f_k => $f_v)
-                                    	@if($f_v == 1)
-    									暖气
-                                    	@elseif($f_v == 2)
-    									地毯
-                                    	@elseif($f_v == 3)
-                                    	音响
-                                    	@elseif($f_v == 4)
-                                    	无线话筒
-                                    	@elseif($f_v == 5)
-                                    	固定投影
-                                    	@elseif($f_v == 6)
-                                    	固定幕布
-                                    	@elseif($f_v == 7)
-    									移动投影
-                                    	@elseif($f_v == 8)
-                                    	电视屏
-                                    	@elseif($f_v == 9)
-                                    	白板
-                                    	@elseif($f_v == 10)
-                                    	移动舞台
-                                    	@elseif($f_v == 11)
-                                    	茶/水
-                                    	@elseif($f_v == 12)
-    									纸笔
-                                    	@elseif($f_v == 13)
-                                    	桌卡
-                                    	@elseif($f_v == 14)
-                                    	指引牌
-                                    	@elseif($f_v == 15)
-                                    	签到台
-                                    	@elseif($f_v == 16)
-                                    	鲜花
-                                    	@elseif($f_v == 17)
-                                    	茶歇
-                                    	@elseif($f_v == 18)
-                                    	有线话筒
-                                    	@elseif($f_v == 19)
-                                    	台式话筒
-                                    	@elseif($f_v == 20)
-                                    	小蜜蜂
-                                    	@elseif($f_v == 21)
-                                    	移动幕布
-                                    	@elseif($f_v == 22)
-                                    	LED屏
-                                    	@elseif($f_v == 23)
-                                    	移动讲台
-                                    	@elseif($f_v == 24)
-                                    	宽带接口
-                                    	@elseif($f_v == 25)
-                                    	代客泊车
-                                    	@else
-    									停车场
-                                    	@endif
+                                    @foreach($val->freeService as $f_k => $f_v)
+                                        @if($f_v == 1)
+                                        暖气
+                                        @elseif($f_v == 2)
+                                        地毯
+                                        @elseif($f_v == 3)
+                                        音响
+                                        @elseif($f_v == 4)
+                                        无线话筒
+                                        @elseif($f_v == 5)
+                                        固定投影
+                                        @elseif($f_v == 6)
+                                        固定幕布
+                                        @elseif($f_v == 7)
+                                        移动投影
+                                        @elseif($f_v == 8)
+                                        电视屏
+                                        @elseif($f_v == 9)
+                                        白板
+                                        @elseif($f_v == 10)
+                                        移动舞台
+                                        @elseif($f_v == 11)
+                                        茶/水
+                                        @elseif($f_v == 12)
+                                        纸笔
+                                        @elseif($f_v == 13)
+                                        桌卡
+                                        @elseif($f_v == 14)
+                                        指引牌
+                                        @elseif($f_v == 15)
+                                        签到台
+                                        @elseif($f_v == 16)
+                                        鲜花
+                                        @elseif($f_v == 17)
+                                        茶歇
+                                        @elseif($f_v == 18)
+                                        有线话筒
+                                        @elseif($f_v == 19)
+                                        台式话筒
+                                        @elseif($f_v == 20)
+                                        小蜜蜂
+                                        @elseif($f_v == 21)
+                                        移动幕布
+                                        @elseif($f_v == 22)
+                                        LED屏
+                                        @elseif($f_v == 23)
+                                        移动讲台
+                                        @elseif($f_v == 24)
+                                        宽带接口
+                                        @elseif($f_v == 25)
+                                        代客泊车
+                                        @else
+                                        停车场
+                                        @endif
                                         ,
                                     @endforeach
                                 </td>
@@ -165,13 +148,8 @@
                                         ,
                                     @endforeach
                                 </td>
-                                <td>{{ $val->price }}</td>
                                 <td>
-                                    @if($val->updown == 1)
-                                    上架
-                                    @else
-                                    下架
-                                    @endif
+                                    {{ $val->price }}
                                 </td>
                                 <td>
                                     @if($val->status == 1)
@@ -181,7 +159,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('/shopcenter/places/detail?id='.$val->id) }}">详情</a> <br>
+                                    <a href="{{ url('/shopcenter/meetplaces/detail?id='.$val->id) }}">详情</a> <br>
                                     <a href="{{ url('/shopcenter/meetplaces?id='.$val->id) }}">会场</a>
                                 </td>
                             </tr>
@@ -189,7 +167,7 @@
                             </tbody>
                         </table>
 
-                        {{ $data->appends($request)->links() }}
+                        {{-- $data->appends($request)->links() --}}
                     </div>
                     <!-- /.box-body -->
                 </div>

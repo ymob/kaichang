@@ -191,7 +191,11 @@ Route::group(['middleware' => 'homeshoper'], function(){
     
     // 商户管理场地
     Route::get('/shopcenter/places', 'Home\ShopPlacesController@index');
-    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@index');
+    Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@places');
+    Route::post('/shopcenter/places/detail', 'Home\ShopPlacesController@upplaces');
+    // 会场
+    Route::get('/shopcenter/meetplaces', 'Home\ShopPlacesController@meetplaces');
+    Route::get('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@meet_detail');
 
 });
 
