@@ -34,9 +34,27 @@ class ShopPlacesController extends Controller
     }
 
     //加载添加场地页面
-    public function add()
-    {
+    public function add(Request $request)
+    {  
+        // dd($res);
         return view('home.shopercenter.release',['title'=>'商户发布场地']);
+    }
+
+    //ajax实现城市三级联动
+    public function city(Request $request)
+    {   
+        //获取提交的level和upid的值
+        $level = $request->input('level');
+        $upid = $request->input('upid');
+
+        //查询数据
+        $res=\DB::table('district')->where([
+            ['level',$level],
+            ['upid', $upid],
+        ])->get();
+
+        return response()->json($res);
+       
     }
 
     //执行添加场地
@@ -46,14 +64,14 @@ class ShopPlacesController extends Controller
         $validator = \Validator::make($request->all(), [
             'typeId' => 'required',
             'title' => 'required',
-            'address3' => 'required',
+            'address4' => 'required',
             'phone' => 'required',
             'evidencePic' => 'required|image',
             'price' => 'required'
         ],[
             'typeId.required' => '未选择场地类型',
             'title.required' => '场地标题不能为空',
-            'address3.required' => '地址不能为空',
+            'address4.required' => '地址不能为空',
             'phone.required' => '联系电话不能为空',
             'evidencePic.required' => '必须上传营业执照',
             'evidencePic.image' => '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。',
@@ -69,10 +87,26 @@ class ShopPlacesController extends Controller
         //处理要添加的数据
         $data = $request->except('_token');
         $data['sid'] = \Session('shopkeeper')->id;
-        $data['address'] = $data['address1'].','.$data['address2'].','.$data['address3'];
+        if($request->has('address1') && $request->has('address2') && $request->has('address3'))
+        {
+            $data['address'] = $data['address1'].','.$data['address2'].','.$data['address3'].','.$data['address4'];
+        }
+        if($request->has('address1') && $request->has('address2') && !$request->has('address3'))
+        {
+            $data['address'] = $data['address1'].','.$data['address2'].','.''.','.$data['address4'];
+        }
+        if($request->has('address1') && !$request->has('address2') && !$request->has('address3'))
+        {
+            $data['address'] = $data['address1'].','.''.','.''.','.$data['address4'];
+        }
+         if(!$request->has('address1') && !$request->has('address2') && !$request->has('address3'))
+        {
+            $data['address'] = ''.','.''.','.''.','.$data['address4'];
+        }
         unset($data['address1']);
         unset($data['address2']);
         unset($data['address3']);
+        unset($data['address4']);
         if($request->has('freeService'))
         {
             $data['freeService'] = implode(',',$data['freeService']);
