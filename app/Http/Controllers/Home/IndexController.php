@@ -27,7 +27,7 @@ class IndexController extends Controller
         foreach($data as $k=>$v)
         {
             // 地址
-            $data[$k]
+//            $data[$k]
 
             // 会场数
             $data[$k]->meetNum = \DB::table('meetplaces')->where('pid',$v->id)->count();
