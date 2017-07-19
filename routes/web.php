@@ -188,7 +188,7 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 商户发布场地
     Route::get('/shopcenter/release','Home\ShopPlacesController@add');
     //ajax城市联动
-    Route::get('shopcenter/city','Home\ShopPlacesController@city');
+    Route::get('/shopcenter/city','Home\ShopPlacesController@city');
     Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
@@ -201,6 +201,10 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 会场
     Route::get('/shopcenter/meetplaces', 'Home\ShopPlacesController@meetplaces');
     Route::get('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@meet_detail');
+    Route::post('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@up_meet');
+    Route::get('/shopcenter/meetplaces/delete', 'Home\ShopPlacesController@meet_delete');
+    // 配套服务
+    Route::post('/shopcenter/facilities/delete', 'Home\ShopPlacesController@fac_delete');
 
 });
 

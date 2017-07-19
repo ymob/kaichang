@@ -135,10 +135,13 @@
                            * 地址:
                        </td>
                        <td>
-                           <select name="address1" class="s left" >
+                           <select name="address1" class="s left select" >
                                <option value="">请选择</option>
                            </select>
-                           <select name="address2" class="s left" >
+                           <select name="address2" class="s left select" >
+                               <option value="">请选择</option>
+                           </select>
+                           <select name="address3" class="s left select" >
                                <option value="">请选择</option>
                            </select>
                        </td>
@@ -148,7 +151,7 @@
 
                        </td>
                        <td>
-                           <input type="text" name="address3" class="m left" placeholder="请 填 写 详 细 街 道 位 置">
+                           <input type="text" name="address4" value="{{ $data->address['3'] }}" class="m left" placeholder="请 填 写 详 细 街 道 位 置">
                        </td>
                    </tr>
                    <tr>
@@ -368,4 +371,66 @@
        </div>
     </div>
 
+@endsection
+
+@section('javascript')
+    <script type="text/javascript">
+
+        //默认获取省份信息
+        $.get('/shopcenter/city',{"level":1,"upid":0, "add" : {{ $data->address[0] }}},function(data){
+          // console.log(data);
+          var str='<option value="">请选择</option>';
+          $.each(data,function(i,n){
+            if(n.selected)
+            {
+                str+="<option value='"+n.id+"' selected>"+n.name+"</option>";
+            }else
+            {
+                str+="<option value='"+n.id+"'>"+n.name+"</option>";
+            }
+          });
+          $('.select').eq(0).html(str);
+          $('.select').eq(0).change();
+        },'json');
+
+        //为省份添加change事件,查询对应城市信息
+        $('.select').eq(0).on('change',function(){
+          var value=$(this).val();
+          $.get('/shopcenter/city',{"level":2,"upid":value, "add" : {{ $data->address[1] }}},function(data){
+            var str='<option value="">请选择</option>';
+            $.each(data,function(i,n){
+              if(n.selected)
+                {
+                    str+="<option value='"+n.id+"' selected>"+n.name+"</option>";
+                }else
+                {
+                    str+="<option value='"+n.id+"'>"+n.name+"</option>";
+                }
+            });
+            $('.select').eq(1).html(str);
+            $('.select').eq(1).change();
+          },'json');
+        });
+
+        //为城市添加chang事件,查询对应县区信息
+        $('.select').eq(1).on('change',function(){
+          var value=$(this).val();
+          $.get('/shopcenter/city',{"level":3,"upid":value,  "add" : {{ $data->address[2] }}},function(data){
+            var str='<option value="">请选择</option>';
+            $.each(data,function(i,n){
+              if(n.selected)
+                {
+                    str+="<option value='"+n.id+"' selected>"+n.name+"</option>";
+                }else
+                {
+                    str+="<option value='"+n.id+"'>"+n.name+"</option>";
+                }
+            });
+            $('.select').eq(2).html(str);
+            $('.select').eq(2).change();
+          },'json');
+        });
+
+
+    </script>
 @endsection
