@@ -99,7 +99,6 @@ Route::group(['middleware'=>'adminlogin'],function(){
     //加载定单管理页面
     Route::get('admin/order/index/{status}',"Admin\OrderController@index");
 
-
     //缓存
     Route::get('admin/cache/cache','Admin\CacheController@cache');
 
@@ -116,11 +115,17 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // ========= 前台 ==================================================
 
-//前台首页
+// 前台首页
 Route::get('/', 'Home\IndexController@index');
-Route::post('/indexSearch','Home\IndexController@indexSearch');
+Route::get('/indexSearch','Home\IndexController@indexSearch');
 
-//错误页面
+// 列表页场地搜索
+Route::get('/listSearch','Home\ListController@listSearch');
+
+// 场地搜索结果详情页
+Route::get('/detail/pid={pid}','Home\DetailsController@index');
+
+// 错误页面
 Route::get('/404', function(){
     return view('404');
 });
@@ -214,10 +219,3 @@ Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
 Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
 Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');
-
-
-//场地搜索结果列表
-Route::get('/list','Home\ListController@index');
-
-//场地搜索结果详情
-Route::get('/detail','Home\DetailsController@indexs');

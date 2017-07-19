@@ -10,17 +10,17 @@
             <ol class="breadcrumb container">
                 <li><a href="#">首页</a></li>
                 <li><a href="#">场地搜索</a></li>
-                <li class="active">北京四川五粮液龙爪树宾馆</li>
+                <li class="active">{{ $data->title  }}</li>
             </ol>
         </div>
         <div id="all_con" class="container">
             <div>
-                <h3>北京四川五粮液龙爪树酒店 <small> 北京是朝阳区小红门录龙爪树北里312号</small></h3>
+                <h3>{{ $data->title  }} <small> {{ $data->address }}</small></h3>
                 <p>
                     <span>场地类型：</span>
-                    <span>酒店会场 </span>&nbsp;&nbsp;&nbsp;
+                    <span>{{ $data->type }} </span>&nbsp;&nbsp;&nbsp;
                     <span>联系电话：</span>
-                    <span>13513513511</span>
+                    <span>{{ $data->phone }}</span>
                 </p>
             </div>
 
@@ -37,12 +37,12 @@
                 <div id="count" class="col-md-6">
                     <div class="row">
                         <div>
-                            <h1>500</h1>
+                            <h1>{{ $data->meetNum }}</h1>
                             <span>会场数量</span>
                         </div>
                         <div>
-                            <h1>500</h1>
-                            <span>会场数量</span>
+                            <h1>{{ $data->maxArea }}</h1>
+                            <span>最大会场面积</span>
                         </div>
                         <div>
                             <h1>500</h1>
@@ -51,16 +51,16 @@
                     </div>
                     <div class="row">
                         <div>
-                            <h1>500</h1>
-                            <span>会场数量</span>
+                            <h1><?php echo date('Y-m',$data->created_at) ?></h1>
+                            <span>开业时间</span>
                         </div>
                         <div>
-                            <h1>500</h1>
-                            <span>会场数量</span>
+                            <h1>{{ $data->maxPeople }}</h1>
+                            <span>最多容纳人数</span>
                         </div>
                         <div>
-                            <h1>500</h1>
-                            <span>会场数量</span>
+                            <h1><?php echo date('Y-m',$data->updated_at) ?></h1>
+                            <span>最近装修</span>
                         </div>
                     </div> 
                 </div>
@@ -77,23 +77,27 @@
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                                <img src="./home/images/tu1.png" alt="...">
+                                <img src="{{ url('uploads/shoper/places/places/') }}/{{ $data->pic[0] }}" alt="图片加载失败">
                                 <div class="carousel-caption">
-                                    场地1
+                                    场地外景图1
                                 </div>
                             </div>
-                            <div class="item">
-                                <img src="./home/images/tu1.png" alt="...">
-                                <div class="carousel-caption">
-                                    场地2
+                            @if(isset($data->pic[1]))
+                                <div class="item">
+                                    <img src="{{ url('uploads/shoper/places/places/') }}/{{ $data->pic[1] }}" alt="图片加载失败">
+                                    <div class="carousel-caption">
+                                        场地外景图2
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item">
-                                <img src="./home/images/tu1.png" alt="...">
-                                <div class="carousel-caption">
-                                    场地3
+                            @endif
+                            @if(isset($data->pic[2]))
+                                <div class="item">
+                                    <img src="{{ url('uploads/shoper/places/places/') }}/{{ $data->pic[2] }}" alt="图片加载失败">
+                                    <div class="carousel-caption">
+                                        场地外景图3
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
 
                         <!-- Controls -->
@@ -111,10 +115,11 @@
             <div style="clear: both;"></div>
             <div class="hr-dashed"></div>
             <!-- 场地详情 -->
+            @foreach($meetData as $k=>$v)
             <div class="detail">
                 <div class="detail_nav">
                     <span class="glyphicon glyphicon-triangle-right"></span>
-                    <b>大宴会厅</b>
+                    <b>{{ $v->title }}</b>
                     <p class="pull-right">
                         <span>4.8分</span>
                         <small>/ 5分</small>
@@ -123,276 +128,102 @@
                 <div style="clear: both;"></div>
                 <div class="detail_con">
                     <div class="col-xs-3">
-                        <img src="{{ asset('/home/images/tu21.png') }}">
+                        <img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{$v->pic}}">
                     </div>
                     <div class="col-xs-9">
                         <ol>
                             <li>
                                 <span>
                                     <span>会场面积：</span>
-                                    <span>1350平方米</span>
+                                    <span>{{ $v->area }}平方米</span>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <span>最多容纳人数：</span>
-                                    <span>1400 <a href="">（课桌式）</a> / </span>
-                                    <span>1000 <a href="">（宴会式）</a></span> 
+                                    <span>{{ $v->deskPeople }} <a href="">（课桌式）</a> / </span>
+                                    <span>{{ $v->dinnerPeople }} <a href="">（宴会式）</a></span>
                                 </span>
                                 <span class="pull-right">
                                     <span class="biaoqian">aa</span>
                                     <span class="biaoqian">aa</span>
-                                </span> 
+                                </span>
                             </li>
                             <li>
-                                <span>曾举办活动：</span>
-                                <a href="">互联网大会、</a>
-                                <a href="">互联网大会</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>会场配置：会议纸笔、免费茶水、免费WIFI</span>
+                                {{--<span>曾举办活动：</span>--}}
+                                {{--<a href="">互联网大会、</a>--}}
+                                {{--<a href="">互联网大会</a>--}}
+                                <span>可提供免费服务：{{ $v->free }}</span>
                                 <span class="pull-right">
                                     <span>总成交量：0 |</span>
                                     <span>评论：0</span>
-                                </span> 
+                                </span>
                             </li>
-                            <li>价格：<span class="s_price">￥30万/天</span></li>
+                            <li>价格：<span class="s_price">￥{{ $v->price }}元/天</span></li>
                             <li>
                                 <span>会议时长：</span>
-                                <select name="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                <select name="timeLong" style="height:26px;width:60px;">
+                                    <option value="1">1 天</option>
+                                    <option value="2">2 天</option>
+                                    <option value="3">3 天</option>
+                                    <option value="4">4 天</option>
+                                    <option value="5">5 天</option>
+                                    <option value="6">6 天</option>
+                                    <option value="7">7 天</option>
+                                    <option value="8">8 天</option>
+                                    <option value="9">9 天</option>
+                                    <option value="10">10 天</option>
+                                    <option value="11">11 天</option>
+                                    <option value="12">12 天</option>
+                                    <option value="13">13 天</option>
+                                    <option value="14">14 天</option>
+                                    <option value="15">14天以上</option>
                                 </select>
                                 ，共<span class="day">&nbsp;&nbsp;&nbsp;&nbsp;</span>天
                             </li>
                             <li>
-                                <span>会议日期：</span>
-                                <select name="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
+                                <span>会议开始日期：</span>
+                                <input type="date" name="startTime" style="height:26px;">
                             </li>
                         </ol>
                     </div>
+                    {{--配套服务--}}
                     <div class="col-xs-3">
                         <ol>
-                            <li><span>会议茶歇：</span></li>
-                            <li><span>会务客房：</span></li>
-                            <li><span>AV设备：</span></li>
+                            <span class="support"><br>可提供配套服务:</span>
+                            @foreach($facilities[$k] as $key=>$val)
+                            <li><span>{{ $val->support }}：</span></li>
+                            @endforeach
                         </ol>
                     </div>
                     <div class="col-xs-9">
                         <ol>
-                            <li>
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="" id="">
-                                    <option value=""> 类 型 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value=""> 价 格 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <span>
-                                    数量&nbsp;
-                                    <span class="jian">-</span>
-                                    <span class="num">1</span>
-                                    <span class="jia">+</span>
-                                    份
-                                </span>
-                                入/离时间
-                                <select name="" id="">
-                                    <option value=""> 请选择 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="" id="">
-                                    <option value=""> 类 型 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value=""> 价 格 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <span>
-                                    数量&nbsp;
-                                    <span class="jian">-</span>
-                                    <span class="num">1</span>
-                                    <span class="jia">+</span>
-                                    份
-                                </span>
-                                使用时间
-                                <select name="" id="">
-                                    <option value=""> 请选择 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <button class="btn btn-danger col-xs-offset-9">加入购物车</button>
-                            </li>
+
+                            @foreach($facilities[$k] as $key=>$val)
+                                <li><span>类型 : {{ $val->type }}</span></li>
+                            @endforeach
                         </ol>
+                        <ol>
+                            @foreach($facilities[$k] as $key=>$val)
+                                <li><span>价格 : {{ $val->price }}</span></li>
+                            @endforeach
+                        </ol>
+                        <ol>
+                            @foreach($facilities[$k] as $key=>$val)
+                                <li style="padding-top:8px;">
+                                    <input type="checkbox" name="sel[]" class="checkbox">
+                                </li>
+                            @endforeach
+                        </ol>
+                        <div>
+                            <li>
+                                <button class="btn btn-danger col-xs-offset-10">加入购物车</button>
+                            </li>
+                        </div>
                     </div>
                 </div>
                 <div style="clear: both;"></div>
                 <div class="hr-dashed"></div>
             </div>
-            <div class="detail">
-                <div class="detail_nav">
-                    <span class="glyphicon glyphicon-triangle-right"></span>
-                    <b>大宴会厅</b>
-                    <p class="pull-right">
-                        <span>4.8分</span>
-                        <small>/ 5分</small>
-                    </p>
-                </div>
-                <div style="clear: both;"></div>
-                <div class="detail_con">
-                    <div class="col-xs-3">
-                        <img src="{{ asset('/home/images/tu21.png') }}">
-                    </div>
-                    <div class="col-xs-9">
-                        <ol>
-                            <li>
-                                <span>
-                                    <span>会场面积：</span>
-                                    <span>1350平方米</span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>最多容纳人数：</span>
-                                    <span>1400 <a href="">（课桌式）</a> / </span>
-                                    <span>1000 <a href="">（宴会式）</a></span> 
-                                </span>
-                                <span class="pull-right">
-                                    <span class="biaoqian">aa</span>
-                                    <span class="biaoqian">aa</span>
-                                </span> 
-                            </li>
-                            <li>
-                                <span>曾举办活动：</span>
-                                <a href="">互联网大会、</a>
-                                <a href="">互联网大会</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>会场配置：会议纸笔、免费茶水、免费WIFI</span>
-                                <span class="pull-right">
-                                    <span>总成交量：0 |</span>
-                                    <span>评论：0</span>
-                                </span> 
-                            </li>
-                            <li>价格：<span class="s_price">￥30万/天</span></li>
-                            <li>
-                                <span>会议时长：</span>
-                                <select name="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                ，共<span class="day">&nbsp;&nbsp;&nbsp;&nbsp;</span>天
-                            </li>
-                            <li>
-                                <span>会议日期：</span>
-                                <select name="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="col-xs-3">
-                        <ol>
-                            <li><span>会议茶歇：</span></li>
-                            <li><span>会务客房：</span></li>
-                            <li><span>AV设备：</span></li>
-                        </ol>
-                    </div>
-                    <div class="col-xs-9">
-                        <ol>
-                            <li>
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="" id="">
-                                    <option value=""> 类 型 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value=""> 价 格 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <span>
-                                    数量&nbsp;
-                                    <span class="jian">-</span>
-                                    <span class="num">1</span>
-                                    <span class="jia">+</span>
-                                    份
-                                </span>
-                                入/离时间
-                                <select name="" id="">
-                                    <option value=""> 请选择 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="" id="">
-                                    <option value=""> 类 型 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <select name="" id="">
-                                    <option value=""> 价 格 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                                <span>
-                                    数量&nbsp;
-                                    <span class="jian">-</span>
-                                    <span class="num">1</span>
-                                    <span class="jia">+</span>
-                                    份
-                                </span>
-                                使用时间
-                                <select name="" id="">
-                                    <option value=""> 请选择 </option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                </select>
-                            </li>
-                            <li>
-                                <button class="btn btn-danger col-xs-offset-9">加入购物车</button>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                    <div style="clear: both;"></div>
-                    <div class="hr-dashed"></div>
-            </div>
+            @endforeach
+
             <!-- end 场地详情 -->
 
             <!-- 评论 -->
@@ -498,6 +329,11 @@
 
 @section('js')
     <script>
+
+        $(".detail_con").eq(0).css('display','block');
+        $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-bottom');
+        $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-right');
+
         $('.detail_nav').on('click', function(){
             var status =  $(this).next().next().css('display');
             var ico = $(this).find('span').eq(0);
@@ -521,6 +357,12 @@
         $('.jia').on('click', function(){
             var num = Number($(this).prev().html());
             $(this).prev().html(num + 1);
+        });
+
+        // 选择会议时长
+        $("select[name='timeLong']").on('change',function(){
+            var day = '&nbsp;'+$(this).val()+'&nbsp;';
+            $(".day").html(day);
         });
     </script>
 @endsection

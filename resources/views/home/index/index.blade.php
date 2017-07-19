@@ -12,8 +12,7 @@
             </div>
             <div id="search_e">
 
-                <form action="/indexSearch" method="post" >
-                    {{ csrf_field() }}
+                <form action="/indexSearch" method="get" >
                     <ul>
                         <li class="city">
                             <a href="#">
