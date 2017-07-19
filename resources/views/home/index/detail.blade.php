@@ -187,7 +187,7 @@
                     {{--配套服务--}}
                     <div class="col-xs-3">
                         <ol>
-                            <span class="support"><br>可提供配套服务:</span>
+                            <span class="support">可提供配套服务:</span>
                             @foreach($facilities[$k] as $key=>$val)
                             <li><span>{{ $val->support }}：</span></li>
                             @endforeach

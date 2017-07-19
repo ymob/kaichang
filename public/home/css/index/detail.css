@@ -35,7 +35,7 @@ h3+p { font-size: 16px; }
 .detail_con div:nth-child(4) li .jian,.jia,.num { border: 1px solid #bbb; margin-left: -5px; }
 .detail_con div:nth-child(4) li .jian,.jia { padding: 0px 15px; background: #cecece }
 .detail_con div:nth-child(4) li .num { padding: 0px 15px; }
-.detail_con .support{float:left;color:#0E6EB8;font-weight:bold;}
+.detail_con .support{float:left;color:#0E6EB8;font-weight:bold;margin-top:10px;}
 #comment .comment_nav { height: 35px; border-top: 1px solid #ccc; background: #F5F5F5 }
 #comment .comment_nav>b { font-size: 18px; line-height: 35px; }
 #comment .comment_nav>span { font-size: 15px; font-weight: bold; line-height: 35px; }
