@@ -159,8 +159,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('/shopcenter/meetplaces/detail?id='.$val->id) }}">详情</a> <br>
-                                    <a href="{{ url('/shopcenter/meetplaces?id='.$val->id) }}">会场</a>
+                                    <a href="{{ url('/shopcenter/meetplaces/detail?id='.$val->id.'&pid='.$pid) }}">详情</a> <br>
+                                    <a href="{{ url('/shopcenter/meetplaces/delete?id='.$val->id) }}" onClick="javascript:return del();">删除</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -175,4 +175,17 @@
             </div>
             <!-- /.col -->
         </div>
+@endsection
+
+@section('javascript')
+    <script>
+        function del() {
+            var msg = "您真的确定要删除吗？\n\n请确认！";
+            if (confirm(msg)==true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
 @endsection

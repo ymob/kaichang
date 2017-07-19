@@ -48,7 +48,8 @@ class ShopPlacesController extends Controller
         $res->supportService = $arr2;
         $arr3 = explode(',', $res->pic);
         $res->pic = $arr3;
-
+        $arr4 = explode(',', $res->address);
+        $res->address = $arr4;
         return view('home.shopercenter.places_detail', ['title' => '场地详情页', 'data' => $res]);
     }
 
@@ -102,7 +103,7 @@ class ShopPlacesController extends Controller
 
         if($data['typeId'] != 1)
         {
-            $data['hotelStar'] = '';
+            $data['hotelStar'] = null;
         }
         // dd($data);
         if($request->pic)
@@ -191,10 +192,11 @@ class ShopPlacesController extends Controller
         }else{
             $data['supportService'] = '';
         }
-        $data['address'] = $data['address1'].','.$data['address2'].','.$data['address3'];
+        $data['address'] = $data['address1'].','.$data['address2'].','.$data['address3'].','.$data['address4'];
         unset($data['address1']);
         unset($data['address2']);
         unset($data['address3']);
+        unset($data['address4']);
         // dd($data);
         $data['updated_at'] = time();
         $res = Place::where('id', $id)->update($data);
@@ -226,14 +228,236 @@ class ShopPlacesController extends Controller
             $val->supportService = $arr2;
         }
 
-        return view('home.shopercenter.meetplaces', ['title' => '会场列表页', 'data' => $data]);
+        return view('home.shopercenter.meetplaces', ['title' => '会场列表页', 'data' => $data, 'pid' => $pid]);
     }
 
     // 会场详情
     public function meet_detail(Request $request)
     {
         $mid = $request->id;
-        dd($mid);
+        $pid = $request->pid;
+        $res1 = Place::where([
+            ['id', $pid],
+            ['sid', session('shopkeeper')->id]
+            ])->first();
+        $res2 = Meetplace::where([
+            ['id', $mid],
+            ['pid', $pid]
+            ])->first();
+
+        if(!$res1 || !$res2)
+        {
+            return redirect('404');
+        }
+
+        $arr1 = explode(',', $res2->freeService);
+
+        $arr = [];
+
+        $freeValues = array('空','暖气','地毯','音响','无线话筒','固定投影','固定幕布','移动投影','电视屏','白板','移动舞台','茶/水','纸笔','桌卡','指引牌','签到台','鲜花','茶歇','有线话筒','台式话筒','小蜜蜂','移动幕布','LED屏','移动讲台','宽带接口','代客泊车','停车场');
+        $free = explode(',', $res1->freeService);
+        if(is_array($free) && $free[0] != '')
+        {
+            foreach($free as $v)
+            {
+                if(in_array($v, $arr1))
+                {
+                    $arr['free'][$v] = [$freeValues[$v]];
+                }else
+                {
+                    $arr['free'][$v] = $freeValues[$v];
+                }
+
+            }
+        }else
+        {
+            $arr['free'] = null;
+        }
+        $supportValues = array('空','客房','茶歇','AV设备');
+        $support = [1, 2, 3];
+        foreach($support as $v)
+        {
+            $arr['support'][$v] = $supportValues[$v];
+        }
+
+
+        $res3 = Facilitie::where('mid', $mid)->get();
+
+        // dd($res3);
+        return view('home.shopercenter.meet_detail', ['title' => '会场详情页', 'arr' => $arr, 'mid' => $mid, 'meetplace' => $res2, 'fac' => $res3]);
+    }
+
+    // 执行修改会场和附属服务
+    public function up_meet(Request $request)
+    {
+        $valid = [
+            'title' => 'required',
+            'price' => 'required'
+        ];
+        $validInfo = [
+            'title.required' => '会场标题不能为空',
+            'price.required' => '会场价格不能为空'
+        ];
+        if(isset($request->pic))
+        {
+            $valid['pic'] = 'image';
+            $validInfo['pic.image'] = '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。';
+        }
+        $this->validate($request, $valid, $validInfo);
+
+        $data = $request->except('_token', 'pid');
+        $id = $request->mid;
+        // dd($data);
+        $meet = [];
+        $meet['title'] = $data['title'];
+        $meet['area'] = $data['area'];
+        $meet['deskPeople'] = $data['deskPeople'];
+        $meet['dinnerPeople'] = $data['dinnerPeople'];
+        $meet['price'] = $data['price'];
+        if($request->file('pic'))
+        {
+            if($request->file('pic')->isValid())
+            {
+                $oldPic = Meetplace::where('id', $id)->first()->pic;
+                $ext=$request->file('pic')->extension();
+                do
+                {
+                    $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                }while(file_exists('./uploads/shoper/places/meetplaces/'.$filename));
+                $request->file('pic')->move('./uploads/shoper/places/meetplaces',$filename);
+                if(file_exists('./uploads/shoper/places/meetplaces/'.$oldPic) && $oldPic != 'default.jpg')
+                {
+                    unlink('./uploads/shoper/places/meetplaces/'.$oldPic);
+                }
+                $meet['pic'] = $filename;
+            }
+        }
+        $meet['updated_at'] = time();
+        if(array_key_exists('freeService',$data))
+        {
+            $meet['freeService'] = implode(',',$data['freeService']);
+        }
+        $meet['supportService'] = '1,2,3';
+
+
+
+        $res = Meetplace::where('id', $id)->update($meet);
+
+        if($res)
+        {
+            if($data['supportService'])
+            {
+                $str = trim($data['supportService'], ',');
+
+                $arr = explode(',', $str);
+                
+                for ($i=0; $i < 50; $i++) { 
+                    $key = 'type' . $i;
+                    if (array_key_exists($key, $data)) {
+
+                        // dd($data);
+
+                        $facility = [];
+                        $price = 'price' . $i;
+                        $supportType = 'supportType' . $i;
+                        $pic = 'pic' . $i;
+
+                        $facility['mid'] = $id;
+                        $facility['supportType'] = $data[$supportType];
+                        $facility['type'] = $data[$key];
+                        $facility['price'] = $data[$price];
+                        $facility['created_at'] = time();
+                        $facility['updated_at'] = time();
+                        if(array_key_exists($pic,$data))
+                        {
+                            $ext = $request->file($pic)->extension();
+                            do {
+                                $filename = time() . mt_rand(10000000, 99999999) . '.' . $ext;
+                            } while (file_exists('./uploads/shoper/places/facilities/' . $filename));
+
+                            $request->file($pic)->move('./uploads/shoper/places/facilities', $filename);
+
+                            $facility['pic'] = $filename;
+                        }
+
+                        $res = \DB::table('facilities')->insert($facility);
+                        //var_dump($res);
+                        if(!$res)
+                        {
+                            return back()->with(['info' => '添加会场失败']);
+                        }
+                    }
+                }
+            }
+            return back()->with(['info' => '修改成功']);
+        }else
+        {
+            return back()->with(['info' => '修改失败']);
+        }
+
+    }
+
+    // 删除附属服务
+    public function fac_delete(Request $request)
+    {
+        $id = $request->id;
+        $data = Facilitie::join('meetplaces', 'meetplaces.id', 'facilities.mid')
+            ->join('places', 'places.id', 'meetplaces.pid')
+            ->select('facilities.*', 'meetplaces.pid', 'places.sid')
+            ->where('facilities.id', $id)
+            ->first();
+        if(!$data)
+        {
+            return redirect('404');
+        }
+        if(file_exists('./uploads/shoper/places/facilities/'.$data['pic']) && $data['pic'] != 'default.jpg')
+        {
+            // dd(2);
+            unlink('./uploads/shoper/places/facilities/'.$data['pic']);
+        }
+        $res = Facilitie::where('id', $id)->delete();
+        if($res)
+        {
+            return response()->json(1);
+        }else
+        {
+            return response()->json(0);
+        }
+
+    }
+
+    // 删除会场
+    public function meet_delete(Request $request)
+    {
+        $mid = $request->id;
+        $sid = session('shopkeeper')->id;
+        $res = Meetplace::join('places', 'places.id', 'meetplaces.pid')
+            ->where('meetplaces.id', $mid)
+            ->select('meetplaces.id', 'places.sid')
+            ->get();
+        if($res[0]['sid'] != $sid)
+        {
+            return redirect('404');
+        }
+
+        $m_res = Meetplace::where('id', $mid)->delete();
+
+        if($m_res)
+        {
+            $f_res = Facilitie::where('mid', $mid)->delete();
+            // dd($f_res);
+            if($f_res)
+            {
+                return back()->with(['info' => '删除成功']);
+            }else
+            {
+                return back()->with(['info' => '数据异常']);
+            }
+        }else
+        {
+            return back()->with(['info' => '删除失败']);
+        }
+
     }
 
     //加载添加场地页面
@@ -249,13 +473,18 @@ class ShopPlacesController extends Controller
         //获取提交的level和upid的值
         $level = $request->input('level');
         $upid = $request->input('upid');
-
+        $add = $request->add;
         //查询数据
         $res=\DB::table('district')->where([
             ['level',$level],
             ['upid', $upid],
         ])->get();
-
+        foreach ($res as $key => $val) {
+            if($val->id == $add)
+            {
+                $val->selected = 1;
+            }
+        }
         return response()->json($res);
        
     }
@@ -350,19 +579,20 @@ class ShopPlacesController extends Controller
 
             $data['evidencePic'] = $filename;
         }
-        if($request->file('pic')->isValid())
+        if($request->file('pic'))
         {
-
-            $ext=$request->file('pic')->extension();
-
-            do
+            if($request->file('pic')->isValid())
             {
-                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
-            }while(file_exists('./uploads/shoper/places/places'.$filename));
+                $ext=$request->file('pic')->extension();
+                do
+                {
+                    $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                }while(file_exists('./uploads/shoper/places/places'.$filename));
 
-            $request->file('pic')->move('./uploads/shoper/places/places',$filename);
+                $request->file('pic')->move('./uploads/shoper/places/places',$filename);
 
-            $data['pic'] = $filename;
+                $data['pic'] = $filename;
+            }
         }
 
         //添加数据到数据库表 places ,返回ID
@@ -418,6 +648,7 @@ class ShopPlacesController extends Controller
         return view('home.shopercenter.addMeet',['title'=>'添加会场', 'pid'=>$pid ,'arr'=>$arr]);
     }
 
+    // 添加会场
     public function insertMeet(Request $request)
     {
         //表单验证
@@ -458,19 +689,22 @@ class ShopPlacesController extends Controller
         }else{
             $meet['supportService'] = '';
         }
-        if($request->file('pic')->isValid())
+        if($request->file('pic'))
         {
-
-            $ext=$request->file('pic')->extension();
-
-            do
+            if($request->file('pic')->isValid())
             {
-                $filename = time().mt_rand(10000000,99999999).'.'.$ext;
-            }while(file_exists('./uploads/shoper/places/meetplaces'.$filename));
 
-            $request->file('pic')->move('./uploads/shoper/places/meetplaces',$filename);
+                $ext=$request->file('pic')->extension();
 
-            $meet['pic'] = $filename;
+                do
+                {
+                    $filename = time().mt_rand(10000000,99999999).'.'.$ext;
+                }while(file_exists('./uploads/shoper/places/meetplaces'.$filename));
+
+                $request->file('pic')->move('./uploads/shoper/places/meetplaces',$filename);
+
+                $meet['pic'] = $filename;
+            }
         }
         $time = time();
         $meet['created_at'] = $time;
@@ -525,7 +759,7 @@ class ShopPlacesController extends Controller
         }
     }
 
-
+    // 添加会场
     public function insertMeetAgain(Request $request)
     {
         //表单验证
@@ -574,7 +808,7 @@ class ShopPlacesController extends Controller
             do
             {
                 $filename = time().mt_rand(10000000,99999999).'.'.$ext;
-            }while(file_exists('./uploads/shoper/places/meetplaces'.$filename));
+            }while(file_exists('./uploads/shoper/places/meetplaces/'.$filename));
 
             $request->file('pic')->move('./uploads/shoper/places/meetplaces',$filename);
 
@@ -610,7 +844,7 @@ class ShopPlacesController extends Controller
                         $ext = $request->file($pic)->extension();
                         do {
                             $filename = time() . mt_rand(10000000, 99999999) . '.' . $ext;
-                        } while (file_exists('./uploads/shoper/places/facilities' . $filename));
+                        } while (file_exists('./uploads/shoper/places/facilities/' . $filename));
 
                         $request->file($pic)->move('./uploads/shoper/places/facilities', $filename);
 
