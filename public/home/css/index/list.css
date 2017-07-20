@@ -5,14 +5,14 @@ border{border:1px solid red;}
 .title{line-height: 34px;font-size: 16px;font-weight:bold;}
 
 /*列表页再搜索*/
-table{width: 750px;}
+table{width: 100%;}
 table tr{height: 50px;}
 table tr th{width: 125px;font-size: 18px;padding: 15px 15px 15px 0px;}
 table li{float: left;margin-right: 20px;font-size: 18px;}
 table>tr>td{line-height: 50px;}
 table label{font-weight: normal;}
 
-#rightbox1{width: 450px;height: 224px;float: right;}
+#rightbox1{width: 100%;height: 224px;float: right;}
 #btn-rsea{height: 40px;width: 240px;margin: 182px;}
 .s_selected{color: #2D7FBE}
 .s_selected ul li{box-shadow: 0 0 12px 1px #ccc;padding: 2px 4px;}
@@ -33,6 +33,7 @@ table label{font-weight: normal;}
 .s_main li:nth-child(3) span {display: block;height: 2px;width: 86%;background-color: #c3c3c3;margin:6px 0 6px 86px}
 .s_main li:nth-child(8) {margin-top: 16px;}
 .s_main li:nth-child(8) a {border: 1px solid #2D7FBE;padding: 2px 4px ;margin-right: 6px;font-weight: 600}
+.s_main li:nth-child(2) a {border: 1px solid orangered;padding: 2px 4px ;margin-right: 6px;font-weight: 600}
 .s_main_ri{position: absolute;right: 0}
 .s_main .s_grade{transform: translate(-18px,-191px);font-weight: 600;font-size: 20px!important;}
 .s_main .s_price{font-size: 22px!important;color: red;transform: translate(-18px,-131px);font-weight:600!important}
@@ -53,10 +54,11 @@ table label{font-weight: normal;}
 .seek_paging nav ul li ul li a {border-radius: 4px; }
 
 /*广告推广*/
-.a_generalize ul{box-shadow: 0 0 10px 0 #999 ;border-radius: 5px;padding: 15px 0 ;}
-.a_generalize ul>li{margin: 0 15px;}
-.a_generalize ul>li ol{box-shadow: 1px 0 8px 0 #c3c3c3;box-shadow: -1px 0 8px #c3c3c3;padding-bottom: 10px;}
-
-.a_generalize ul>li>ol>li{text-align: center;font-size: 10px;margin: 8px 0 }
-.a_generalize ul>li>ol>li:nth-child(2){font-size: 18px; font-weight: 600}
-.a_generalize ul>li>ol>li:nth-child(1) img{width: 268px;}
+.a_generalize{box-shadow: 0 0 10px 0 #999 ;border-radius: 5px;padding: 15px 0 ;}
+#commend { padding: 0px 15px; }
+#commend .col-md-6 { padding: 0px 0px; }
+#commend .col-xs-6 { padding: 15px; }
+#commend .col-xs-6 img { width: 100%; }
+#commend .col-xs-6 ul { margin-top: -18px; box-shadow: 1px 0 8px 0 #c3c3c3; box-shadow: -1px 0 8px #c3c3c3; padding: 10px 0px; }
+#commend h3 { color: #000; text-align: center; }
+#commend p { font-size: 12px; text-align: center; }

@@ -170,6 +170,7 @@ class CreateAllTable extends Migration
             $table->integer('uid');
             $table->integer('gid');
             $table->integer('created_at');
+            $table->integer('sid');
         });
 
         //收藏夹表

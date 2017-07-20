@@ -1,5 +1,6 @@
 .border-ccc{border:1px solid #999;}
 .border-blue{border:1px solid #0E6EB8;}
+.border{border:1px solid red;}
 .fixedWidth{width:111px;}
 *{margin: 0;padding: 0;list-style: none;}
 a{color: black;} a:hover,a:link,a:visited,a:active{text-decoration: none;color: black;}

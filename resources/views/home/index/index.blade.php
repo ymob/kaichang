@@ -13,6 +13,7 @@
             <div id="search_e">
 
                 <form action="/indexSearch" method="post" >
+                    {{ csrf_field() }}
                     <ul>
                         <li class="city">
                             <a href="#">
@@ -41,7 +42,7 @@
                                     <li><a href="">上海</a></li>
                                     <li><a href="">杭州</a></li>
                                     <li><a href="">南京</a></li>
-                                    <li><a href="">大连</a></li>
+               
                                     <li><a href="">苏州</a></li>
                                     <li><a href="">无锡</a></li>
                                     <li><a href="">济南</a></li>
@@ -65,8 +66,8 @@
                                     <li><a href="">淄博</a></li>
                                     <li><a href="">临沂</a></li>
                                     <li><a href="">马鞍山</a></li>
-                                    <li><a href="">合州</a></li>
                                     <li><a href="">台州</a></li>
+                                    <li><a href="">泰州</a></li>
                                     <li><a href="">济宁</a></li>
                                     <li><a href="">泰安</a></li>
                                 </ul>
@@ -104,15 +105,19 @@
                             </div>
                         </li>
                         <li>
-                            <input type="text" name="keywords" size="49" class="form-my border-blue" placeholder="  场 地 或 地 标 关 键 词">
+                            <input type="text" name="keywords" size="49" class="form-my border-blue" placeholder="  场 地 或 地 标 关 键 词" value="">
                         </li>
                         <li>
                             <select name="number" class="form-my border-blue fixedWidth">
                                 <option value="0">人数不限</option>
-                                <option value="1">50-100</option>
-                                <option value="2">100-200</option>
-                                <option value="3">200-300</option>
-                                <option value="4">300-400</option>
+                                <option value="1">10-30</option>
+                                <option value="2">30-60</option>
+                                <option value="3">60-100</option>
+                                <option value="4">100-200</option>
+                                <option value="5">200-300</option>
+                                <option value="6">300-500</option>
+                                <option value="7">500-1000</option>
+                                <option value="8">1000+</option>
                             </select>
                         </li>
                         <li>
@@ -126,7 +131,8 @@
             </div>
             <div id="search_d">
                 <div class="">
-                    <form action="">
+                    <form action="/indexSearch" method="post">
+                        {{ csrf_field() }}
                         <table border="0">
                             <tr>
                                 <th>会议规模：</th>
@@ -159,7 +165,7 @@
                                                     <li><a href="">上海</a></li>
                                                     <li><a href="">杭州</a></li>
                                                     <li><a href="">南京</a></li>
-                                                    <li><a href="">大连</a></li>
+                                 
                                                     <li><a href="">苏州</a></li>
                                                     <li><a href="">无锡</a></li>
                                                     <li><a href="">济南</a></li>
@@ -183,8 +189,8 @@
                                                     <li><a href="">淄博</a></li>
                                                     <li><a href="">临沂</a></li>
                                                     <li><a href="">马鞍山</a></li>
-                                                    <li><a href="">合州</a></li>
                                                     <li><a href="">台州</a></li>
+                                                    <li><a href="">泰州</a></li>
                                                     <li><a href="">济宁</a></li>
                                                     <li><a href="">泰安</a></li>
                                                 </ul>
@@ -224,19 +230,32 @@
                                         <li>
                                             <select name="number" class="form-my">
                                                 <option value="0">人数不限</option>
-                                                <option value="1">50-100</option>
-                                                <option value="2">100-200</option>
-                                                <option value="3">200-300</option>
-                                                <option value="4">300-400</option>
+                                                <option value="1">10-30</option>
+                                                <option value="2">30-60</option>
+                                                <option value="3">60-100</option>
+                                                <option value="4">100-200</option>
+                                                <option value="5">200-300</option>
+                                                <option value="6">300-500</option>
+                                                <option value="7">500-1000</option>
+                                                <option value="8">1000+</option>
                                             </select>
                                         </li>
                                         <li>
                                             <select name="price" class="form-my">
                                                 <option value="0">&nbsp;&nbsp; 预算</option>
-                                                <option value="1">50-100</option>
-                                                <option value="2">100-200</option>
-                                                <option value="3">200-300</option>
-                                                <option value="4">300-400</option>
+                                                <option value="1">3000以下</option>
+                                                <option value="2">3-5千</option>
+                                                <option value="3">5-8千</option>
+                                                <option value="4">8千-1.2万</option>
+                                                <option value="5">1.2-1.5万</option>
+                                                <option value="6">1.5-2万</option>
+                                                <option value="7">2-3万</option>
+                                                <option value="8">3-5万</option>
+                                                <option value="9">5-8万</option>
+                                                <option value="10">8-12万</option>
+                                                <option value="11">12-20万</option>
+                                                <option value="12">20-30万</option>
+                                                <option value="13">30万以上</option>
                                             </select>
                                         </li>
                                     </ul>
@@ -246,13 +265,13 @@
                                 <th>场地类型：</th>
                                 <td>
                                     <ul>
-                                        <li><label><input type="checkbox" id="hotel"> 酒店</label></li>
-                                        <li><label><input type="checkbox" > 会议中心</label></li>
-                                        <li><label><input type="checkbox" > 体育馆</label></li>
-                                        <li><label><input type="checkbox" > 展览馆</label></li>
-                                        <li><label><input type="checkbox" > 酒吧/餐厅/会所</label></li>
-                                        <li><label><input type="checkbox" > 艺术中心/剧院</label></li>
-                                        <li><label><input type="checkbox" > 咖啡厅/茶室</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" id="hotel" value="1"> 酒店</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="2"> 会议中心</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="3"> 体育馆</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="4"> 展览馆</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="5"> 酒吧/餐厅/会所</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="6"> 艺术中心/剧院</label></li>
+                                        <li><label><input type="checkbox" name="typeId[]" value="7"> 咖啡厅/茶室</label></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -261,7 +280,7 @@
                                 <td>
                                     <ul>
                                         <li>
-                                            <select name="number" class="form-my">
+                                            <select name="timeLong" class="form-my">
                                                 <option value="0">会议时长</option>
                                                 <option value="1">50-100</option>
                                                 <option value="2">100-200</option>
@@ -305,7 +324,7 @@
                                                         {{--}--}}
                                                     {{--});--}}
                                                 {{--</script>--}}
-                                                <input type="date">
+                                                <input type="date" name="startTime" value="">
 
                                                 {{--<input type="date" name="startime" class="form-my">--}}
 
@@ -317,22 +336,22 @@
                             <tr id="star">
                                 
                             </tr>
-                            <tr id="star_model" class="hidden">
+                            <tr id="star_model" class="hidden" >
                                 <th>酒店星级：</th>
                                 <td>
                                     <ul>
-                                        <li><label><input type="checkbox" > 三星以下</label></li>
-                                        <li><label><input type="checkbox" > 三星级</label></li>
-                                        <li><label><input type="checkbox" > 四星级</label></li>
-                                        <li><label><input type="checkbox" > 五星级</label></li>
-                                        <li><label><input type="checkbox" > 六星级</label></li>
-                                        <li><label><input type="checkbox" > 七星级</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="2"> 三星以下</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="3"> 三星级</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="4"> 四星级</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="5"> 五星级</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="6"> 六星级</label></li>
+                                        <li><label><input type="checkbox" name="hotelStar[]" value="7"> 七星级</label></li>
                                     </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-primary" type="submit">
                                         <span class="glyphicon glyphicon-search"></span>
                                         <span>搜 索</span>
                                     </button>

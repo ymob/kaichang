@@ -13,123 +13,129 @@
         {{--多条件搜索--}}
         <div class="margin-top">
             <form action="">
-                <table border="0" class="left">
-                    <tr>
-                        <th>会议规模：</th>
-                        <td>
-                            <ul>
-                                <li class="city">
-                                    <a href="#">
-                                        <div class="form-my border-ccc fixedWidth">
-                                            <span index="city"> 地区不限 </span>
-                                            <input type="hidden" name="city">
-                                            <span class="glyphicon glyphicon-menu-down">
-                                        </div>
-                                    </a>
-                                    <div>
-                                        <span class="border">华东</span>
-                                        <ul>
-                                            <li><a href="">北京</a></li>
-                                            <li><a href="">北京</a></li>
-                                            <li><a href="">北京</a></li>
-                                            <li><a href="">北京</a></li>
-                                        </ul>
-                                        <div class="hr"></div>
-                                        <span class="border">华东</span>
-                                        <ul>
-                                            <li><a href="">北京</a></li>
-                                            <li><a href="">北京</a></li>
-                                            <li><a href="">北京</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <select name="number" class="form-my">
-                                        <option value="0">人数不限</option>
-                                        <option value="1">50-100</option>
-                                        <option value="2">100-200</option>
-                                        <option value="3">200-300</option>
-                                        <option value="4">300-400</option>
-                                    </select>
-                                </li>
-                                <li>
-                                    <select name="price" class="form-my">
-                                        <option value="0">&nbsp;&nbsp; 预算</option>
-                                        <option value="1">50-100</option>
-                                        <option value="2">100-200</option>
-                                        <option value="3">200-300</option>
-                                        <option value="4">300-400</option>
-                                    </select>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>场地类型：</th>
-                        <td>
-                            <ul>
-                                <li><label><input type="checkbox" id="hotel"> 酒店</label></li>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>会议时长：</th>
-                        <td>
-                            <ul>
-                                <li>
-                                    <select name="number" class="form-my">
-                                        <option value="0">会议时长</option>
-                                        <option value="1">50-100</option>
-                                        <option value="2">100-200</option>
-                                        <option value="3">200-300</option>
-                                        <option value="4">300-400</option>
-                                    </select>
-                                </li>
-                                <li>
-                                    <label>
-                                        <span>开始时间：</span>
-                                        <input type="date" class="form-my">
-                                    </label>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr id="star_model">
-                        <th>酒店星级：</th>
-                        <td>
-                            <ul>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                                <li><label><input type="checkbox" > 酒店</label></li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr class="s_selected">
-                        <th style="font-size:16px;">您已选择 ：</th>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="a_s">城市 : 北京</span>
-                                    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </li>
-                                <li>
-                                    <span class="a_s">场地类型 : 酒店会场</span>
-                                    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-                <div id="rightbox1">
-                    <div id="btn-rsea">
-                        <button class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span>
-                            <span>搜 索</span>
-                        </button>&nbsp;&nbsp;
-                        <button class="btn btn-primary">清空所有选项</button>
+                <div class="row">
+                    <div class="col-md-8">
+                        <table border="0" class="left">
+                            <tr>
+                                <th>会议规模：</th>
+                                <td>
+                                    <ul>
+                                        <li class="city">
+                                            <a href="#">
+                                                <div class="form-my border-ccc fixedWidth">
+                                                    <span index="city"> 地区不限 </span>
+                                                    <input type="hidden" name="city">
+                                                    <span class="glyphicon glyphicon-menu-down">
+                                                </div>
+                                            </a>
+                                            <div>
+                                                <span class="border">华东</span>
+                                                <ul>
+                                                    <li><a href="">北京</a></li>
+                                                    <li><a href="">北京</a></li>
+                                                    <li><a href="">北京</a></li>
+                                                    <li><a href="">北京</a></li>
+                                                </ul>
+                                                <div class="hr"></div>
+                                                <span class="border">华东</span>
+                                                <ul>
+                                                    <li><a href="">北京</a></li>
+                                                    <li><a href="">北京</a></li>
+                                                    <li><a href="">北京</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <select name="number" class="form-my">
+                                                <option value="0">人数不限</option>
+                                                <option value="1">50-100</option>
+                                                <option value="2">100-200</option>
+                                                <option value="3">200-300</option>
+                                                <option value="4">300-400</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <select name="price" class="form-my">
+                                                <option value="0">&nbsp;&nbsp; 预算</option>
+                                                <option value="1">50-100</option>
+                                                <option value="2">100-200</option>
+                                                <option value="3">200-300</option>
+                                                <option value="4">300-400</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>场地类型：</th>
+                                <td>
+                                    <ul>
+                                        <li><label><input type="checkbox" id="hotel"> 酒店</label></li>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>会议时长：</th>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <select name="number" class="form-my">
+                                                <option value="0">会议时长</option>
+                                                <option value="1">50-100</option>
+                                                <option value="2">100-200</option>
+                                                <option value="3">200-300</option>
+                                                <option value="4">300-400</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <span>开始时间：</span>
+                                                <input type="date" class="form-my">
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr id="star_model">
+                                <th>酒店星级：</th>
+                                <td>
+                                    <ul>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                        <li><label><input type="checkbox" > 酒店</label></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="s_selected">
+                                <th style="font-size:16px;">您已选择 ：</th>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <span class="a_s">城市 : 北京</span>
+                                            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        </li>
+                                        <li>
+                                            <span class="a_s">场地类型 : 酒店会场</span>
+                                            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="rightbox1">
+                            <div id="btn-rsea">
+                                <button class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    <span>搜 索</span>
+                                </button>&nbsp;&nbsp;
+                                <button class="btn btn-primary">清空所有选项</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -197,85 +203,51 @@
                     <!--按什么显示-->
                     <div class="a_show">
                         <ul class="list-unstyled">
-                            <!--第一条-->
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <!--图片-->
-                                    <dt><img src="./home/images/tu1.png" alt="" height="210px"></dt>
-                                    <!--内容-->
-                                    <dd>
-                                        <ol class="list-unstyled s_main">
-                                            <li><a href="">北京香格里拉大酒店</a></li>
-                                            <li>四星级酒店  北京海淀区慈竹远29号</li>
-                                            <li><span></span></li>
-                                            <li>会场名称 : 大宴会厅</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li>最多容纳人数 : 1000人</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li><a href="">星际酒店</a><a href="">西施装修</a><a href="">汗餐厅</a></li>
-                                            <li>成交量 : 58622单 | 评论 : 35252</li>
-                                            <li class="s_main_ri s_grade">4.8分/5分</li>
-                                            <li class="s_main_ri s_price">￥5万1起</li>
-                                            <li class="s_main_ri s_reserve"><button class="btn btn-danger">预 定</button></li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <!--第二条-->
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <!--图片-->
-                                    <dt><img src="./home/images/tu1.png" alt="" height="210px"></dt>
-                                    <!--内容-->
-                                    <dd>
-                                        <ol class="list-unstyled s_main">
-                                            <li><a href="">北京香格里拉大酒店</a></li>
-                                            <li>四星级酒店  北京海淀区慈竹远29号</li>
-                                            <li><span></span></li>
-                                            <li>会场名称 : 大宴会厅</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li>最多容纳人数 : 1000人</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li><a href="">星际酒店</a><a href="">西施装修</a><a href="">汗餐厅</a></li>
-                                            <li>成交量 : 58622单 | 评论 : 35252</li>
-                                            <li class="s_main_ri s_grade">4.8分/5分</li>
-                                            <li class="s_main_ri s_price">￥5万1起</li>
-                                            <li class="s_main_ri s_reserve"><button class="btn btn-danger">预 定</button></li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <!--第三条-->
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <!--图片-->
-                                    <dt><img src="./home/images/tu1.png" alt="" height="210px"></dt>
-                                    <!--内容-->
-                                    <dd>
-                                        <ol class="list-unstyled s_main">
-                                            <li><a href="">北京香格里拉大酒店</a></li>
-                                            <li>四星级酒店  北京海淀区慈竹远29号</li>
-                                            <li><span></span></li>
-                                            <li>会场名称 : 大宴会厅</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li>最多容纳人数 : 1000人</li>
-                                            <li>场地面积 : 2000M(50*40*6M)</li>
-                                            <li><a href="">星际酒店</a><a href="">西施装修</a><a href="">汗餐厅</a></li>
-                                            <li>成交量 : 58622单 | 评论 : 35252</li>
-                                            <li class="s_main_ri s_grade">4.8分/5分</li>
-                                            <li class="s_main_ri s_price">￥5万1起</li>
-                                            <li class="s_main_ri s_reserve"><button class="btn btn-danger">预 定</button></li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
+
+                            @foreach($data as $key=>$val)
+                                <li>
+                                    <dl class="dl-horizontal">
+                                        <dt><img src="{{ url('uploads/shoper/places/places/') }}/{{ $val->pic }}" alt="" height="210px"></dt>
+                                        <dd>
+                                            <ol class="list-unstyled s_main">
+                                                <li><a href="">{{ $val->title }}</a></li>
+                                                <li>
+                                                    地址 : {{ $val->address }}&nbsp;&nbsp;
+                                                    @if($val->hotelStar)
+                                                        <a href="#">{{ $val->hotelStar }}</a>
+                                                    @endif
+                                                </li>
+                                                <li><span></span></li>
+                                                <li>最大会场面积 : {{ $val->maxArea }}平米</li>
+                                                <li>最多容纳人数 : {{ $val->maxPeople }}人</li>
+                                                <li>会场数量 : {{ $val->meetNum }}</li>
+                                                <li>可提供配套服务 :
+                                                    @foreach($val->support as $v)
+                                                        {{ $v }}&nbsp;
+                                                    @endforeach
+                                                </li>
+                                                <li>
+                                                    @foreach($val->free as $v)
+                                                            <a href="#">{{ $v }}</a>
+                                                    @endforeach
+                                                </li>
+                                                <li>成交量 : 58622单 | 评论 : 35252</li>
+                                                <li class="s_main_ri s_grade">4.8分/5分</li>
+                                                <li class="s_main_ri s_price">￥{{ $val->price }}元起</li>
+                                                <li class="s_main_ri s_reserve"><button class="btn btn-danger">预 定</button></li>
+                                            </ol>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </div>
                     <!--分页-->
                     <div class="seek_paging">
                         <nav>
                             <ul class="pager">
-                                <li class="previous"><a href="#"><span>&larr;</span> 首页</a></li>
+                                <li class="previous"><a href="#">首页</a></li>
                                 <li>
                                     <ul class="pagination">
                                         <!--选中的样式-->
@@ -296,7 +268,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="next"><a href="#">尾页 <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="next"><a href="#">尾页</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -399,57 +371,52 @@
         </div>
 
         <!--首页推广-->
-        <div class="a_generalize margin-top">
-            <ul class="list-inline">
-                <li>
-                    <ol class="list-unstyled">
-                        <li><img src="./home/images/tu21.png" alt=""></li>
-                        <li>水立方</li>
-                        <li>所在地 : 北京市海淀区紫竹院路69号</li>
-                        <li>会所数量 : 40最大会所场面积:1352平米</li>
-                        <li>最多容纳人数1400</li>
-                        <li>联系电话 : 010-84826854</li>
-
-                    </ol>
-                </li>
-                <li>
-                    <ol class="list-unstyled">
-                        <li><img src="./home/images/tu21.png" alt=""></li>
-                        <li>水立方</li>
-                        <li>所在地 : 北京市海淀区紫竹院路69号</li>
-                        <li>会所数量 : 40最大会所场面积:1352平米</li>
-                        <li>最多容纳人数1400</li>
-                        <li>联系电话 : 010-84826854</li>
-
-                    </ol>
-                </li>
-                <li>
-                    <ol class="list-unstyled">
-                        <li><img src="./home/images/tu21.png" alt=""></li>
-                        <li>水立方</li>
-                        <li>所在地 : 北京市海淀区紫竹院路69号</li>
-                        <li>会所数量 : 40最大会所场面积:1352平米</li>
-                        <li>最多容纳人数1400</li>
-                        <li>联系电话 : 010-84826854</li>
-
-                    </ol>
-                </li>
-                <li>
-                    <ol class="list-unstyled">
-                        <li><img src="./home/images/tu21.png" alt=""></li>
-                        <li>水立方</li>
-                        <li>所在地 : 北京市海淀区紫竹院路69号</li>
-                        <li>会所数量 : 40最大会所场面积:1352平米</li>
-                        <li>最多容纳人数1400</li>
-                        <li>联系电话 : 010-84826854</li>
-
-                    </ol>
-                </li>
-
-            </ul>
+        <div id="commend" class="row a_generalize margin-top">
+            <div class="col-md-6">
+                <div class="col-xs-6">
+                    <img src="./home/images/tu1.png">
+                    <ul>
+                        <h3>鸟巢</h3>
+                        <p>所在地 : 北京市海淀区紫竹院路69号</p>
+                        <p>会所数量 : 40最大会所场面积:1352平米</p>
+                        <p>最多容纳人数1400</p>
+                        <p>联系电话 : 010-84826854</p>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <img src="./home/images/tu1.png">
+                    <ul>
+                        <h3>鸟巢</h3>
+                        <p>所在地 : 北京市海淀区紫竹院路69号</p>
+                        <p>会所数量 : 40最大会所场面积:1352平米</p>
+                        <p>最多容纳人数1400</p>
+                        <p>联系电话 : 010-84826854</p>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-xs-6">
+                    <img src="./home/images/tu1.png">
+                    <ul>
+                        <h3>鸟巢</h3>
+                        <p>所在地 : 北京市海淀区紫竹院路69号</p>
+                        <p>会所数量 : 40最大会所场面积:1352平米</p>
+                        <p>最多容纳人数1400</p>
+                        <p>联系电话 : 010-84826854</p>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <img src="./home/images/tu1.png">
+                    <ul class="list-unstyled">
+                        <h3>鸟巢</h3>
+                        <p>所在地 : 北京市海淀区紫竹院路69号</p>
+                        <p>会所数量 : 40最大会所场面积:1352平米</p>
+                        <p>最多容纳人数1400</p>
+                        <p>联系电话 : 010-84826854</p>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-
 
     </div>
     <div style="clear:left;"></div>

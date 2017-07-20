@@ -445,7 +445,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/adver/index') }}"><i class="fa fa-circle-o"></i> 广告列表</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
+                        <li><a href="{{ url('/admin/adver/toads') }}"><i class="fa fa-circle-o"></i> 广告添加</a></li>
                     </ul>
                 </li>
 

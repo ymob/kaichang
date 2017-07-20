@@ -2,9 +2,9 @@
 
 @section('header')
     <style>
-        .top{width:100%;height:30px;background:#267CBF;line-height:30px;font-size:16px;font-weight:bold;}
+        .top{width:100%;height:30px;background:#00a7d0;line-height:30px;font-size:16px;font-weight:bold;}
         form table{width:100%;}
-        form table tr td{padding:0px 10px;}
+        #form table tr td{padding:6px 10px;}
         .tright{text-align:right;width:200px;}
         .ss{width:80px;height:30px;margin:0px 10px;}
         .s{width:130px;height:30px;margin:0px 10px;}
@@ -33,9 +33,9 @@
                    {{ session('info') }}
                </div>
            @endif
-           <form action="/shopcenter/insert" method="POST" enctype="multipart/form-data">
+           <form id="form" name="form" action="/shopcenter/insert" method="POST" enctype="multipart/form-data">
                {{ csrf_field() }}
-               <table border="0">
+               <table border="1">
                    <tr>
                        <td class="tright">
                         * 场地类型:
@@ -109,7 +109,7 @@
                             * 上传场地出租凭证:
                        </td>
                        <td>
-                           <input type="file" name="evidencePic" class="sm left" style="margin:5px 10px 0px 10px;">
+                           <input type="file" onchange="check1()" id="evidencePic" name="evidencePic" class="sm left" style="margin:5px 10px 0px 10px;">
                            <span class="left">企业请上传公司营业执照副本复印件并加盖公章<br>闲置会议室出租请上传租赁合同或房产证</span>
                        </td>
                    </tr>
@@ -213,9 +213,8 @@
                        <td class="tright">
                             上传照片:
                        </td>
-                       <td>
-                           {{--<input type="file" name="pic" multiple class="sm left" style="margin:5px 10px 0px 10px;">--}}
-                           <input type="file" name="pic" class="sm left" style="margin:5px 10px 0px 10px;">
+                       <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+                           <input type="file" id="pic" onchange="check()" name="pic" class="sm left" style="margin:5px 10px 0px 10px;">
                            <span class="left" style="line-height:35px;">展示大小: 576px * 350px</span>
                        </td>
                    </tr>
@@ -236,7 +235,7 @@
       //默认获取省份信息
     $.get('/shopcenter/city',{"level":1,"upid":0},function(data){
       // console.log(data);
-      var str="";
+      var str="<option value=''>请选择</option>";
       $.each(data,function(i,n){
         str+="<option value='"+n.id+"'>"+n.name+"</option>";
       });
@@ -272,5 +271,35 @@
           },'json');
 
         });
+
+
+
+        //限制上传图片大小
+         function check()
+        {
+          
+          var imagSize =  document.getElementById("pic").files[0].size;
+          var size = imagSize/(1024*1024);
+          var res = size.toFixed(2);
+          // alert("图片大小："+imagSize+"B")
+          if(imagSize>1024*1024*0.5)
+            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+            return false;
+        }
+
+         function check1()
+        {
+          
+          var imagSize =  document.getElementById("evidencePic").files[0].size;
+          var size = imagSize/(1024*1024);
+          var res = size.toFixed(2);
+          // alert("图片大小："+imagSize+"B")
+          if(imagSize>1024*1024*0.5)
+            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+            return false;
+        }
+     
+     
+          
       </script>
 @endsection

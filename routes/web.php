@@ -93,6 +93,12 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::get('admin/adver/add','Admin\AdverController@add');
     //执行添加广告动作
     Route::post('admin/adver/insert','Admin\AdverController@insert');
+    //将场地表信息改为广告表
+    Route::get('admin/adver/toads',"Admin\AdverController@toads");
+     //移除广告
+    Route::get('admin/adver/removeads/{id}',"Admin\AdverController@removeads");
+      //执行加入广告列表动作 
+   Route::get('admin/adver/changeads/{id}',"Admin\AdverController@changeads");
 
 
     //订单管理
@@ -102,6 +108,7 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
     //缓存
     Route::get('admin/cache/cache','Admin\CacheController@cache');
+
 
 });
 
@@ -221,3 +228,7 @@ Route::get('/list','Home\ListController@index');
 
 //场地搜索结果详情
 Route::get('/detail','Home\DetailsController@indexs');
+
+//底部链接
+//关于我们
+Route::get('home/foot/aboutus','Home\FootController@index');
