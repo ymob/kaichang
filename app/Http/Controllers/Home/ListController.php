@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 
 class ListController extends Controller
 {
-    //加载搜索结果列表页
-    public function index()
+    // 执行列表页搜索
+    public function listSearch()
     {
-        return view('home.index.list',['title'=>'列表页']);
+
     }
+
 }

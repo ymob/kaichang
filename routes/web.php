@@ -105,7 +105,6 @@ Route::group(['middleware'=>'adminlogin'],function(){
     //加载定单管理页面
     Route::get('admin/order/index/{status}',"Admin\OrderController@index");
 
-
     //缓存
     Route::get('admin/cache/cache','Admin\CacheController@cache');
 
@@ -123,11 +122,17 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // ========= 前台 ==================================================
 
-//前台首页
+// 前台首页
 Route::get('/', 'Home\IndexController@index');
-Route::post('/indexSearch','Home\IndexController@indexSearch');
+Route::get('/indexSearch','Home\IndexController@indexSearch');
 
-//错误页面
+// 列表页场地搜索
+Route::get('/listSearch','Home\ListController@listSearch');
+
+// 场地搜索结果详情页
+Route::get('/detail/pid={pid}','Home\DetailsController@index');
+
+// 错误页面
 Route::get('/404', function(){
     return view('404');
 });
@@ -190,7 +195,7 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 商户发布场地
     Route::get('/shopcenter/release','Home\ShopPlacesController@add');
     //ajax城市联动
-    Route::get('shopcenter/city','Home\ShopPlacesController@city');
+    Route::get('/shopcenter/city','Home\ShopPlacesController@city');
     Route::post('/shopcenter/insert','Home\ShopPlacesController@insert');
     Route::get('/shopcenter/addMeet/{pid}','Home\ShopPlacesController@addMeet');
     Route::post('/shopcenter/insertMeet','Home\ShopPlacesController@insertMeet');
@@ -203,6 +208,10 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 会场
     Route::get('/shopcenter/meetplaces', 'Home\ShopPlacesController@meetplaces');
     Route::get('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@meet_detail');
+    Route::post('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@up_meet');
+    Route::get('/shopcenter/meetplaces/delete', 'Home\ShopPlacesController@meet_delete');
+    // 配套服务
+    Route::post('/shopcenter/facilities/delete', 'Home\ShopPlacesController@fac_delete');
 
 });
 
@@ -223,12 +232,4 @@ Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@
 Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');
 
 
-//场地搜索结果列表
-Route::get('/list','Home\ListController@index');
 
-//场地搜索结果详情
-Route::get('/detail','Home\DetailsController@indexs');
-
-//底部链接
-//关于我们
-Route::get('home/foot/aboutus','Home\FootController@index');

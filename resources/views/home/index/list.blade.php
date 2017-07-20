@@ -210,12 +210,12 @@
                                         <dt><img src="{{ url('uploads/shoper/places/places/') }}/{{ $val->pic }}" alt="" height="210px"></dt>
                                         <dd>
                                             <ol class="list-unstyled s_main">
-                                                <li><a href="">{{ $val->title }}</a></li>
+                                                <li><a href="{{ url('/detail/pid=') }}{{ $val->id }}">{{ $val->title }}</a></li>
                                                 <li>
-                                                    地址 : {{ $val->address }}&nbsp;&nbsp;
                                                     @if($val->hotelStar)
                                                         <a href="#">{{ $val->hotelStar }}</a>
                                                     @endif
+                                                    地址 : {{ $val->address }}
                                                 </li>
                                                 <li><span></span></li>
                                                 <li>最大会场面积 : {{ $val->maxArea }}平米</li>
@@ -234,7 +234,10 @@
                                                 <li>成交量 : 58622单 | 评论 : 35252</li>
                                                 <li class="s_main_ri s_grade">4.8分/5分</li>
                                                 <li class="s_main_ri s_price">￥{{ $val->price }}元起</li>
-                                                <li class="s_main_ri s_reserve"><button class="btn btn-danger">预 定</button></li>
+                                                <li class="s_main_ri s_reserve">
+                                                    <a class="btn btn-danger" href="{{ url('/detail/pid=') }}{{ $val->id }}" role="button">预订</a>
+                                                </li>
+
                                             </ol>
                                         </dd>
                                     </dl>
@@ -244,33 +247,8 @@
                         </ul>
                     </div>
                     <!--分页-->
-                    <div class="seek_paging">
-                        <nav>
-                            <ul class="pager">
-                                <li class="previous"><a href="#">首页</a></li>
-                                <li>
-                                    <ul class="pagination">
-                                        <!--选中的样式-->
-                                        <li>
-                                            <a href="#">
-                                                <span >&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li>
-                                            <a href="#">
-                                                <span>&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="next"><a href="#">尾页</a></li>
-                            </ul>
-                        </nav>
+                    <div class="seek_paging text-center">
+                            {{ $data->appends($request)->links() }}
                     </div>
                 </div>
 
