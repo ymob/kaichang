@@ -251,9 +251,10 @@
         <div class="toolbar-wrap J-wrap">
             <div class="toolbar">
                 <div class="toolbar-panels J-panel">
+
                     <div style="visibility: hidden;" class="J-content toolbar-panel tbar-panel-cart toolbar-animate-out">
                         <h3 class="tbar-panel-header J-panel-header">
-                            <a href="" class="title"><i></i><em class="title">购物车</em></a>
+                            <a href="#" class="title"><i></i><em class="title">购物车</em></a>
                             <span class="close-panel J-close"></span>
                         </h3>
                         <div class="tbar-panel-main">
@@ -266,60 +267,26 @@
                                 </div>
                                 <div id="J-cart-render">
                                     <div class="tbar-cart-list">
-                                        <div class="tbar-cart-item" >
-                                            <div class="jtc-item-promo">
-                                                <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
-                                                <div class="promo-text">已购满600元，您可领赠品</div>
-                                            </div>
-                                            <div class="jtc-item-goods">
-                                                <span class="p-img"><a href="#" target="_blank"><img src="" alt="美的（Midea） BCD-206TM(E) 206升静音/省电/三门冰箱（闪白银）" height="50" width="50" /></a></span>
-                                                <div class="p-name">
-                                                    <a href="#">美的（Midea） BCD-206TM(E)206升静音/省电/三门冰箱（闪白银）</a>
+                                        @if($shopcart)
+                                            @foreach($shopcart as $k=>$v)
+                                            <div class="tbar-cart-item" >
+                                                {{--<div class="jtc-item-promo">--}}
+                                                    {{--<em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>--}}
+                                                    {{--<div class="promo-text">已购满600元，您可领赠品</div>--}}
+                                                {{--</div>--}}
+                                                <div class="jtc-item-goods">
+                                                    <span class="p-img"><a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" target="_blank"><img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{ $v['pic'] }}" alt="" height="50" width="50" /></a></span>
+                                                    <div class="p-name">
+                                                        <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" style="font-weight:bold;">{{ $v['mname'] }}</a><br>
+                                                        已选配套服务: {{ $v['fname'] }}
+                                                    </div>
+                                                    <div class="p-price"><strong>¥{{ $v['price'] }} ×1 </div>
+                                                    <a href="{{ $k }}" class="p-del J-del">删除</a>
                                                 </div>
-                                                <div class="p-price"><strong>¥1398.00</strong>×1 </div>
-                                                <a href="#none" class="p-del J-del">删除</a>
                                             </div>
-                                        </div>
-                                        <div class="tbar-cart-item">
-                                            <div class="jtc-item-promo">
-                                                <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
-                                                <div class="promo-text">已购满600元，您可领赠品</div>
-                                            </div>
-                                            <div class="jtc-item-goods">
-                                                <span class="p-img">
-                                                    <a href="#" target="_blank"><img src="" alt="美的（Midea） BCD-206TM(E) 206升静音/省电/三门冰箱（闪白银）" height="50" width="50" /></a>
-                                                </span>
-                                                <div class="p-name">
-                                                    <a href="#">美的（Midea） BCD-206TM(E)206升静音/省电/三门冰箱（闪白银）</a>
-                                                </div>
-                                                <div class="p-price"><strong>¥1398.00</strong>×1 </div>
-                                                <a href="#none" class="p-del J-del">删除</a> 
-                                            </div>
-                                        </div>
-                                        <div class="tbar-cart-item" >
-                                            <div class="jtc-item-promo">
-                                                <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
-                                                <div class="promo-text">已购满600元，您可领赠品</div>
-                                            </div>
-                                            <div class="jtc-item-goods">
-                                                <span class="p-img"><a href="#" target="_blank"><img src="" alt="美的（Midea） BCD-206TM(E) 206升静音/省电/三门冰箱（闪白银）" height="50" width="50" /></a></span>
-                                                <div class="p-name"><a href="#">美的（Midea） BCD-206TM(E)206升静音/省电/三门冰箱（闪白银）</a> </div>
-                                                <div class="p-price"> <strong>¥1398.00</strong>×1 </div>
-                                                <a href="#none" class="p-del J-del">删除</a>
-                                            </div>
-                                        </div>
-                                        <div class="tbar-cart-item" >
-                                            <div class="jtc-item-promo">
-                                                <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
-                                                <div class="promo-text">已购满600元，您可领赠品</div>
-                                            </div>
-                                            <div class="jtc-item-goods">
-                                                <span class="p-img"><a href="#" target="_blank"><img src="" alt="美的（Midea） BCD-206TM(E) 206升静音/省电/三门冰箱（闪白银）" height="50" width="50" /> </a> </span>
-                                                <div class="p-name"><a href="#">美的（Midea） BCD-206TM(E)206升静音/省电/三门冰箱（闪白银）</a> </div>
-                                                <div class="p-price"> <strong>¥1398.00</strong>×1 </div>
-                                                <a href="#none" class="p-del J-del">删除</a>
-                                            </div>
-                                        </div>
+                                            @endforeach
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +364,7 @@
                 </div>
                 
                 <div class="toolbar-footer">
-                    <div class="toolbar-tab tbar-tab-top"> <a href="#"> <i class="tab-ico  "></i> <em class="footer-tab-text">顶部</em> </a> </div>
+                    <div class="toolbar-tab tbar-tab-top"> <a href="#"> <i class="tab-ico"></i> <em class="footer-tab-text">顶部</em> </a> </div>
                     <div class=" toolbar-tab tbar-tab-feedback"> <a href="#" target="_blank"> <i class="tab-ico"></i> <em class="footer-tab-text ">反馈</em> </a> </div>
                 </div>
                 

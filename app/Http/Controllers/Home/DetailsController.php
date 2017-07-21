@@ -10,7 +10,6 @@ class DetailsController extends Controller
     //加载搜索结果详情页
     public function index($pid)
     {
-//        dd($pid);
         // 场地信息 //
         $data = \DB::table('places')->where('id',$pid)->first();
 
@@ -73,10 +72,49 @@ class DetailsController extends Controller
         }
 
 
+//        dd(session('shopcart'));
+        // 通用,查询购物车信息
+        if(session('user'))
+        {
+            $uid = session('user')->id;
+            $res = \DB::table('shopcart')->where('uid',$uid)->get();
+            if($res)
+            {
+                $shopcart = $res;
+            }else{
+                $shopcart = [];
+            }
+        }else
+        {
+            if(session('shopcart'))
+            {
+                $shopcart = session('shopcart');
+            }else{
+                $shopcart = [];
+            }
+        }
+        $support = array('','客房','茶歇','AV设备');
+        if($shopcart)
+        {
+            foreach($shopcart as $key=>$val)
+            {
+                $shopcart[$key]['pid'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
+                $shopcart[$key]['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
+                $fids = explode(',',$val['fids']);
+                $arr = [];
+                foreach($fids as $k=>$v)
+                {
+                    $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
+                    $arr[] = $support[$sid];
+                }
+                $shopcart[$key]['fname'] = implode(' ',$arr);
+                $shopcart[$key]['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
+//                $val['start'] = date('Y-m-d H:i',$val('stime'));
+            }
+        }
+//        dd($shopcart);
 
-//        dd($facilities);
-
-        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities]);
+        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart]);
     }
 
 }

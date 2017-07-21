@@ -10,19 +10,19 @@ class ShopCenterController extends Controller
     // index
     public function index()
     {
-        $data = \DB::table('orders')->where('sids', 'like', '%'.session('shopkeeper')->id.'%')->get();
-
-        // dd($data);
-        foreach ($data as $key => $val) {
-            $arr = explode(',', $val->sids);
-            if(!in_array(51, $arr))
-            {
-                unset($data[$key]);
-            }else
-            {
-                $res = explode(',', $val->gids);
-            }
-        }
+//        $data = \DB::table('orders')->where('sids', 'like', '%'.session('shopkeeper')->id.'%')->get();
+//
+//        // dd($data);
+//        foreach ($data as $key => $val) {
+//            $arr = explode(',', $val->sids);
+//            if(!in_array(51, $arr))
+//            {
+//                unset($data[$key]);
+//            }else
+//            {
+//                $res = explode(',', $val->gids);
+//            }
+//        }
 
     	return view('home.shopercenter.index', ['title' => '商户中心首页']);
     }
