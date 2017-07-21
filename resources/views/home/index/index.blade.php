@@ -130,7 +130,7 @@
             </div>
             <div id="search_d">
                 <div class="">
-                    <form action="/indexSearch" method="post">
+                    <form action="{{ url('/listSearch') }}" method="post">
                         {{ csrf_field() }}
                         <table border="0">
                             <tr>
@@ -228,7 +228,8 @@
                                         </li>
                                         <li>
                                             <select name="number" class="form-my">
-                                                <option value="0">人数不限</option>
+                                                <option value="">人数不限</option>
+                                                <option value="0">1-10</option>
                                                 <option value="1">10-30</option>
                                                 <option value="2">30-60</option>
                                                 <option value="3">60-100</option>
@@ -241,7 +242,7 @@
                                         </li>
                                         <li>
                                             <select name="price" class="form-my">
-                                                <option value="0">&nbsp;&nbsp; 预算</option>
+                                                <option value="">&nbsp;&nbsp; 预算</option>
                                                 <option value="1">3000以下</option>
                                                 <option value="2">3-5千</option>
                                                 <option value="3">5-8千</option>
@@ -281,53 +282,27 @@
                                         <li>
                                             <select name="timeLong" class="form-my">
                                                 <option value="0">会议时长</option>
-                                                <option value="1">50-100</option>
-                                                <option value="2">100-200</option>
-                                                <option value="3">200-300</option>
-                                                <option value="4">300-400</option>
+                                                <option value="1">1天</option>
+                                                <option value="2">2天</option>
+                                                <option value="3">3天</option>
+                                                <option value="4">4天</option>
+                                                <option value="5">5天</option>
+                                                <option value="6">6天</option>
+                                                <option value="7">7天</option>
+                                                <option value="8">10天</option>
+                                                <option value="9">14天</option>
                                             </select>
                                         </li>
                                         <li>
-                                            <span class="form-my">起止时间：</span>
+                                            <span class="form-my">开始时间：</span>
                                         </li>
                                         <li>
                                             <label>
-
-                                                {{--<div class="border-blue form-my">--}}
-                                                    {{--<a id="input_trigger_demo_index" href="#">--}}
-                                                    {{--<span id="date_demo_index"></span>--}}
-                                                    {{--<input type="hidden" name="time">--}}
-                                                    {{--<span class="caret"></span>--}}
-                                                    {{--</a>--}}
-                                                {{--</div>--}}
-                                                {{--<script type="text/javascript">--}}
-
-                                                    {{--var dateRange = new pickerDateRange('date_demo_index', {--}}
-                                                        {{--aRecent7Days : 'aRecent7DaysDemo2', //最近7天--}}
-                                                        {{--isTodayValid : false,--}}
-                                                        {{--startDate : '2013-04-14',--}}
-                                                        {{--endDate : '2013-04-21',--}}
-                                                        {{--disCertainDate : [true, 4, 2],--}}
-                                                        {{--//needCompare : true,--}}
-                                                        {{--//isSingleDay : true,--}}
-                                                        {{--//shortOpr : true,--}}
-                                                        {{--dayRangeMax : '999', // 日期最大范围(以天计算)--}}
-                                                        {{--startDateId : 'startDate',--}}
-                                                        {{--endDateId : 'endDate',--}}
-                                                        {{--defaultText : ' 至 ',--}}
-                                                        {{--inputTrigger : 'input_trigger_demo_index',--}}
-                                                        {{--theme : 'ta',--}}
-                                                        {{--success : function(obj) {--}}
-                                                            {{--$('#date_demo_index').next('input').attr('value', obj.startDate + ',' + obj.endDate);--}}
-                                                            {{--// console.log(obj);                            --}}
-                                                        {{--}--}}
-                                                    {{--});--}}
-                                                {{--</script>--}}
-                                                <input type="date" name="startTime" value="">
-
-                                                {{--<input type="date" name="startime" class="form-my">--}}
-
+                                                <input type="date" name="startime" class="form-my">
                                             </label>
+                                        </li>
+                                        <li>
+                                            <span id="time_info" class="text-danger" style="display:none;font-size:12px;">如果需要时间添加，请两个选项都得填写</span>
                                         </li>
                                     </ul>
                                 </td>
@@ -374,8 +349,10 @@
 @section('js')
     <script>
 
+        // 城市下拉框
         var map = $("[index='city']").parents('a');
         map.on('click', function(){
+            // alert(2);
             var status = $(this).next().css('display');
             if(status == 'block')
             {
@@ -387,6 +364,7 @@
             return false;
         });
         $('.city div li').on('click', function(){
+            // alert(2);
             var val = $(this).find('a').html();
             // alert(val);
             $(this).parents('form').find("[index='city']").html('&nbsp;&nbsp;'+val);
@@ -394,6 +372,8 @@
             map.next().css('display', 'none');
             return false;
         });
+
+        // 高级搜索
         $('#down_up a').on('click', function(){
             $(this).find('span').toggleClass("glyphicon-menu-down");
             $(this).find('span').toggleClass("glyphicon-menu-up");
@@ -415,6 +395,15 @@
             }
             return false;
         });
+
+        // 酒店
+        if($('#hotel').is(':checked'))
+        {
+            var html = $('#star_model').html();
+            $('#star').html(html);
+        }
+
+        // 酒店星级
         $('#hotel').on('change', function(){
             var status = $.trim($('#star').html());
             if(status == '')
@@ -424,6 +413,29 @@
             }else
             {
                 $('#star').html('');
+            }
+        });
+
+        // 时间和时长
+        var h_form = $('#search_d form');
+        h_form.on('submit', function(){
+            var timeLong = $('[name="timeLong"]').val();
+            var startime = $('[name="startime"]').val();
+            if(!startime)
+            {
+                if(timeLong != 0)
+                {
+                    $('#time_info').css('display', 'block');
+                    return false;  
+                }
+            }
+            if(timeLong != 0)
+            {
+               if(!startime)
+                {
+                    $('#time_info').css('display', 'block');
+                    return false;  
+                } 
             }
         });
     </script>

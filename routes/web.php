@@ -120,7 +120,7 @@ Route::get('/', 'Home\IndexController@index');
 Route::get('/indexSearch','Home\IndexController@indexSearch');
 
 // 列表页场地搜索
-Route::get('/listSearch','Home\ListController@listSearch');
+Route::post('/listSearch','Home\ListController@listSearch');
 
 // 场地搜索结果详情页
 Route::get('/detail/pid={pid}','Home\DetailsController@index');
