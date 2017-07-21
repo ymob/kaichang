@@ -214,7 +214,7 @@ class UserCenterController extends Controller
             ->join('goods', 'goods.id', '=', 'shopcart.gid')
             ->select('shopcart.*', 'users.name', 'goods.title')
             ->get();
-            // dd($data);
+             dd($data);
 
        
 

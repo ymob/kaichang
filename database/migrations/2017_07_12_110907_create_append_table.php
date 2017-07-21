@@ -40,8 +40,10 @@ class CreateAppendTable extends Migration
             $table->string('pic')->default('default_place.jpg');  //1.jpg,2.jpg,3.jpg
             $table->integer('updown')->default('1'); //默认1上架  0下架
             $table->integer('status')->default('1'); //默认1 开启  0禁用
+            $table->integer('isads')->default('0');//是否添加都广告位,1表示是广告,0不是广告
             $table->integer('created_at');
             $table->integer('updated_at');
+
         });
 
         //场地下的 会场表 meetplaces
@@ -79,7 +81,6 @@ class CreateAppendTable extends Migration
             $table->integer('updated_at');
         });
 
-    }
 
     /**
      * Reverse the migrations.

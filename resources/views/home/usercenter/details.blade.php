@@ -13,7 +13,7 @@
             height:33px;
             border:1px solid #00a7d0;
             line-height:33px;
-            background:#91C8F9;
+            background:#00a7d0;
             margin-bottom:20px;
         }
         .user-list{
@@ -23,7 +23,7 @@
             width:700px;
             height:40px;
             font-size:16px;
-            background: #ce8483;
+            background: #00a7d0;
             margin-left:13px;
             border-radius:3px;
             line-height:40px;

@@ -41,7 +41,7 @@
                                     <li><a href="">上海</a></li>
                                     <li><a href="">杭州</a></li>
                                     <li><a href="">南京</a></li>
-                                    <li><a href="">大连</a></li>
+               
                                     <li><a href="">苏州</a></li>
                                     <li><a href="">无锡</a></li>
                                     <li><a href="">济南</a></li>
@@ -65,8 +65,8 @@
                                     <li><a href="">淄博</a></li>
                                     <li><a href="">临沂</a></li>
                                     <li><a href="">马鞍山</a></li>
-                                    <li><a href="">合州</a></li>
                                     <li><a href="">台州</a></li>
+                                    <li><a href="">泰州</a></li>
                                     <li><a href="">济宁</a></li>
                                     <li><a href="">泰安</a></li>
                                 </ul>
@@ -164,7 +164,7 @@
                                                     <li><a href="">上海</a></li>
                                                     <li><a href="">杭州</a></li>
                                                     <li><a href="">南京</a></li>
-                                                    <li><a href="">大连</a></li>
+                                 
                                                     <li><a href="">苏州</a></li>
                                                     <li><a href="">无锡</a></li>
                                                     <li><a href="">济南</a></li>
@@ -188,8 +188,8 @@
                                                     <li><a href="">淄博</a></li>
                                                     <li><a href="">临沂</a></li>
                                                     <li><a href="">马鞍山</a></li>
-                                                    <li><a href="">合州</a></li>
                                                     <li><a href="">台州</a></li>
+                                                    <li><a href="">泰州</a></li>
                                                     <li><a href="">济宁</a></li>
                                                     <li><a href="">泰安</a></li>
                                                 </ul>

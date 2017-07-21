@@ -126,13 +126,13 @@
     <footer>
         <div class="text-center footer">
             <p>
-                <a href="">关于我们</a> | 
-                <a href="">联系我们</a> | 
-                <a href="">联系客服</a> | 
+                <a href="/home/foot/aboutus">关于我们</a> | 
+                <a href="/home/foot/aboutus">联系我们</a> | 
+                <a href="/home/foot/aboutus">联系客服</a> | 
                 <a href="">商家中心</a> | 
                 <a href="">手机开场</a> | 
-                <a href="">友情链接</a> | 
-                <a href="">隐私政策</a>
+                <a href="/home/foot/aboutus">友情链接</a> | 
+                <a href="/home/foot/aboutus">隐私政策</a>
             </p>
             <p>COPYRIGHT &copy; 2017 - 2023 ALL RIGHTS RESERVED 开场网 版权所有</p>
             <p>经营许可证编号 : 京ICP证160741号 京ICP备11042446号-5</p>

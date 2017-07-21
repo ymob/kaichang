@@ -6,7 +6,7 @@
     <section class="content-header">
         <h1>
             广告管理
-            <small>广告列表</small>
+            <small>会场列表</small>
         </h1>
         {{--<ol class="breadcrumb">--}}
             {{--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--}}
@@ -21,7 +21,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">广告列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h3 class="box-title">会场列表</h3>&nbsp;&nbsp;&nbsp;&nbsp;
                        <!--  <a href="{{ url('/admin/adver/add') }}"><button class="btn-flat"><i class="fa fa-user-plus"> </i> 广告添加</button></a> -->
 
                     </div>    
@@ -90,7 +90,7 @@
                             <tbody>
                             <!-- 遍历 -->
                             @foreach($data as $key=>$value)
-                            @if($value->isads==1)
+                            @if($value->isads==0)
                             <tr class="parent" width="800px" style="text-align:center">
                                 <td class="ids">{{$value->id}}</td>
                                 <td class="name">{{ $value->title}}</td>
@@ -106,7 +106,7 @@
                                 <td>
                                    <!--  <a href="{{ url('/admin/adver/edit') }}/{{ $value->id }}">编辑</a>
                                     |<a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
-                                    | --><a href="{{url('admin/adver/removeads')}}/{{$value->id}}">移出广告列表</a>
+                                    | --><a href="{{url('admin/adver/changeads')}}/{{$value->id}}">加入广告列表</a>
                                 </td>
 
                             </tr>

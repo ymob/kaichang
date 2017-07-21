@@ -17,7 +17,18 @@ class AdverController extends Controller
         $keywords=$request->input('keywords','');
 
         //查询分页搜索数据
-        $data=\DB::table('ads')->where('content','like','%'.$keywords.'%')->paginate($num);
+        $data=\DB::table('places')->where('title','like','%'.$keywords.'%')->paginate($num);
+        // dd($data);
+        foreach ($data as $key => $value) {
+            $address = explode(',',$value->address);
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            // var_dump($finaladdress);
+            $data[$key]->address = $finaladdress; 
+        }
+
 
         //加载广告列表页
         return view('admin.adver.index',['title'=>'广告列表','request'=>$request->all(),'data'=>$data]);
@@ -107,7 +118,7 @@ class AdverController extends Controller
     {
     	//获取添加的具体内容
     	$data = $request->except('_token');
-        dd($data);
+        // dd($data);
 
         //处理图片
         if($request->hasFile('pic')){
@@ -137,4 +148,68 @@ class AdverController extends Controller
     		return redirect('admin/adver/index')->with(['info'=>'添加失败']);
     	}
     }
+
+    //移除广告
+     public function removeads($id)
+     {
+        //修改场地表isads字段为0
+        $res = \DB::table('places')->where('id',$id)->update(['isads'=>0]);
+        // dd($res);
+        //提示用户是否移除成功
+        if($res)
+        {
+            return back()->with(['info'=>'移除成功']);
+        }else
+        {
+            return back()->with(['info'=>'移除失败']);
+
+        }
+     }
+
+
+     //加载添加加入广告的列表
+    //加载广告列表
+    public function toads(Request $request)
+    {
+        //获取每页显示的数据条数
+        $num=$request->input('num',10);
+
+        //获取搜索关键字
+        $keywords=$request->input('keywords','');
+
+        //查询分页搜索数据
+        $data=\DB::table('places')->where('title','like','%'.$keywords.'%')->paginate($num);
+        // dd($data);
+        foreach ($data as $key => $value) {
+            $address = explode(',',$value->address);
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            // var_dump($finaladdress);
+            $data[$key]->address = $finaladdress; 
+        }
+
+
+        //加载广告列表页
+        return view('admin.adver.toads',['title'=>'广告列表','request'=>$request->all(),'data'=>$data]);
+    }
+
+     //执行加入广告列表
+     public function changeads($id)
+     {  
+
+        //修改场地表isads字段为1
+        $res = \DB::table('places')->where('id',$id)->update(['isads'=>1]);
+        // dd($res);
+        //提示用户是否加入成功
+        if($res)
+        {
+            return back()->with(['info'=>'加入成功']);
+        }else
+        {
+            return back()->with(['info'=>'加入失败']);
+
+        }
+     }
 }
