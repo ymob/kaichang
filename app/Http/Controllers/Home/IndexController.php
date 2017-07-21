@@ -45,12 +45,18 @@ class IndexController extends Controller
             }
 
             // 免费服务
-            $free = explode(',',$v->freeService);
-            foreach($free as $key=>$value)
+            if($v->freeService)
             {
-                $free[$key] = $freeValues[$value];
+                $free = explode(',',$v->freeService);
+                foreach($free as $key=>$value)
+                {
+                    $free[$key] = $freeValues[$value];
+                }
+                $data[$k]->free = $free;
+            }else
+            {
+                $data[$k]->free = [];
             }
-            $data[$k]->free = $free;
 
             // 配套服务
             $support = explode(',',$v->supportService);
@@ -66,6 +72,8 @@ class IndexController extends Controller
 
         }
 //        dd($data);
-        return view('home.index.list',['title'=>'搜索结果列表页', 'request'=>$request->all(), 'data'=>$data]);
+        return view('home.index.list',['title'=>'搜索结果列表页', 'request'=>$request->all(), 'scode' => 1, 'data'=>$data]);
     }
+
+    
 }
