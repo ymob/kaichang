@@ -90,6 +90,7 @@
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>
                             <ul>
+                                <li><a href="{{ url('/shopcenter/login') }}">商户登录</a></li>
                                 <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
                                 <li><a href="{{ url('/shopcenter/regist/index') }}">商户入驻</a></li>
                                 @if(session('shopkeeper'))

@@ -190,9 +190,9 @@ class UserCenterController extends Controller
         foreach($data as $key=>$val){
 
             //查询商户表
-            $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
+            // $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
 
-            $data[$key]->keepername = $name;
+            // $data[$key]->keepername = $name;
 
         }
 
@@ -205,16 +205,16 @@ class UserCenterController extends Controller
     public function shopcart()
     {   
 
-        //获取每页显示的数据条数
-        $num = 10;
+        // //获取每页显示的数据条数
+        // $num = 10;
 
-            //查询表中数据
-            $data = \DB::table('shopcart')
-            ->join('users', 'users.id', '=', 'shopcart.uid')
-            ->join('goods', 'goods.id', '=', 'shopcart.gid')
-            ->select('shopcart.*', 'users.name', 'goods.title')
-            ->get();
-             dd($data);
+        //     //查询表中数据
+        //     $data = \DB::table('shopcart')
+        //     ->join('users', 'users.id', '=', 'shopcart.uid')
+        //     ->join('goods', 'goods.id', '=', 'shopcart.gid')
+        //     ->select('shopcart.*', 'users.name', 'goods.title')
+        //     ->get();
+        //      dd($data);
 
        
 

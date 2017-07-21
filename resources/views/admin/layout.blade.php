@@ -750,10 +750,7 @@
 <script src="{{ asset('/admin/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('/admin/adminlte/bootstrap/js/raphael-min.js') }}"></script>
-<<<<<<< HEAD
-=======
-<!-- switch -->
->>>>>>> e4b54d5f73c70cc48a3d400d206588cdd9df8ac2
+
 <script src="{{ asset('/admin/adminlte/plugins/morris/morris.min.js') }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset('/admin/adminlte/plugins/sparkline/jquery.sparkline.min.js') }}"></script>

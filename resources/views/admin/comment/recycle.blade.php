@@ -94,7 +94,7 @@
                                 <td class="ids">{{ $value->id}}</td>
                                 <td class="name">{{ $value->username }}</td>
                                 <td class="name">{{ $value->goodname}}</td>
-                                <td class="name" style="width:300px;height:50px" overflow="hidden">{{ $value->content }}</td>
+                                 <td class="name" ><div id="sort" style='width: 400px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->content }}</div></td>
                                 <!-- <td> <textarea name="content" cols="50" rows="2"  style="overflow:hidden;resize:none;border:none">{{$value->content}}</textarea></td> -->
                                 <td class="name">{{date('y-m-d h:i:s',$value->created_at)  }}</td>
                                 <td class="name">{{ date('y-m-d h:i:s',$value->updated_at) }}</td>

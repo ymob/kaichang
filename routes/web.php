@@ -166,7 +166,11 @@ Route::group(['middleware' => 'homeuser'], function(){
 
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-  
+    
+
+    //用户评论
+    //加载评论页面
+    Route::get('/home/comment/index',"Home\CommentController@index");
 });
 
 // 用户注册
@@ -213,6 +217,8 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 配套服务
     Route::post('/shopcenter/facilities/delete', 'Home\ShopPlacesController@fac_delete');
 
+
+    
 });
 
 
