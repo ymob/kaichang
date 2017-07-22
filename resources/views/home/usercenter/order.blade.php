@@ -8,6 +8,8 @@
             color:#001f3b;
             height:40px;
             width:715px;
+            /*margin-top: 20px;*/
+             border-radius: 10px;
         }
         a{
             text-decoration:none;
@@ -20,11 +22,14 @@
             border-right:1px solid  #e3eaee;
             position:relative;
             height:40px;
+            line-height: 40px;
+            /*border-radius: 10px;*/
         }
-       a:hover{
+
+         a:hover{
             color:#007bb6;
             font-size:102%;
-        }
+          }
          .style-table
         {
              border:1px solid #e3eaee;
@@ -37,6 +42,7 @@
             color:#001f3b;
             border:1px solid  #e3eaee;
             text-align:center;
+
 
         }
         td{
@@ -51,16 +57,16 @@
 @section('con')
 
     <ul class="order-title">
-      <li ><a href="#" class="sta">全部订单</a></li>
-      <li><a href="#" class="sta">未付款</a></li>
-      <li ><a href="#" class="sta">未接单</a></li>
-      <li><a href="#" class="sta">使用中</a></li>
-      <li ><a href="#" class="sta">定单取消</a></li>
-      <li style="border-right:none"><a href="#" class="sta">使用完成</a></li>
+      <li class="cur"><a href="#" class="sta" style="color:#007bb6">全部订单</a></li>
+      <li class="cur"><a href="#" class="sta" style="color:#007bb6">未付款</a></li>
+      <li class="cur"><a href="#" class="sta" style="color:#007bb6">未接单</a></li>
+      <li class="cur"><a href="#" class="sta" style="color:#007bb6">使用中</a></li>
+      <li class="cur"><a href="#" class="sta" style="color:#007bb6">定单取消</a></li>
+      <li style="border-right:none"  class="cur" ><a href="#" class="sta" style="color:#007bb6">使用完成</a></li>
     </ul>
 
-  <table class="style-table " style="margin-top: 50px;">
-      <tr class="style-tr">
+  <table class="style-table table table-striped table-hover" style="margin-top: 10px;">
+      <tr class="style-tr info">
 
           <th class="style-td">编号</th>
           <th class="style-td">商家</th>
@@ -139,7 +145,7 @@
             }
         });
 
-         $("ul li").click(function(){
+         $(".cur").click(function(){
       // alert(111);
         $(this).addClass("current").siblings().removeClass("current");
     });

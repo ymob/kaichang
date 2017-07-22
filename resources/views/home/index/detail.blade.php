@@ -208,9 +208,16 @@
                         <ol>
                             @foreach($facilities[$k] as $key=>$val)
                                 <li style="">
+                                  <span>
+                                     数量&nbsp;
+                                     <span class="jian ope">-</span>
+                                     <span class="num">0</span>
+                                     <span class="jia ope">+</span>
+                                     份
+                                  </span>
                                     {{--<input type="checkbox" name="sel[]" class="checkbox">--}}
-                                    无 <input type="radio" name="sel{{ $k }}{{ $key }}" value="0" checked >&nbsp;
-                                    有 <input type="radio" name="sel{{ $k }}{{ $key }}" value="1">
+                                    {{--无 <input type="radio" name="sel{{ $k }}{{ $key }}" value="0" checked >&nbsp;--}}
+                                    {{--有 <input type="radio" name="sel{{ $k }}{{ $key }}" value="1">--}}
                                 </li>
                             @endforeach
                         </ol>
@@ -335,6 +342,7 @@
 @section('js')
     <script>
 
+        // 会场下拉的展开与收缩
         $(".detail_con").eq(0).css('display','block');
         $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-bottom');
         $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-right');
@@ -354,9 +362,11 @@
                 $(this).next().next().css('display', 'none');
             }
         });
+
+        // 加减按钮
         $('.jian').on('click', function(){
             var num = Number($(this).next().html());
-            if(num < 2) return;
+            if(num < 1) return;
             $(this).next().html(num - 1);
         });
         $('.jia').on('click', function(){
@@ -364,7 +374,7 @@
             $(this).prev().html(num + 1);
         });
 
-        // 选择会议时长
+        // 选择会议时长并填充
         $("select[name='timeLong']").on('change',function(){
             var day = '&nbsp;'+$(this).val()+'&nbsp;';
             $(".day").html(day);
@@ -379,14 +389,14 @@
 
             var mprice1 = $(this).html();
             $(this).parents(".detail").find(".totalprice").html(mprice1);
-            var radios = $(this).parents(".detail").find(":radio");
+            var opes = $(this).parents(".detail").find(".ope");
 
-            $(this).parents(".detail").find(":radio").on('click',function(){
+            $(this).parents(".detail").find(".ope").on('click',function(){
 
-                var index = radios.index($(this));
-                //ope是1的时候表示选中,加上价格;是0表示取消,减去价格
+                var index = opes.index($(this));
+                //ope是1的时候表示加上价格;是0表示减去价格
                 var ope = index%2;
-                //low是当前选中的radio所在行数
+                //low是当前选中的加减按钮所在行数
                 var low = Math.floor(index/2);
 
                 if(ope == 1)
@@ -403,6 +413,10 @@
                     var mprice2 = $(this).parents(".detail").find(".totalprice").html();
                     var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
                     var total = parseInt(mprice2)-parseInt(fprice);
+                    if(total < $(this).parents(".detail").find(".mprice").html())
+                    {
+                        return false;
+                    }
                     $(this).parents(".detail").find(".totalprice").html(total);
 
                     var mfid = $(this).parents(".detail").find(".fid").eq(low).html();
@@ -420,6 +434,7 @@
             var price = $(this).parents(".detail").find(".totalprice").html();
             var stime = $(this).parents(".detail").find(".stime").val();
             var ltime = $(this).parents(".detail").find(".ltime").val();
+
             if(ltime == 0)
             {
                 alert('请选择会场租用时长!');
@@ -431,12 +446,12 @@
                 return false;
             }
 
-//            console.log(ltime);
             $.ajax('/shopcart/add',{
                 "type":'GET',
                 "data":{mid:mid, fids:fid, stime:stime, ltime:ltime, price:price},
                 "success":function(data){
                     console.log(data);
+                    location.href='';
                 },
                 "error":function(){
                     alert('数据异常');

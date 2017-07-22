@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('/home/css/index/dateRange.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('/home/css/index/dateRange.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('/home/css/index/nav.css') }}">
     <script src="{{ asset('/home/js/index/jquery.min.js') }}"></script>
-    <script src="{{ asset('/home/js/index/dateRange.js') }}"></script>
+{{--    <script src="{{ asset('/home/js/index/dateRange.js') }}"></script>--}}
 
     @yield('head')
 
@@ -31,6 +31,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <a id="top"></a>
                     <a class="navbar-brand" href="{{ url('/') }}">首页</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -126,13 +127,13 @@
     <footer>
         <div class="text-center footer">
             <p>
-                <a href="">关于我们</a> | 
-                <a href="">联系我们</a> | 
-                <a href="">联系客服</a> | 
+                <a href="/home/foot/aboutus">关于我们</a> | 
+                <a href="/home/foot/aboutus">联系我们</a> | 
+                <a href="/home/foot/aboutus">联系客服</a> | 
                 <a href="">商家中心</a> | 
                 <a href="">手机开场</a> | 
-                <a href="">友情链接</a> | 
-                <a href="">隐私政策</a>
+                <a href="/home/foot/aboutus">友情链接</a> | 
+                <a href="/home/foot/aboutus">隐私政策</a>
             </p>
             <p>COPYRIGHT &copy; 2017 - 2023 ALL RIGHTS RESERVED 开场网 版权所有</p>
             <p>经营许可证编号 : 京ICP证160741号 京ICP备11042446号-5</p>
@@ -267,24 +268,27 @@
                                 </div>
                                 <div id="J-cart-render">
                                     <div class="tbar-cart-list">
-                                        @if($shopcart)
-                                            @foreach($shopcart as $k=>$v)
-                                            <div class="tbar-cart-item" >
-                                                {{--<div class="jtc-item-promo">--}}
-                                                    {{--<em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>--}}
-                                                    {{--<div class="promo-text">已购满600元，您可领赠品</div>--}}
-                                                {{--</div>--}}
-                                                <div class="jtc-item-goods">
-                                                    <span class="p-img"><a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" target="_blank"><img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{ $v['pic'] }}" alt="" height="50" width="50" /></a></span>
-                                                    <div class="p-name">
-                                                        <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" style="font-weight:bold;">{{ $v['mname'] }}</a><br>
-                                                        已选配套服务: {{ $v['fname'] }}
-                                                    </div>
-                                                    <div class="p-price"><strong>¥{{ $v['price'] }} ×1 </div>
-                                                    <a href="{{ $k }}" class="p-del J-del">删除</a>
-                                                </div>
-                                            </div>
+
+                                        @if(isset($shopcart))
+                                        @foreach($shopcart as $k=>$v)
+                                        <div class="tbar-cart-item" >
+                                        <div class="jtc-item-promo">
+                                            <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}"><em class="promo-tag promo-mz">{{ $v['pname'] }}<i class="arrow"></i></em></a>
+                                        <div class="promo-text"></div>
+                                        </div>
+                                        <div class="jtc-item-goods">
+                                        <span class="p-img"><a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" target="_blank"><img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{ $v['pic'] }}" alt="" height="50" width="50" /></a></span>
+                                        <div class="p-name">
+                                            <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" style="font-weight:bold;">{{ $v['mname'] }}</a><br>
+                                            @foreach($v['fname'] as $key=>$val)
+                                                {{ $val }} &nbsp;
                                             @endforeach
+                                        </div>
+                                            <div class="p-price"><strong>¥<span class="meetprice">{{ $v['price'] }}</span> ×1 </strong></div>
+                                        <a href="{{ $k }}" class="p-del J-del">删除</a>
+                                        </div>
+                                        </div>
+                                        @endforeach
                                         @endif
 
                                     </div>
@@ -293,8 +297,8 @@
                         </div>
                         <div class="tbar-panel-footer J-panel-footer">
                             <div class="tbar-checkout">
-                                <div class="jtc-number"> <strong class="J-count">0</strong>件商品 </div>
-                                <div class="jtc-sum"> 共计：<strong class="J-total">¥113</strong> </div>
+                                <div class="jtc-number"> <strong class="J-count count" >0</strong> 件商品 </div>
+                                <div class="jtc-sum"> 共计：<strong>¥</strong><strong class="J-total"></strong> </div>
                                 <a class="jtc-btn J-btn" href="#none" target="_blank">去购物车结算</a>
                             </div>
                         </div>
@@ -349,7 +353,7 @@
                     <div class="toolbar-tab tbar-tab-cart">
                         <i class="tab-ico"></i>
                         <em class="tab-text ">购物车</em>
-                        <span class="tab-sub J-count ">1</span>
+                        <span class="tab-sub J-count count"></span>
                     </div>
                     <div class=" toolbar-tab tbar-tab-follow">
                         <i class="tab-ico"></i>
@@ -364,7 +368,7 @@
                 </div>
                 
                 <div class="toolbar-footer">
-                    <div class="toolbar-tab tbar-tab-top"> <a href="#"> <i class="tab-ico"></i> <em class="footer-tab-text">顶部</em> </a> </div>
+                    <div class="toolbar-tab tbar-tab-top"> <a href="#top"> <i class="tab-ico"></i> <em class="footer-tab-text">顶部</em> </a> </div>
                     <div class=" toolbar-tab tbar-tab-feedback"> <a href="#" target="_blank"> <i class="tab-ico"></i> <em class="footer-tab-text ">反馈</em> </a> </div>
                 </div>
                 
@@ -532,6 +536,25 @@
 //                $(location).attr('href','/');
             }
         });
+
+        // 侧边购物车 //
+        // 关闭购物车按钮
+        $(".close-panel").on('click',function(){
+
+            $(".toolbar-wrap").removeClass("toolbar-open");
+
+        });
+        // 显示购物车中商品数
+        $(".count").html($(".tbar-cart-list").find(".tbar-cart-item").length);
+        // 计算购物车中商品总价
+        var prices = $(".meetprice");
+        var sum = 0;
+        $.each(prices,function(i,n){
+            sum += parseInt($(this).html());
+        });
+        $(".J-total").html(sum);
+
+
 
     </script>
 </body>

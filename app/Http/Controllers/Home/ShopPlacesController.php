@@ -499,6 +499,7 @@ class ShopPlacesController extends Controller
             'address4' => 'required',
             'phone' => 'required',
             'evidencePic' => 'required|image',
+            //'avatar' => 'dimensions:min_width=250,min_height=500'
             'price' => 'required'
         ],[
             'typeId.required' => '未选择场地类型',

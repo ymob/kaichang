@@ -98,16 +98,20 @@ class DetailsController extends Controller
         {
             foreach($shopcart as $key=>$val)
             {
-                $shopcart[$key]['pid'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
+                $pid = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
+                $shopcart[$key]['pid'] = $pid;
+                $shopcart[$key]['pname'] = \DB::table('places')->where('id',$pid)->value('title');
                 $shopcart[$key]['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
                 $fids = explode(',',$val['fids']);
+                $count = array_count_values($fids);
+                $fids = array_unique($fids);
                 $arr = [];
                 foreach($fids as $k=>$v)
                 {
                     $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
-                    $arr[] = $support[$sid];
+                    $arr[] = $support[$sid].' ✖ '.$count[$v];
                 }
-                $shopcart[$key]['fname'] = implode(' ',$arr);
+                $shopcart[$key]['fname'] = $arr;
                 $shopcart[$key]['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
 //                $val['start'] = date('Y-m-d H:i',$val('stime'));
             }

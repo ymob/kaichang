@@ -132,7 +132,11 @@ class CreateAllTable extends Migration
             $table->integer('stime');   //开始时间
             $table->integer('ltime');   //会议时长
             $table->integer('created_at');
+<<<<<<< HEAD
             $table->integer('updated_at')->nullable();
+=======
+            $table->integer('sid');
+>>>>>>> c22bdfc566e8797ccdc6bf084ce12a4f32cd6920
         });
 
         //收藏夹表

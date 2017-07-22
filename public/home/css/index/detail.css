@@ -30,9 +30,10 @@ h3+p { font-size: 16px; }
 .detail_con div:nth-child(3) li { height: 40px; line-height: 40px; }
 .detail_con div:nth-child(3) li span { float: right; font-weight: bold; color: #333; font-size: 16px; }
 .detail_con div:nth-child(4) {  padding-left: 20px; }
-.detail_con div:nth-child(4) ol{ width:150px;float:left;}
+.detail_con div:nth-child(4) ol{ width:120px;float:left;}
+.detail_con div:nth-child(4) ol:nth-child(3){ width:220px;float:left;}
 .detail_con div:nth-child(4) li { height: 40px; line-height: 40px; }
-.detail_con div:nth-child(4) li .jian,.jia,.num { border: 1px solid #bbb; margin-left: -5px; }
+.detail_con div:nth-child(4) li .jian,.jia,.num { border: 1px solid #bbb; margin-left: -5px; cursor:pointer;}
 .detail_con div:nth-child(4) li .jian,.jia { padding: 0px 15px; background: #cecece }
 .detail_con div:nth-child(4) li .num { padding: 0px 15px; }
 .detail_con .support{float:left;color:#0E6EB8;font-weight:bold;margin-top:10px;}

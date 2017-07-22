@@ -42,14 +42,14 @@ class RegistController extends Controller
                 ->withInput();
         }
 
-        // //比对手机验证码
-        // $cookiePhonecode = \Cookie::get('phonecode');
-        // $inputPhonecode = $request->input('phonecode');
+         //比对手机验证码
+         $cookiePhonecode = \Cookie::get('phonecode');
+         $inputPhonecode = $request->input('phonecode');
         
-        // if($cookiePhonecode != $inputPhonecode)
-        // {
-        //     return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
-        // }
+         if($cookiePhonecode != $inputPhonecode)
+         {
+             return back()->with(['code'=>'2','info'=>'手机验证码错误'])->withInput();
+         }
 
         $data=$request->except('_token','re_password','phonecode');
 
