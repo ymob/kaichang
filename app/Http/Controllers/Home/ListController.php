@@ -14,7 +14,6 @@ class ListController extends Controller
     {
     	$pageSize = 5;
 
-    	// dd($page);
         if($request->data)
         {
             $data = $request->data;
@@ -29,7 +28,6 @@ class ListController extends Controller
         if($startPage < 0) $startPage = 0;
 
 		$where = 'WHERE id>0 ';
-        // dd($data);
 
         // 地区
 		$arr_add = ['北京'=>1,'天津'=>2,'沈阳'=>107,'大连'=>108,'哈尔滨'=>130,'石家庄'=>73,'太原'=>84,'呼和浩特'=>95,'廊坊'=>82,'上海'=>9,'杭州'=>175,'南京'=>162,'苏州'=>166,'无锡'=>163,'济南'=>223,'厦门'=>204,'宁波'=>176,'福州'=>203,'青岛'=>224,'合肥'=>186,'常州'=>165,'扬州'=>171,'温州'=>177,'绍兴'=>180,'嘉兴'=>178,'威海'=>232,'镇江'=>172,'南通'=>167,'金华'=>183,'徐州'=>164,'潍坊'=>229,'淄博'=>225,'临沂'=>235,'马鞍山'=>190,'台州'=>184,'泰州'=>173,'济宁'=>230,'泰安'=>231,'成都'=>385,'武汉'=>258,'郑州'=>240,'长沙'=>275,'南昌'=>212,'贵阳'=>406,'西宁'=>462,'重庆'=>22,'西安'=>438,'昆明'=>415,'兰州'=>448,'乌鲁木齐'=>475,'银川'=>470,'广州'=>289,'深圳'=>291,'佛山'=>294,'珠海'=>292,'东莞'=>305,'三亚'=>325,'海口'=>324,'南宁'=>310,'惠州'=>299];
@@ -92,7 +90,7 @@ class ListController extends Controller
         	$where = trim($where).')';
         }
 
-        // 时间条件
+        // 酒店星级条件
         if(isset($data['hotelStar']))
         {
         	$where = trim($where);
@@ -113,8 +111,13 @@ class ListController extends Controller
         $where = trim($where);
 
         // 查询语句
-		$places = \DB::select("SELECT * FROM places ".$where);
+        $key_where = md5($where);
 
+        $places = \Cache::get($key_where, function() use($where, $key_where) {
+            $res = \DB::select("SELECT * FROM places ".$where);
+            \Cache::put($key_where, $res, 5);
+            return $res;
+        });
 
 		// 时间
 		$startime = strtotime($data['startime']);
@@ -138,7 +141,6 @@ class ListController extends Controller
     			}
     			if($orders)
     			{
-                    // 
     				if(in_array(false, $place_order))
     				{
                         $val->timeContradict = true;
@@ -146,7 +148,6 @@ class ListController extends Controller
     			}
     		}
 
-            // dd($places);
             $places_order_false = [];
             $places_order_true = [];
             foreach ($places as $key => $val)
@@ -212,20 +213,25 @@ class ListController extends Controller
             $v->pic = $pics[0];
         }
 
-        $places = array_slice($places, $startPage, $pageSize);
+        $dataSize = count($places);
+        $maxPage = ceil($dataSize / $pageSize);
+        // 清除缓存
+        if($maxPage == $page)
+        {
+            \Cache::forget($key_where);
+        }
 
+        $places = array_slice($places, $startPage, $pageSize+1);
         $data['page'] = $page + 1;
         $data['places'] = $places;
-        // dd($data);
+
         $ajax = json_encode($data);
 
-        // dd($data);
         if($request->data)
         {
             return response()->json($data);
         }else
         {
-
             return view('home.index.list', ['title'=>'搜索结果列表页', 'ajax' => $ajax, 'request' => $request->all(), 'scode' => 2,'data' => $places]);
         }
 

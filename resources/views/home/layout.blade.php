@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/dateRange.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/nav.css') }}">
-    <script src="{{ asset('/home/js/index/jquery.min.js') }}"></script>
-    <script src="{{ asset('/home/js/index/dateRange.js') }}"></script>
 
     @yield('head')
 
