@@ -56,7 +56,7 @@ class ShopLoginController extends Controller
             \Cookie::queue('remember_token', $shopkeeper->remember_token, 10); //10分钟
         }
 
-        return redirect('/')->with(['info' => '登录成功']);
+        return redirect('/shopcenter/index')->with(['info' => '登录成功']);
     }
 
     // 执行退出
