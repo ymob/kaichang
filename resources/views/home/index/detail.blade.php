@@ -10,7 +10,7 @@
             <ol class="breadcrumb container">
                 <li><a href="#">首页</a></li>
                 <li><a href="#">场地搜索</a></li>
-                <li class="active">{{ $data->title  }}</li>
+                <li class="active">{{ $data->title }}</li>
             </ol>
         </div>
         <div id="all_con" class="container">
@@ -142,8 +142,8 @@
                                     <span>{{ $v->dinnerPeople }} <a href="">（宴会式）</a></span>
                                 </span>
                                 <span class="pull-right">
-                                    <span class="biaoqian">aa</span>
-                                    <span class="biaoqian">aa</span>
+                                    <span class="biaoqian">场地方正</span>
+                                    <span class="biaoqian">装修精美</span>
                                 </span>
                             </li>
                             <li>
@@ -156,10 +156,11 @@
                                     <span>评论：0</span>
                                 </span>
                             </li>
-                            <li>价格：<span class="s_price">￥{{ $v->price }}元/天</span></li>
+                            <li>价格：<span class="s_price">￥<span class="mprice">{{ $v->price }}</span> 元/天</span></li>
                             <li>
                                 <span>会议时长：</span>
-                                <select name="timeLong" style="height:26px;width:60px;">
+                                <select name="ltime" class="ltime" style="height:26px;width:70px;">
+                                    <option value="0">请选择</option>
                                     <option value="1">1 天</option>
                                     <option value="2">2 天</option>
                                     <option value="3">3 天</option>
@@ -174,13 +175,12 @@
                                     <option value="12">12 天</option>
                                     <option value="13">13 天</option>
                                     <option value="14">14 天</option>
-                                    <option value="15">14天以上</option>
                                 </select>
                                 ，共<span class="day">&nbsp;&nbsp;&nbsp;&nbsp;</span>天
                             </li>
                             <li>
                                 <span>会议开始日期：</span>
-                                <input type="date" name="startTime" style="height:26px;">
+                                <input type="date" name="stime" class="stime" style="height:26px;">
                             </li>
                         </ol>
                     </div>
@@ -202,20 +202,32 @@
                         </ol>
                         <ol>
                             @foreach($facilities[$k] as $key=>$val)
-                                <li><span>价格 : {{ $val->price }}</span></li>
+                                <li>价格 : <span class="fprice">{{ $val->price }}</span></li>
                             @endforeach
                         </ol>
                         <ol>
                             @foreach($facilities[$k] as $key=>$val)
-                                <li style="padding-top:8px;">
-                                    <input type="checkbox" name="sel[]" class="checkbox">
+                                <li style="">
+                                  <span>
+                                     数量&nbsp;
+                                     <span class="jian ope">-</span>
+                                     <span class="num">0</span>
+                                     <span class="jia ope">+</span>
+                                     份
+                                  </span>
+                                    {{--<input type="checkbox" name="sel[]" class="checkbox">--}}
+                                    {{--无 <input type="radio" name="sel{{ $k }}{{ $key }}" value="0" checked >&nbsp;--}}
+                                    {{--有 <input type="radio" name="sel{{ $k }}{{ $key }}" value="1">--}}
                                 </li>
                             @endforeach
                         </ol>
                         <div>
-                            <li>
-                                <button class="btn btn-danger col-xs-offset-10">加入购物车</button>
-                            </li>
+                            <div class="total"><span>总价 : </span><span class="totalprice">100.00 </span> 元</div>
+                            <button class="btn btn-danger col-xs-offset-9 go">加入购物车</button>
+                            <span style="display:none;" class="mid">{{ $v->id }}</span>
+                            @foreach($facilities[$k] as $key=>$val)
+                                <span style="display:none;" class="fid">{{ $val->id }}</span>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -278,7 +290,7 @@
             <div id="commend" class="row">
                 <div class="col-md-6">
                     <div class="col-xs-6">
-                        <img src="./home/images/tu1.png">
+                        <img src="{{ url('home/images') }}/tu1.png">
                         <ul>
                             <h3>鸟巢</h3>
                             <p>所在地 : 北京市海淀区紫竹院路69号</p>
@@ -288,7 +300,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-6">
-                        <img src="./home/images/tu1.png">
+                        <img src="{{ url('home/images') }}/tu1.png">
                         <ul>
                             <h3>鸟巢</h3>
                             <p>所在地 : 北京市海淀区紫竹院路69号</p>
@@ -300,7 +312,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col-xs-6">
-                        <img src="./home/images/tu1.png">
+                        <img src="{{ url('home/images') }}/tu1.png">
                         <ul>
                             <h3>鸟巢</h3>
                             <p>所在地 : 北京市海淀区紫竹院路69号</p>
@@ -310,7 +322,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-6">
-                        <img src="./home/images/tu1.png">
+                        <img src="{{ url('home/images') }}/tu1.png">
                         <ul class="list-unstyled">
                             <h3>鸟巢</h3>
                             <p>所在地 : 北京市海淀区紫竹院路69号</p>
@@ -330,6 +342,7 @@
 @section('js')
     <script>
 
+        // 会场下拉的展开与收缩
         $(".detail_con").eq(0).css('display','block');
         $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-bottom');
         $(".detail_nav").eq(0).find('span').eq(0).toggleClass('glyphicon-triangle-right');
@@ -349,9 +362,11 @@
                 $(this).next().next().css('display', 'none');
             }
         });
+
+        // 加减按钮
         $('.jian').on('click', function(){
             var num = Number($(this).next().html());
-            if(num < 2) return;
+            if(num < 1) return;
             $(this).next().html(num - 1);
         });
         $('.jia').on('click', function(){
@@ -359,10 +374,92 @@
             $(this).prev().html(num + 1);
         });
 
-        // 选择会议时长
+        // 选择会议时长并填充
         $("select[name='timeLong']").on('change',function(){
             var day = '&nbsp;'+$(this).val()+'&nbsp;';
             $(".day").html(day);
         });
+
+        // 计算会场总价
+        var mprice = $(".mprice");
+        // 所选配套服务id
+        var fid = [];
+
+        $.each(mprice,function(i,n){
+
+            var mprice1 = $(this).html();
+            $(this).parents(".detail").find(".totalprice").html(mprice1);
+            var opes = $(this).parents(".detail").find(".ope");
+
+            $(this).parents(".detail").find(".ope").on('click',function(){
+
+                var index = opes.index($(this));
+                //ope是1的时候表示加上价格;是0表示减去价格
+                var ope = index%2;
+                //low是当前选中的加减按钮所在行数
+                var low = Math.floor(index/2);
+
+                if(ope == 1)
+                {
+                    var mprice2 = $(this).parents(".detail").find(".totalprice").html();
+                    var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
+                    var total = parseInt(mprice2)+parseInt(fprice);
+                    $(this).parents(".detail").find(".totalprice").html(total);
+
+                    fid.push($(this).parents(".detail").find(".fid").eq(low).html());
+                }
+                if(ope == 0)
+                {
+                    var mprice2 = $(this).parents(".detail").find(".totalprice").html();
+                    var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
+                    var total = parseInt(mprice2)-parseInt(fprice);
+                    if(total < $(this).parents(".detail").find(".mprice").html())
+                    {
+                        return false;
+                    }
+                    $(this).parents(".detail").find(".totalprice").html(total);
+
+                    var mfid = $(this).parents(".detail").find(".fid").eq(low).html();
+                    fid.splice($.inArray(mfid,fid),1);
+                }
+
+            });
+
+        });
+
+        // 添加到购物车
+        $(".go").on('click',function(){
+
+            var mid = $(this).parents(".detail").find(".mid").html();
+            var price = $(this).parents(".detail").find(".totalprice").html();
+            var stime = $(this).parents(".detail").find(".stime").val();
+            var ltime = $(this).parents(".detail").find(".ltime").val();
+
+            if(ltime == 0)
+            {
+                alert('请选择会场租用时长!');
+                return false;
+            }
+            if(!stime)
+            {
+                alert('请选择会场租用开始时间!');
+                return false;
+            }
+
+            $.ajax('/shopcart/add',{
+                "type":'GET',
+                "data":{mid:mid, fids:fid, stime:stime, ltime:ltime, price:price},
+                "success":function(data){
+                    console.log(data);
+                    location.href='';
+                },
+                "error":function(){
+                    alert('数据异常');
+                },
+                "dataType":"json"
+            });
+
+        });
+
     </script>
 @endsection

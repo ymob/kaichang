@@ -189,7 +189,7 @@
 .jtc-item-promo .promo-tag {
     position: relative;
     float: left;
-    width: 40px;
+    width: 100%;
     height: 20px;
     margin-top: -1px;
     margin-left: -57px;
@@ -205,6 +205,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     font: 12px/18px verdana;
+    font-weight:bold;
 }
 .jtc-item-goods {
     padding: 10px 0px;

@@ -288,6 +288,9 @@
                         <ul id="places_ul" class="list-unstyled">
 
                             @foreach($data as $key=>$val)
+                                @if($loop->index >= 5)
+                                @break
+                                @endif
                                 <li>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -549,18 +552,26 @@
         var ajax = null;
 
         $('#loadOther').on('click', function(){
+            if($('#loadOther').hasClass('disabled'))
+            {
+                return false;
+            }
             $.ajax('/listSearch', {
                 data: {'data': ajax?ajax:{!! $ajax !!} },
                 type: 'POST',
                 dataType: 'json',
                 success: function(data)
                 {
-                    if(data.places.length != 5)
+                    if(data.places.length != 6)
                     {
                         $('#loadOther').addClass('disabled');
                         $('#loadOther').html('暂无更多场地');
                     }
                     $.each(data.places, function(i, n){
+                        if(i == 5)
+                        {
+                            return false;
+                        }
                         var model = $('#place_model').clone();
                         model.attr('id', '');
                         

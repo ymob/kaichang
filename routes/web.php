@@ -132,6 +132,9 @@ Route::post('/listSearch','Home\ListController@listSearch');
 // 场地搜索结果详情页
 Route::get('/detail/pid={pid}','Home\DetailsController@index');
 
+// 购物车
+Route::get('/shopcart/add','Home\ShopcartController@add');
+
 // 错误页面
 Route::get('/404', function(){
     return view('404');

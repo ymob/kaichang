@@ -60,49 +60,6 @@ class CreateAllTable extends Migration
             $table->integer('updated_at');
         });
 
-        //商品分类表
-        Schema::create('goods_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('typeName');
-            $table->integer('pid');
-            $table->string('path')->default('0');
-            // 0：禁用 1：启用
-            $table->tinyInteger('status')->default('1');
-            $table->string('attrIds')->nullable();
-        });
-
-        //商品属性表
-        Schema::create('goods_attrs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('attrName');
-            $table->string('valueIds')->nullable();
-        });
-
-        //商品属性值表
-        Schema::create('goods_values', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('value');
-        });
-
-        //商品表
-        Schema::create('goods', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('sid');
-            $table->string('title');
-            $table->string('phone');
-            $table->string('license');
-            $table->integer('typeId');
-            $table->tinyInteger('status')->default('1');
-        });
-
-        //商品属性信息表
-        Schema::create('goods_attrinfo', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('gid');
-            $table->integer('goodAttrId');
-            $table->integer('goodAttrValId');
-        });
-
         //企业用户表(用户详情表)
         Schema::create('userdetails', function (Blueprint $table) {
             $table->increments('id');
@@ -132,15 +89,17 @@ class CreateAllTable extends Migration
         //订单表
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number')->unique();
-            $table->integer('uid')->unique();
-            $table->string('sids');
-            $table->string('gids');
+            $table->integer('number');
+            $table->integer('pid')->nullable();
+            $table->integer('mid');
+            $table->string('fids');
+            $table->integer('stime');
+            $table->integer('ltime');
             $table->decimal('price', 10, 2);
-            // 1：未付款 2：未接单 3：交易中 4：交易完成 5：交易终止
+            // 1：商家未接单 2：未付款 3：交易中 4：交易完成 5：交易终止
             $table->tinyInteger('status')->default('1');
             $table->integer('created_at');
-            $table->integer('ended_at');
+            $table->integer('updated_at');
         });
 
         // 订单商品表
@@ -168,9 +127,16 @@ class CreateAllTable extends Migration
         Schema::create('shopcart', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid');
-            $table->integer('gid');
+            $table->integer('mid');     //会场 id
+            $table->string('fids')->nullable();     //配套服务 id 如 23,24,25
+            $table->integer('stime');   //开始时间
+            $table->integer('ltime');   //会议时长
             $table->integer('created_at');
+<<<<<<< HEAD
+            $table->integer('updated_at')->nullable();
+=======
             $table->integer('sid');
+>>>>>>> c22bdfc566e8797ccdc6bf084ce12a4f32cd6920
         });
 
         //收藏夹表
@@ -212,6 +178,48 @@ class CreateAllTable extends Migration
             $table->string('phone');
         });
 
+//        //商品分类表
+//        Schema::create('goods_types', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('typeName');
+//            $table->integer('pid');
+//            $table->string('path')->default('0');
+//            // 0：禁用 1：启用
+//            $table->tinyInteger('status')->default('1');
+//            $table->string('attrIds')->nullable();
+//        });
+//
+//        //商品属性表
+//        Schema::create('goods_attrs', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('attrName');
+//            $table->string('valueIds')->nullable();
+//        });
+//
+//        //商品属性值表
+//        Schema::create('goods_values', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('value');
+//        });
+//
+//        //商品表
+//        Schema::create('goods', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->integer('sid');
+//            $table->string('title');
+//            $table->string('phone');
+//            $table->string('license');
+//            $table->integer('typeId');
+//            $table->tinyInteger('status')->default('1');
+//        });
+//
+//        //商品属性信息表
+//        Schema::create('goods_attrinfo', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->integer('gid');
+//            $table->integer('goodAttrId');
+//            $table->integer('goodAttrValId');
+//        });
 
     }
 
