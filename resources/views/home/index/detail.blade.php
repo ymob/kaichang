@@ -160,7 +160,6 @@
                             <li>
                                 <span>会议时长：</span>
                                 <select name="ltime" class="ltime" style="height:26px;width:70px;">
-                                    <option value="0">请选择</option>
                                     <option value="1">1 天</option>
                                     <option value="2">2 天</option>
                                     <option value="3">3 天</option>
@@ -176,7 +175,7 @@
                                     <option value="13">13 天</option>
                                     <option value="14">14 天</option>
                                 </select>
-                                ，共<span class="day">&nbsp;&nbsp;&nbsp;&nbsp;</span>天
+                                ，共&nbsp;&nbsp;<span class="day">1</span>&nbsp;&nbsp;天
                             </li>
                             <li>
                                 <span>会议开始日期：</span>
@@ -375,9 +374,18 @@
         });
 
         // 选择会议时长并填充
-        $("select[name='timeLong']").on('change',function(){
-            var day = '&nbsp;'+$(this).val()+'&nbsp;';
-            $(".day").html(day);
+        $("select[name='ltime']").on('change',function(){
+            var day = $(this).val();
+            $(this).parents(".detail").find(".day").html(day);
+
+            var smprice = $(this).parents(".detail").find(".mprice").html();
+            var totalprice = parseInt(smprice)*$(this).val();
+            $(this).parents(".detail").find(".totalprice").html(totalprice);
+
+            var nums = $(this).parents(".detail").find(".num");
+            $.each(nums,function(i,n){
+                $(this).html(0);
+            });
         });
 
         // 计算会场总价
@@ -403,7 +411,8 @@
                 {
                     var mprice2 = $(this).parents(".detail").find(".totalprice").html();
                     var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
-                    var total = parseInt(mprice2)+parseInt(fprice);
+                    var day =$(".day").html();
+                    var total = parseInt(mprice2)+parseInt(fprice)*day;
                     $(this).parents(".detail").find(".totalprice").html(total);
 
                     fid.push($(this).parents(".detail").find(".fid").eq(low).html());
@@ -412,8 +421,9 @@
                 {
                     var mprice2 = $(this).parents(".detail").find(".totalprice").html();
                     var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
-                    var total = parseInt(mprice2)-parseInt(fprice);
-                    if(total < $(this).parents(".detail").find(".mprice").html())
+                    var day =$(".day").html();
+                    var total = parseInt(mprice2)-parseInt(fprice)*day;
+                    if(total < $(this).parents(".detail").find(".mprice").html()*day)
                     {
                         return false;
                     }
@@ -434,7 +444,7 @@
             var price = $(this).parents(".detail").find(".totalprice").html();
             var stime = $(this).parents(".detail").find(".stime").val();
             var ltime = $(this).parents(".detail").find(".ltime").val();
-
+            console.log(price);
             if(ltime == 0)
             {
                 alert('请选择会场租用时长!');

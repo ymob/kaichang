@@ -89,10 +89,10 @@ class CreateAllTable extends Migration
         //订单表
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number');
+            $table->string('number');
             $table->integer('pid')->nullable();
             $table->integer('mid');
-            $table->string('fids');
+            $table->string('fids')->nullable();
             $table->integer('stime');
             $table->integer('ltime');
             $table->decimal('price', 10, 2);
@@ -131,12 +131,10 @@ class CreateAllTable extends Migration
             $table->string('fids')->nullable();     //配套服务 id 如 23,24,25
             $table->integer('stime');   //开始时间
             $table->integer('ltime');   //会议时长
+            $table->decimal('price', 10, 2);
             $table->integer('created_at');
-<<<<<<< HEAD
             $table->integer('updated_at')->nullable();
-=======
-            $table->integer('sid');
->>>>>>> c22bdfc566e8797ccdc6bf084ce12a4f32cd6920
+
         });
 
         //收藏夹表

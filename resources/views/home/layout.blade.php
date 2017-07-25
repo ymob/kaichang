@@ -7,10 +7,7 @@
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/home/css/index/index.css') }}">
-{{--    <link rel="stylesheet" href="{{ asset('/home/css/index/dateRange.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('/home/css/index/nav.css') }}">
-    <script src="{{ asset('/home/js/index/jquery.min.js') }}"></script>
-{{--    <script src="{{ asset('/home/js/index/dateRange.js') }}"></script>--}}
 
     @yield('head')
 
@@ -70,14 +67,14 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/shopcart/index') }}">
                                 购物车
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
-                            <ul>
-                                <li><a href="#">开场</a></li>
-                                <li><a href="#">开场</a></li>
-                            </ul>
+                            {{--<ul>--}}
+                                {{--<li><a href="#">开场</a></li>--}}
+                                {{--<li><a href="#">开场</a></li>--}}
+                            {{--</ul>--}}
                         </li>
                         <li>
                             <a href="#">
@@ -280,12 +277,14 @@
                                         <span class="p-img"><a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" target="_blank"><img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{ $v['pic'] }}" alt="" height="50" width="50" /></a></span>
                                         <div class="p-name">
                                             <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" style="font-weight:bold;">{{ $v['mname'] }}</a><br>
-                                            @foreach($v['fname'] as $key=>$val)
-                                                {{ $val }} &nbsp;
-                                            @endforeach
+                                            @if(isset($v['fname']))
+                                                @foreach($v['fname'] as $key=>$val)
+                                                    {{ $val }} &nbsp;
+                                                @endforeach
+                                            @endif
                                         </div>
                                             <div class="p-price"><strong>¥<span class="meetprice">{{ $v['price'] }}</span> ×1 </strong></div>
-                                        <a href="{{ $k }}" class="p-del J-del">删除</a>
+                                        <a href="{{ url('/shopcart/delete') }}/{{ $v['started_at'] }}" class="p-del J-del">删除</a>
                                         </div>
                                         </div>
                                         @endforeach
@@ -299,7 +298,7 @@
                             <div class="tbar-checkout">
                                 <div class="jtc-number"> <strong class="J-count count" >0</strong> 件商品 </div>
                                 <div class="jtc-sum"> 共计：<strong>¥</strong><strong class="J-total"></strong> </div>
-                                <a class="jtc-btn J-btn" href="#none" target="_blank">去购物车结算</a>
+                                <a class="jtc-btn J-btn" href="{{ url('/shopcart/index') }}" target="_blank">去购物车结算</a>
                             </div>
                         </div>
                     </div>

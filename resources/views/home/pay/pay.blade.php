@@ -123,7 +123,7 @@
 				<span class=""></span>&nbsp;&nbsp;<span>储蓄卡|快捷</span>
 			</div>
 			<div class="col-md-4 total2">
-				<span >总计:&nbsp;&nbsp;&nbsp;</span><span>¥330,300.00</span>
+				<span >总计:&nbsp;&nbsp;&nbsp;</span><span>¥666,666.00</span>
 			</div>
 		</div>
 		<div class="col-md-2"></div>

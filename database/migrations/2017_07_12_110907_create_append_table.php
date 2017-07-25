@@ -15,7 +15,7 @@ class CreateAppendTable extends Migration
     {
 
         //商品(场地)表 places
-        Schema::create('places',function(Blueprint $table){
+        Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sid'); //商户id
             //场地类型 1酒店、2会议中心、3体育馆、4展览馆、5酒吧/餐厅/会所、6艺术中心/剧院、7咖啡厅/茶室
@@ -47,7 +47,7 @@ class CreateAppendTable extends Migration
         });
 
         //场地下的 会场表 meetplaces
-        Schema::create('meetplaces',function(Blueprint $table){
+        Schema::create('meetplaces', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pid'); //场地id
             $table->string('title');
@@ -66,7 +66,7 @@ class CreateAppendTable extends Migration
         });
 
         //会场下的 配套服务 facilities
-        Schema::create('facilities',function(Blueprint $table){
+        Schema::create('facilities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mid'); //会场id
             $table->integer('supportType'); //类型 1客房 2茶歇 3AV设备
@@ -81,6 +81,15 @@ class CreateAppendTable extends Migration
             $table->integer('updated_at');
         });
 
+        // 用户收藏表
+        Schema::create('collection', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('uid');
+            $table->integer('pid');
+            $table->integer('status')->default('1');
+            $table->integer('updated');
+        });
+    }
 
     /**
      * Reverse the migrations.
