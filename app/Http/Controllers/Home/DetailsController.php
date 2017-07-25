@@ -13,7 +13,6 @@ class DetailsController extends Controller
         $placesId = $pid;
         // 场地信息 //
         $data = \DB::table('places')->where('id',$pid)->first();
-
         // 地址
         $address = explode(',',$data->address);
         $arr = [];
@@ -36,7 +35,7 @@ class DetailsController extends Controller
 
         // 当前场地下的会场信息 //
         $meetData = \DB::table('meetplaces')->where('pid',$pid)->get();
-//        dd($meetData);
+
         $freeValues = array('','暖气','地毯','音响','无线话筒','固定投影','固定幕布','移动投影','电视屏','白板','移动舞台','茶/水','纸笔','桌卡','指引牌','签到台','鲜花','茶歇','有线话筒','台式话筒','小蜜蜂','移动幕布','LED屏','移动讲台','宽带接口','代客泊车','停车场');
         $mid = [];
 
@@ -78,7 +77,7 @@ class DetailsController extends Controller
         if(session('user'))
         {
             $uid = session('user')->id;
-            $res = \DB::table('shopcart')->where('uid',$uid)->get();
+            $res = \DB::table('shopcart')->where('uid',$uid)->get()->toArray();
             if($res)
             {
                 $shopcart = $res;
@@ -98,6 +97,13 @@ class DetailsController extends Controller
         $support = array('','客房','茶歇','AV设备');
         if($shopcart)
         {
+            foreach($shopcart as $k=>$v)
+            {
+                if (is_object($v)) {
+                    $shopcart[$k] = (array)$v;
+                }
+            }
+
             foreach($shopcart as $key=>$val)
             {
                 $val = (array)$val;
@@ -106,7 +112,7 @@ class DetailsController extends Controller
                 $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
                 $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
                 $fids = explode(',',$val['fids']);
-                $count = array_count_values($fids);
+                $count = array_count_values( $fids);
                 $fids = array_unique($fids);
                 $arr = [];
                 foreach($fids as $k=>$v)
@@ -117,11 +123,13 @@ class DetailsController extends Controller
                         $arr[] = $support[$sid].' ✖ '.$count[$v];
                     }
                 }
+
                 $val['fname'] = $arr;
                 $val['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
                 $shopcart[$key] = $val;
             }
         }
+
 
         $user = session('user');
         if($user)
@@ -145,7 +153,23 @@ class DetailsController extends Controller
             $data->coll = 0;
         }
 
-        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart]);
+
+        $count = \DB::table('places')->where('isads',1)->count()-4;
+        // dd($count);
+        $num = rand(1,$count);
+        $adver  = \DB::table('places')->where('isads',1)->skip($num)->take(4)->get();
+        foreach ($adver as $key => $value) {
+           $address = explode(',',$value->address);
+            
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            $adver[$key]->address = $finaladdress;
+            // var_dump($finaladdress);
+        }
+
+        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart,'adver'=>$adver]);
     }
 
 }

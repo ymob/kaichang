@@ -18,11 +18,6 @@ class UserCenterController extends Controller
 				['status', $code]
 			])->get();
 
-		foreach ($data as $key => $val) {
-			$arr = explode(',', $val->sids);
-			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
-			$val->snames = $res;
-		}
 
 		return view('home.usercenter.index', ['title' => '用户中心首页', 'code' => $code, 'data' => $data]);
 
@@ -189,8 +184,9 @@ class UserCenterController extends Controller
 
             //查询商户表
             $name = \DB::table('shopkeepers')->where('id', $val->sid)->value('name');
+            // $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
 
-            $data[$key]->keepername = $name;
+            // $data[$key]->keepername = $name;
 
         }
 
@@ -203,16 +199,16 @@ class UserCenterController extends Controller
     public function shopcart()
     {   
 
-        //获取每页显示的数据条数
-        $num = 10;
+        // //获取每页显示的数据条数
+        // $num = 10;
 
-            //查询表中数据
-            $data = \DB::table('shopcart')
-            ->join('users', 'users.id', '=', 'shopcart.uid')
-            ->join('goods', 'goods.id', '=', 'shopcart.gid')
-            ->select('shopcart.*', 'users.name', 'goods.title')
-            ->get();
-             dd($data);
+        //     //查询表中数据
+        //     $data = \DB::table('shopcart')
+        //     ->join('users', 'users.id', '=', 'shopcart.uid')
+        //     ->join('goods', 'goods.id', '=', 'shopcart.gid')
+        //     ->select('shopcart.*', 'users.name', 'goods.title')
+        //     ->get();
+        //      dd($data);
 
        
 

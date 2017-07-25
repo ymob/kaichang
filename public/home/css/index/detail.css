@@ -36,7 +36,7 @@ h3+p { font-size: 16px; }
 .detail_con div:nth-child(4) li .jian,.jia,.num { border: 1px solid #bbb; margin-left: -5px; cursor:pointer;}
 .detail_con div:nth-child(4) li .jian,.jia { padding: 0px 15px; background: #cecece }
 .detail_con div:nth-child(4) li .num { padding: 0px 15px; }
-.detail_con .support{float:left;color:#0E6EB8;font-weight:bold;margin-top:10px;}
+.detail_con .support{float:left;color:#0E6EB8;font-weight:bold;margin-top:10px;letter-spacing:10px;}
 .detail_con .total{width:190px;float:right;margin:20px;}
 .detail_con .total span{font-size:16px;}
 .detail_con .total .totalprice{font-size: 22px!important;color: red;transform: translate(-18px,-131px);font-weight:600!important}

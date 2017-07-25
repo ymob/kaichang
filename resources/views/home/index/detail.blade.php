@@ -178,7 +178,6 @@
                             <li>
                                 <span>会议时长：</span>
                                 <select name="ltime" class="ltime" style="height:26px;width:70px;">
-                                    <option value="0">请选择</option>
                                     <option value="1">1 天</option>
                                     <option value="2">2 天</option>
                                     <option value="3">3 天</option>
@@ -194,7 +193,7 @@
                                     <option value="13">13 天</option>
                                     <option value="14">14 天</option>
                                 </select>
-                                ，共<span class="day">&nbsp;&nbsp;&nbsp;&nbsp;</span>天
+                                ，共&nbsp;&nbsp;<span class="day">1</span>&nbsp;&nbsp;天
                             </li>
                             <li>
                                 <span>会议开始日期：</span>
@@ -306,50 +305,22 @@
 
             <!-- 推荐 -->
             <div id="commend" class="row">
-                <div class="col-md-6">
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
+                <div class="col-md-12">
+                    @foreach($adver as $k=>$v)
+                     <div class="col-xs-3">
+                        <a href=""><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
                         <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
+                            <h3>{{$v->title}}</h3>
+                            <p>所在地 : {{$v->address}}</p>
+                            <p>最大会所场面积:{{$v->maxArea}}平米</p>
+                            <p>最多容纳人数{{$v->maxPeople}}</p>
+                            <p>联系电话 : {{$v->phone}}</p>
                         </ul>
                     </div>
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
+                    @endforeach
+                   
                 </div>
-                <div class="col-md-6">
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul class="list-unstyled">
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
             <!-- end 推荐 -->
             <div class="hr-dashed"></div>
@@ -394,8 +365,18 @@
 
         // 选择会议时长并填充
         $("select[name='ltime']").on('change',function(){
-            var day = '&nbsp;'+$(this).val()+'&nbsp;';
-            $(".day").html(day);
+
+            var day = $(this).val();
+            $(this).parents(".detail").find(".day").html(day);
+
+            var smprice = $(this).parents(".detail").find(".mprice").html();
+            var totalprice = parseInt(smprice)*$(this).val();
+            $(this).parents(".detail").find(".totalprice").html(totalprice);
+
+            var nums = $(this).parents(".detail").find(".num");
+            $.each(nums,function(i,n){
+                $(this).html(0);
+            });
         });
 
         // 计算会场总价
@@ -421,7 +402,8 @@
                 {
                     var mprice2 = $(this).parents(".detail").find(".totalprice").html();
                     var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
-                    var total = parseInt(mprice2)+parseInt(fprice);
+                    var day =$(".day").html();
+                    var total = parseInt(mprice2)+parseInt(fprice)*day;
                     $(this).parents(".detail").find(".totalprice").html(total);
 
                     fid.push($(this).parents(".detail").find(".fid").eq(low).html());
@@ -430,8 +412,9 @@
                 {
                     var mprice2 = $(this).parents(".detail").find(".totalprice").html();
                     var fprice = $(this).parents(".detail").find(".fprice").eq(low).html();
-                    var total = parseInt(mprice2)-parseInt(fprice);
-                    if(total < $(this).parents(".detail").find(".mprice").html())
+                    var day =$(".day").html();
+                    var total = parseInt(mprice2)-parseInt(fprice)*day;
+                    if(total < $(this).parents(".detail").find(".mprice").html()*day)
                     {
                         return false;
                     }
@@ -452,7 +435,7 @@
             var price = $(this).parents(".detail").find(".totalprice").html();
             var stime = $(this).parents(".detail").find(".stime").val();
             var ltime = $(this).parents(".detail").find(".ltime").val();
-
+            console.log(price);
             if(ltime == 0)
             {
                 alert('请选择会场租用时长!');

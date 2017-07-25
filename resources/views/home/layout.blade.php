@@ -63,7 +63,7 @@
                             <a href="{{ url('/usercenter/index') }}">我的开场 <span class="glyphicon glyphicon-user"></span></a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/shopcart/index') }}">
                                 购物车
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
@@ -80,6 +80,7 @@
                                 <span class="glyphicon glyphicon-home"></span>
                             </a>
                             <ul>
+                                <li><a href="{{ url('/shopcenter/login') }}">商户登录</a></li>
                                 <li><a href="{{ url('/shopcenter/index') }}">我的场地</a></li>
                                 <li><a href="{{ url('/shopcenter/regist/index') }}">商户入驻</a></li>
                                 @if(session('shopkeeper'))
@@ -269,12 +270,14 @@
                                         <span class="p-img"><a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" target="_blank"><img src="{{ url('uploads/shoper/places/meetplaces/') }}/{{ $v['pic'] }}" alt="" height="50" width="50" /></a></span>
                                         <div class="p-name">
                                             <a href="{{ url('/detail/pid=') }}{{ $v['pid'] }}" style="font-weight:bold;">{{ $v['mname'] }}</a><br>
-                                            @foreach($v['fname'] as $key=>$val)
-                                                {{ $val }} &nbsp;
-                                            @endforeach
+                                            @if(isset($v['fname']))
+                                                @foreach($v['fname'] as $key=>$val)
+                                                    {{ $val }} &nbsp;
+                                                @endforeach
+                                            @endif
                                         </div>
                                             <div class="p-price"><strong>¥<span class="meetprice">{{ $v['price'] }}</span> ×1 </strong></div>
-                                        <a href="{{ $k }}" class="p-del J-del">删除</a>
+                                        <a href="{{ url('/shopcart/delete') }}/{{ $v['started_at'] }}" class="p-del J-del">删除</a>
                                         </div>
                                         </div>
                                         @endforeach
@@ -288,7 +291,7 @@
                             <div class="tbar-checkout">
                                 <div class="jtc-number"> <strong class="J-count count" >0</strong> 件商品 </div>
                                 <div class="jtc-sum"> 共计：<strong>¥</strong><strong class="J-total"></strong> </div>
-                                <a class="jtc-btn J-btn" href="#none" target="_blank">去购物车结算</a>
+                                <a class="jtc-btn J-btn" href="{{ url('/shopcart/index') }}" target="_blank">去购物车结算</a>
                             </div>
                         </div>
                     </div>

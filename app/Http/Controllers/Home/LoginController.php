@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -50,7 +51,19 @@ class LoginController extends Controller
             \Cookie::queue('remember_token', $admin->remember_token, 10); //10分钟
         }
 
-        // return redirect('/')->with(['info'=>'登录成功']);
+        // 将session中购物车数据存储到数据库shopcart表
+        if(session('shopcart'))
+        {
+            $arr = session('shopcart');
+            foreach($arr as $k=>$v)
+            {
+                $v['uid'] = session('user')->id;
+                \DB::table('shopcart')->insert($v);
+            }
+
+            // 清购物车session
+            Session::forget('shopcart');
+        }
         return back()->with(['info'=>'登录成功']);
     }
 
@@ -58,7 +71,6 @@ class LoginController extends Controller
     public function doLogout(Request $request)
     {
     	$request->session()->forget('user');
-        // return redirect('/listSearch')->with(['info'=>'退出成功']);
         return back()->with(['info'=>'退出成功']);
     }
 }
