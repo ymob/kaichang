@@ -288,50 +288,22 @@
 
             <!-- 推荐 -->
             <div id="commend" class="row">
-                <div class="col-md-6">
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
+                <div class="col-md-12">
+                    @foreach($adver as $k=>$v)
+                     <div class="col-xs-3">
+                        <a href=""><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->evidencePic}}"></a>
                         <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
+                            <h3>{{$v->title}}</h3>
+                            <p>所在地 : {{$v->address}}</p>
+                            <p>最大会所场面积:{{$v->maxArea}}平米</p>
+                            <p>最多容纳人数{{$v->maxPeople}}</p>
+                            <p>联系电话 : {{$v->phone}}</p>
                         </ul>
                     </div>
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
+                    @endforeach
+                   
                 </div>
-                <div class="col-md-6">
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul>
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
-                    <div class="col-xs-6">
-                        <img src="{{ url('home/images') }}/tu1.png">
-                        <ul class="list-unstyled">
-                            <h3>鸟巢</h3>
-                            <p>所在地 : 北京市海淀区紫竹院路69号</p>
-                            <p>会所数量 : 40最大会所场面积:1352平米</p>
-                            <p>最多容纳人数1400</p>
-                            <p>联系电话 : 010-84826854</p>
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
             <!-- end 推荐 -->
             <div class="hr-dashed"></div>

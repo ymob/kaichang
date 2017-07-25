@@ -12,7 +12,6 @@ class DetailsController extends Controller
     {
         // 场地信息 //
         $data = \DB::table('places')->where('id',$pid)->first();
-
         // 地址
         $address = explode(',',$data->address);
         $arr = [];
@@ -98,10 +97,11 @@ class DetailsController extends Controller
         {
             foreach($shopcart as $key=>$val)
             {
+                $val = (array)$val;
                 $pid = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
-                $shopcart[$key]['pid'] = $pid;
-                $shopcart[$key]['pname'] = \DB::table('places')->where('id',$pid)->value('title');
-                $shopcart[$key]['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
+                $val['pid'] = $pid;
+                $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
+                $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
                 $fids = explode(',',$val['fids']);
                 $count = array_count_values($fids);
                 $fids = array_unique($fids);
@@ -111,14 +111,30 @@ class DetailsController extends Controller
                     $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
                     $arr[] = $support[$sid].' ✖ '.$count[$v];
                 }
-                $shopcart[$key]['fname'] = $arr;
-                $shopcart[$key]['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
-//                $val['start'] = date('Y-m-d H:i',$val('stime'));
+                $val['fname'] = $arr;
+                $val['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
+                $shopcart[$key] = $val;
             }
         }
+
+        $count = \DB::table('places')->where('isads',1)->count()-4;
+        // dd($count);
+        $num = rand(1,$count);
+        $adver  = \DB::table('places')->where('isads',1)->skip($num)->take(4)->get();
+        foreach ($adver as $key => $value) {
+           $address = explode(',',$value->address);
+            
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            $adver[$key]->address = $finaladdress;
+            // var_dump($finaladdress);
+        }
+        
 //        dd($shopcart);
 
-        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart]);
+        return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart,'adver'=>$adver]);
     }
 
 }

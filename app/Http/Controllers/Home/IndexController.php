@@ -71,8 +71,18 @@ class IndexController extends Controller
             $data[$k]->pic = $pics[0];
 
         }
-//        dd($data);
-        return view('home.index.list',['title'=>'搜索结果列表页', 'request'=>$request->all(), 'scode' => 1, 'data'=>$data]);
+        $count = \DB::table('places')->where('isads',1)->count()-4;
+        // dd($count);
+        $num = rand(0,$count);
+        $adver = \DB::table('places')
+        ->where('isads',1)
+        ->skip($num)
+        ->take(4)
+        ->get();
+
+
+       // dd($adver);
+        return view('home.index.list',['title'=>'搜索结果列表页', 'request'=>$request->all(), 'scode' => 1, 'data'=>$data,'adver'=>$adver]);
     }
 
     

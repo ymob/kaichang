@@ -3,22 +3,52 @@
 @section('head')
 	<style>
 		.o-title{
-			font:700 16px/26px "Microsoft YaHei";
+			font:700 20px "Microsoft YaHei";
 			color:#333;
+			text-align: center;
+		}
+		.o-detail
+		{
+			text-align: center;
+			margin-top: 10px;
 		}
 	</style>
 @endsection
 
 @section('content')
 	<div class="mycomment">
-		<div class="comtitle">
-			<div class="o-title">评价订单</div>
-			<div>
-				<div>订单号:1232234</div>
-				<div>2016-3-13 10:23</div>
+		<div class="col-xs-2" ></div>
+		<div class="col-xs-8">
+			<div class="col-xs-4"></div>
+			<div class="comtitle col-xs-4">
+				<div class="o-title">评价订单</div>
+				<div>
+					<div class="o-detail">订单号:123223489898989&nbsp;&nbsp;&nbsp;&nbsp;2016-3-13 10:23</div>
+					<div></div>
+				</div>
 			</div>
+			<div class="col-xs-4"></div>
 		</div>
-		<div class="placename">
+		<div class="col-xs-2" ></div>
+	</div>
+
+	<div class="mycomment">
+		<div class="col-xs-2" ></div>
+		<div class="col-xs-8">
+			<div class="col-xs-4"></div>
+			<div class="comtitle col-xs-4">
+				<div class="o-title">评价订单</div>
+				<div>
+					<div class="o-detail">订单号:123223489898989&nbsp;&nbsp;&nbsp;&nbsp;2016-3-13 10:23</div>
+					<div></div>
+				</div>
+			</div>
+			<div class="col-xs-4"></div>
+		</div>
+		<div class="col-xs-2" ></div>
+	</div>
+		<div class="col-xs-2" ></div>
+		<div class="placename col-xs-8">
 			<div>
 				<div><img src=""></div>
 				<div>
@@ -41,6 +71,9 @@
 			</div>
 			<div>会场新旧度 ※※※※※※ 0分 &nbsp;&nbsp;&nbsp;会场新旧度 ※※※※※※ 0分&nbsp;&nbsp;&nbsp;会场新旧度 ※※※※※※ 0分&nbsp;&nbsp;&nbsp;会场新旧度 ※※※※※※ 0分</div>
 		</div>
+		<div class="col-xs-2" ></div>
+
+
 		<div class="placedetail">
 			<div>
 				<div>图</div>

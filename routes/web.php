@@ -135,6 +135,9 @@ Route::get('/detail/pid={pid}','Home\DetailsController@index');
 // 购物车
 Route::get('/shopcart/add','Home\ShopcartController@add');
 
+//广告
+Route::get('/adver/index','Home\AdverController@index');
+
 // 错误页面
 Route::get('/404', function(){
     return view('404');
@@ -170,6 +173,8 @@ Route::group(['middleware' => 'homeuser'], function(){
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
     
+    //底部链接
+    Route::get('home/foot/aboutus','Home\FootController@index');
 
     //用户评论
     //加载评论页面
