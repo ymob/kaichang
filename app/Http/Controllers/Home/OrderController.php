@@ -10,6 +10,6 @@ class OrderController extends Controller
     //加载订单详情页面
     public function index()
     {
-    	return view('home.order.order',['title'=>'订单详情']);
+    	return view('home.order.order', ['title'=>'订单详情']);
     }
 }

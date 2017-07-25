@@ -30,17 +30,15 @@ class UserCenterController extends Controller
 
 
 	// detail
-    //加载用户修改信息页面
+    // 加载用户修改信息页面
 	public function details()
 	{
-//		return view('home.usercenter.detail', ['title' => '我的信息', 'user' => session('user')]);
 		return view('home.usercenter.details', ['user' => session('user'),'title'=>'用户个人中心']);
-
 	}
 
 
 	// updetail
-    //执行个人用户信息修改
+    // 执行个人用户信息修改
 	public function updetails(Request $request)
 	{
 	    //获取修改后的数据
@@ -171,8 +169,8 @@ class UserCenterController extends Controller
 	}
 
 	// orders
-    //个人用户订单
-	public function order( Request $request,$status)
+    // 个人用户订单
+	public function order(Request $request, $status)
 	{
         //获取每页显示的数据条数
         $num = 10;
@@ -182,7 +180,7 @@ class UserCenterController extends Controller
             $data=\DB::table('orders')->paginate($num);
         }else
         {
-            $data=\DB::table('orders')->where('status',$status)->paginate($num);
+            $data=\DB::table('orders')->where('status', $status)->paginate($num);
         }
 
 
@@ -190,7 +188,7 @@ class UserCenterController extends Controller
         foreach($data as $key=>$val){
 
             //查询商户表
-            $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
+            $name = \DB::table('shopkeepers')->where('id', $val->sid)->value('name');
 
             $data[$key]->keepername = $name;
 
@@ -218,7 +216,25 @@ class UserCenterController extends Controller
 
        
 
-        return view('home.usercenter.shopcart',['title'=>'购物车']);
+        return view('home.usercenter.shopcart', ['title' => '购物车']);
+    }
+
+    public function collection()
+    {
+        $uid = session('user')->id;
+
+        $data = \DB::table('collection')
+            ->join('places', 'places.id', 'collection.pid')
+            ->where([['collection.uid', $uid], ['collection.status', 1]])
+            ->select('collection.*', 'places.title', 'places.pic', 'places.updown')
+            ->orderBy('collection.updated', 'desc')
+            ->get();
+        foreach ($data as $key => $val) {
+            $arr = explode(',', $val->pic);
+            $val->pic = $arr[0];
+        }
+
+        return view('home.usercenter.collection', ['title' => '我的收藏', 'data' => $data]);
     }
 
 }

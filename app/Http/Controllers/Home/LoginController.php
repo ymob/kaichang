@@ -50,7 +50,7 @@ class LoginController extends Controller
             \Cookie::queue('remember_token', $admin->remember_token, 10); //10分钟
         }
 
-//        return redirect('/')->with(['info'=>'登录成功']);
+        // return redirect('/')->with(['info'=>'登录成功']);
         return back()->with(['info'=>'登录成功']);
     }
 
@@ -58,6 +58,7 @@ class LoginController extends Controller
     public function doLogout(Request $request)
     {
     	$request->session()->forget('user');
+        // return redirect('/listSearch')->with(['info'=>'退出成功']);
         return back()->with(['info'=>'退出成功']);
     }
 }

@@ -127,7 +127,7 @@ Route::get('/', 'Home\IndexController@index');
 Route::get('/indexSearch','Home\IndexController@indexSearch');
 
 // 列表页场地搜索
-Route::post('/listSearch','Home\ListController@listSearch');
+Route::get('/listSearch','Home\ListController@listSearch');
 
 // 场地搜索结果详情页
 Route::get('/detail/pid={pid}','Home\DetailsController@index');
@@ -164,12 +164,16 @@ Route::group(['middleware' => 'homeuser'], function(){
     //修改密码
     Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
     //个人用户订单查询
-    Route::get('usercenter/order/{status}','Home\UserCenterController@order');
+    Route::get('/usercenter/order/{status}','Home\UserCenterController@order');
 
 
     //个人中心购物车
-    Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-  
+    Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+
+    // 收藏
+    Route::get('/usercenter/collection','Home\UserCenterController@collection');
+    Route::post('/collection/update','Home\CollectionCenterController@update');
+
 });
 
 // 用户注册
@@ -233,6 +237,3 @@ Route::post('/shopcenter/regist/regist', 'Home\ShopRegistController@regist');
 Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detail');
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
 Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');
-
-
-

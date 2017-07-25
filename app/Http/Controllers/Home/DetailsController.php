@@ -10,6 +10,7 @@ class DetailsController extends Controller
     //加载搜索结果详情页
     public function index($pid)
     {
+        $placesId = $pid;
         // 场地信息 //
         $data = \DB::table('places')->where('id',$pid)->first();
 
@@ -93,15 +94,17 @@ class DetailsController extends Controller
                 $shopcart = [];
             }
         }
+        
         $support = array('','客房','茶歇','AV设备');
         if($shopcart)
         {
             foreach($shopcart as $key=>$val)
             {
-                $pid = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
-                $shopcart[$key]['pid'] = $pid;
-                $shopcart[$key]['pname'] = \DB::table('places')->where('id',$pid)->value('title');
-                $shopcart[$key]['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
+                $val = (array)$val;
+                $pid = \DB::table('meetplaces')->where('id', $val['mid'])->value('pid');
+                $val['pid'] = $pid;
+                $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
+                $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
                 $fids = explode(',',$val['fids']);
                 $count = array_count_values($fids);
                 $fids = array_unique($fids);
@@ -109,14 +112,38 @@ class DetailsController extends Controller
                 foreach($fids as $k=>$v)
                 {
                     $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
-                    $arr[] = $support[$sid].' ✖ '.$count[$v];
+                    if($sid)
+                    {
+                        $arr[] = $support[$sid].' ✖ '.$count[$v];
+                    }
                 }
-                $shopcart[$key]['fname'] = $arr;
-                $shopcart[$key]['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
-//                $val['start'] = date('Y-m-d H:i',$val('stime'));
+                $val['fname'] = $arr;
+                $val['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
+                $shopcart[$key] = $val;
             }
         }
-//        dd($shopcart);
+
+        $user = session('user');
+        if($user)
+        {
+            $coll = \DB::table('collection')->where([['uid', $user->id], ['pid', $placesId]])->first();
+            if($coll)
+            {
+                if($coll->status == 1)
+                {
+                    $data->coll = 1;
+                }else
+                {
+                    $data->coll = 0;
+                }
+            }else
+            {
+                $data->coll = 0;
+            }
+        }else
+        {
+            $data->coll = 0;
+        }
 
         return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart]);
     }

@@ -15,7 +15,25 @@
         </div>
         <div id="all_con" class="container">
             <div>
-                <h3>{{ $data->title  }} <small> {{ $data->address }}</small></h3>
+                <h3>
+                    {{ $data->title  }} 
+                    <small>{{ $data->address }}</small> 
+                    @if(session('user'))
+                        @if($data->coll)
+                        <a href="javascript:" class="pull-right collection" index="{{ $data->id }}" title="点击收藏">
+                            <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #f55;"></span>
+                        </a>
+                        @else
+                        <a href="javascript:" class="pull-right collection" index="{{ $data->id }}" title="点击收藏">
+                            <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #bbb;"></span>
+                        </a>
+                        @endif
+                    @else
+                    <a href="javascript:" class="pull-right collection" index="{{ $data->id }}" title="点击收藏">
+                        <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #bbb;"></span>
+                    </a>
+                    @endif
+                </h3>
                 <p>
                     <span>场地类型：</span>
                     <span>{{ $data->type }} </span>&nbsp;&nbsp;&nbsp;
@@ -375,7 +393,7 @@
         });
 
         // 选择会议时长并填充
-        $("select[name='timeLong']").on('change',function(){
+        $("select[name='ltime']").on('change',function(){
             var day = '&nbsp;'+$(this).val()+'&nbsp;';
             $(".day").html(day);
         });
