@@ -485,7 +485,7 @@
                 
                  {{--@foreach($adver as $k=>$v)--}}
                      <div class="col-xs-3">
-                        {{--<a href=""><img style="width:200px;height:200px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->evidencePic}}"></a>--}}
+                        {{--<a href=""><img style="width:200px;height:200px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>--}}
                         <ul>
                             {{--<h3>{{$v->title}}</h3>--}}
                             {{--<p>所在地 : {{$v->address}}</p>--}}

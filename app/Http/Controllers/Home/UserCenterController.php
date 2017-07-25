@@ -18,11 +18,11 @@ class UserCenterController extends Controller
 				['status', $code]
 			])->get();
 
-		foreach ($data as $key => $val) {
-			$arr = explode(',', $val->sids);
-			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
-			$val->snames = $res;
-		}
+//		foreach ($data as $key => $val) {
+//			$arr = explode(',', $val->sids);
+//			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
+//			$val->snames = $res;
+//		}
 
 		return view('home.usercenter.index', ['title' => '用户中心首页', 'code' => $code, 'data' => $data]);
 
