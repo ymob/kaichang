@@ -77,7 +77,7 @@
                             
                                 <th class="text-center">ID</th>
                                 <th class="text-center">用户名称</th>
-                                <th class="text-center">商品名称&nbsp<div style="width:15px;height:15px;background:#f00;" class="glyphicon glyphicon-sort"></div></th>
+                                <th class="text-center">商品名称&nbsp;<!-- <div style="width:15px;height:15px;background:#f00;" class="glyphicon glyphicon-sort"></div> --></th>
                                 <th class="text-center">评论内容</th>
                                 <th class="text-center">评论时间</i></th>
                                 <th class="text-center">修改时间</i></th>

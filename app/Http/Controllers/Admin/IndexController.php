@@ -9,6 +9,6 @@ class IndexController extends Controller
 {
     //index
     public function index(){
-        return view('admin.index.index',['title'=>'åŽå°ä¸»é¡µ']);
+        return view('admin.index.index',['title'=>'Ê×Ò³ÁÐ±í']);
     }
 }

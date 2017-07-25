@@ -52,10 +52,17 @@
         {
           border-bottom: 3px solid #1295bf;
         }
+        .myorder{
+          width:100px;
+          height:10px;
+          margin:30px;
+          font-size:20px;
+        }
     </style>
 @endsection
 @section('con')
-
+    <div class="myorder">我的订单</div>
+    <div>
     <ul class="order-title">
       <li class="cur"><a href="#" class="sta" style="color:#007bb6">全部订单</a></li>
       <li class="cur"><a href="#" class="sta" style="color:#007bb6">未付款</a></li>
@@ -64,7 +71,7 @@
       <li class="cur"><a href="#" class="sta" style="color:#007bb6">定单取消</a></li>
       <li style="border-right:none"  class="cur" ><a href="#" class="sta" style="color:#007bb6">使用完成</a></li>
     </ul>
-
+  </div>
   <table class="style-table table table-striped table-hover" style="margin-top: 10px;">
       <tr class="style-tr info">
 
@@ -78,7 +85,7 @@
       <tr>
 
           <td class="style-td">{{$val->number}}</td>
-          <td class="style-td">{{$val->keepername}}</td>
+          <td class="style-td">{{$val->number}}</td>
           <td class="style-td">{{$val->price}}</td>
           <td class="style-td">
               @if($val->status==1)

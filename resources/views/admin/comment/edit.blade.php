@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">评论内容</label>
-                                   <textarea name="content" style="width:480px; height:100px;resize:none" >{{$data->content}}</textarea>
+                                   <textarea name="content" style="width:400px; height:100px;resize:none" >{{$data->content}}</textarea>
                                 </div>
                                
                             </div>

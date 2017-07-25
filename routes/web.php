@@ -137,9 +137,13 @@ Route::get('/shopcart/index','Home\ShopcartController@index');
 Route::get('/shopcart/add','Home\ShopcartController@add');
 Route::get('/shopcart/delete/{ctime}','Home\ShopcartController@delete');
 
+
 // 订单
 Route::get('/home/order/order',"Home\OrderController@index");
 Route::get('/order/submitOrder','Home\OrderController@submitOrder');
+
+//广告
+Route::get('/adver/index','Home\AdverController@index');
 
 // 支付
 Route::get('/home/pay/pay',"Home\PayController@index");
@@ -171,7 +175,13 @@ Route::group(['middleware' => 'homeuser'], function(){
 
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-  
+    
+    //底部链接
+    Route::get('home/foot/aboutus','Home\FootController@index');
+
+    //用户评论
+    //加载评论页面
+    Route::get('/home/comment/index',"Home\CommentController@index");
 });
 
 // 用户注册
@@ -211,6 +221,8 @@ Route::group(['middleware' => 'homeshoper'], function(){
     // 配套服务
     Route::post('/shopcenter/facilities/delete', 'Home\ShopPlacesController@fac_delete');
 
+
+    
 });
 
 // 商户注册
