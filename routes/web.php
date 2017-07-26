@@ -137,7 +137,7 @@ Route::get('/shopcart/add','Home\ShopcartController@add');
 Route::get('/shopcart/delete/{ctime}','Home\ShopcartController@delete');
 
 
-// 订单
+// 前台订单
 Route::get('/home/order/order',"Home\OrderController@index");
 Route::get('/order/submitOrder','Home\OrderController@submitOrder');
 
@@ -161,16 +161,20 @@ Route::group(['middleware' => 'homeuser'], function(){
 
     // 个人中心
     //个人中心主页面
-    Route::get('/usercenter/index', 'Home\UserCenterController@index');
+    Route::get('/usercenter/index', 'Home\UserCenterController@details');
     //用户个人中心详细信息加载页面
     Route::get('/usercenter/details', 'Home\UserCenterController@details');
     //执行个人用户修改个人信息和修改密码
     Route::post('/usercenter/updetails','Home\UserCenterController@updetails');
     //修改密码
     Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-    //个人用户订单查询
-    Route::get('/usercenter/order/{status}','Home\UserCenterController@order');
-
+    //个人用户订单
+    Route::get('usercenter/order/{status}','Home\UserCenterController@order');
+    Route::get('usercenter/orderCancel/{oid}','Home\UserCenterController@cancel');
+    //个人中心购物车
+    Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+    //底部链接
+    Route::get('home/foot/aboutus','Home\FootController@index');
 
     //个人中心购物车
     Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');

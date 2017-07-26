@@ -122,8 +122,6 @@ class UserCenterController extends Controller
         }
 	}
 
-
-	// uppassword
     //修改密码
 	public function uppassword(Request $request)
 	{
@@ -144,7 +142,6 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
-// dd(session('user')->password);
 		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
@@ -163,56 +160,115 @@ class UserCenterController extends Controller
 		}
 	}
 
-	// orders
     // 个人用户订单
 	public function order(Request $request, $status)
 	{
         //获取每页显示的数据条数
         $num = 10;
 
+        $uid = session('user')->id;
         if(!$status || $status==0)
         {
-            $data=\DB::table('orders')->paginate($num);
+            $data=\DB::table('orders')->where('uid',$uid)->paginate($num);
         }else
         {
+            $data=\DB::table('orders')->where([['status',$status],['uid',$uid]])->paginate($num);
+        }
+
+        foreach($data as $key => $val)
+        {
+            if (is_object($val)) {
+                $data[$key] = (array)$val;
+            }
+        }
+        $data2 = [];
+        foreach($data as $key2=>$val2)
+        {
+            $data2[$key2] = $val2;
             $data=\DB::table('orders')->where('status', $status)->paginate($num);
         }
 
-
-	    //遍历
-        foreach($data as $key=>$val){
-
-            //查询商户表
-            $name = \DB::table('shopkeepers')->where('id', $val->sid)->value('name');
-            // $name = \DB::table('shopkeepers')->where('id',$val->sids)->value('name');
-
-            // $data[$key]->keepername = $name;
-
+        $support = array('','客房','茶歇','AV设备');
+        $numberArr = [];
+        foreach ($data2 as $key => $val) {
+            if(!in_array($val['number'],$numberArr))
+            {
+                array_push($numberArr,$val['number']);
+            }else
+            {
+                $data2[$key]['number'] = '';
+            }
+            $data2[$key]['pname'] = \DB::table('places')->where('id', $val['pid'])->value('title');
+            $data2[$key]['mname'] = \DB::table('meetplaces')->where('id', $val['mid'])->value('title');
+            $fids = explode(',', $val['fids']);
+            $count = array_count_values($fids);
+            $fids = array_unique($fids);
+            $arr = [];
+            foreach ($fids as $k => $v) {
+                $sid = \DB::table('facilities')->where('id', $v)->value('supportType');
+                if ($sid) {
+                    $arr[] = $support[$sid] . ' ✖ ' . $count[$v];
+                }
+            }
+            $data2[$key]['fname'] = $arr;
+            $data2[$key]['pic'] = \DB::table('meetplaces')->where('id', $val['mid'])->value('pic');
         }
 
-
-		return view('home.usercenter.order',['title'=>'我的订单','request'=>$request->all(),'data'=>$data,'status'=>$status]);
+		return view('home.usercenter.order',['title'=>'我的订单','request'=>$request->all(),'data'=>$data2,'status'=>$status]);
 	}
 
+    // 取消订单
+    public function cancel($oid)
+    {
+        $res = \DB::table('orders')->where('id',$oid)->update(['status'=>'5']);
+        if($res)
+        {
+            return back();
+        }else{
+            return back();
+        }
+    }
 
     //个人中心购物车
     public function shopcart()
-    {   
+    {
+        $uid = session('user')->id;
+        $res = \DB::table('shopcart')->where('uid',$uid)->get()->toArray();
+        if($res)
+        {
+            $shopcart = $res;
+        }else{
+            $shopcart = [];
+        }
+        $support = array('','客房','茶歇','AV设备');
+        if($shopcart) {
+            foreach ($shopcart as $k => $v) {
+                if (is_object($v)) {
+                    $shopcart[$k] = (array)$v;
+                }
+            }
 
-        // //获取每页显示的数据条数
-        // $num = 10;
+            foreach ($shopcart as $key => $val) {
+                $pid = \DB::table('meetplaces')->where('id', $val['mid'])->value('pid');
+                $shopcart[$key]['pid'] = $pid;
+                $shopcart[$key]['pname'] = \DB::table('places')->where('id', $pid)->value('title');
+                $shopcart[$key]['mname'] = \DB::table('meetplaces')->where('id', $val['mid'])->value('title');
+                $fids = explode(',', $val['fids']);
+                $count = array_count_values($fids);
+                $fids = array_unique($fids);
+                $arr = [];
+                foreach ($fids as $k => $v) {
+                    $sid = \DB::table('facilities')->where('id', $v)->value('supportType');
+                    if ($sid) {
+                        $arr[] = $support[$sid] . ' ✖ ' . $count[$v];
+                    }
+                }
+                $shopcart[$key]['fname'] = $arr;
+                $shopcart[$key]['pic'] = \DB::table('meetplaces')->where('id', $val['mid'])->value('pic');
+            }
+        }
 
-        //     //查询表中数据
-        //     $data = \DB::table('shopcart')
-        //     ->join('users', 'users.id', '=', 'shopcart.uid')
-        //     ->join('goods', 'goods.id', '=', 'shopcart.gid')
-        //     ->select('shopcart.*', 'users.name', 'goods.title')
-        //     ->get();
-        //      dd($data);
-
-       
-
-        return view('home.usercenter.shopcart', ['title' => '购物车']);
+        return view('home.usercenter.shopcart',['title'=>'购物车','shopcart'=>$shopcart]);
     }
 
     public function collection()

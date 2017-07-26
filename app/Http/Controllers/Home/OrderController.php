@@ -10,9 +10,6 @@ class OrderController extends Controller
     //加载订单详情页面
     public function index()
     {
-<<<<<<< HEAD
-    	return view('home.order.order', ['title'=>'订单详情']);
-=======
         // 判断用户是否登录
         if(!session('user'))
         {
@@ -104,13 +101,11 @@ class OrderController extends Controller
             $shopcartData2[$key2] = $val2;
         }
 
-//        dd($shopcartData2);
         $res = \DB::table('orders')->insert($shopcartData2);
 
         // 清数据库中购物车记录
         \DB::table('shopcart')->where('uid',$uid)->delete();
 
         return view('home/pay/pay',['title'=>'支付页']);
->>>>>>> eaf1727cc07fffc1d5df07158595e4184134ca38
     }
 }
