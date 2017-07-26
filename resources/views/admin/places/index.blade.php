@@ -18,7 +18,6 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">场地列表 </h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ url('/admin/user/add') }}"><button class="btn-flat"><i class="fa fa-user-plus"> </i> 场地添加</button></a>
 
                     </div>
                     <!-- /.box-header -->
@@ -30,7 +29,7 @@
                             </div>
                         @endif
 
-                        <form action="/admin/user/index" method="get">
+                        <form action="{{ url('/admin/places/index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -91,7 +90,6 @@
                                 <th>场地图片（3张）</th>
                                 <th>价格</th>
                                 <th>状态</th>
-                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -136,7 +134,7 @@
                                 <td>{{ $val->address }}</td>
                                 <td>{{ $val->phone }}</td>
                                 <td>
-                                    <img src="{{ asset('/uploads/shoper/evidencepic/'.$val->evidencePic) }}" style="width: 50px;">
+                                    <img src="{{ asset('/uploads/shoper/places/evidence/'.$val->evidencePic) }}" style="width: 50px;">
                                 </td>
                                 <td>{{ $val->park }}</td>
                                 <td>{{ $val->maxArea }}</td>
@@ -214,7 +212,7 @@
                                 <td>{{ $val->description }}</td>
                                 <td>
                                     @foreach($val->pic as $p_k => $p_v)
-                                        <a href="{{ url('/uploads/shoper/places/'.$p_v) }}"><img src="{{ asset('/uploads/shoper/places/'.$p_v) }}" style="width: 50px;"></a>
+                                        <a href="{{ asset('/uploads/shoper/places/places/'.$p_v) }}"><img src="{{ asset('/uploads/shoper/places/places/'.$p_v) }}" style="width: 50px;"></a>
                                     @endforeach
                                 </td>
                                 <td>{{ $val->price }}</td>
@@ -232,7 +230,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class="status_sel" index="places" href="#">
+                                                <a class="status_sel" index="places" href="javascript:">
                                                     @if($val->status == 1)
                                                     禁用
                                                     @else
@@ -242,9 +240,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </td>
-                                <td>
-                                    <a href="">编辑</a>
                                 </td>
                             </tr>
                                 @foreach($val->meetplace as $mk => $mv)
@@ -336,7 +331,7 @@
                                 </td>
                                 <td>价格：{{ $mv->price }}</td>
                                 <td>
-                                    <a href="{{ url('/uploads/shoper/places/'.$mv->pic) }}"><img src="{{ asset('/uploads/shoper/places/'.$mv->pic) }}" style="width: 50px;"></a>
+                                    <a href="{{ url('/uploads/shoper/places/meetplaces/'.$mv->pic) }}"><img src="{{ asset('/uploads/shoper/places/meetplaces/'.$mv->pic) }}" style="width: 50px;"></a>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -363,7 +358,6 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td>编辑</td>
                             </tr>
                                     @foreach($mv->facilitie as $fk => $fv)
 
@@ -425,7 +419,7 @@
                                 </td>
                                 <td>{{ $fv->price }}</td>
                                 <td>
-                                    <a href="{{ url('/uploads/shoper/places/'.$fv->pic) }}"><img src="{{ asset('/uploads/shoper/places/'.$fv->pic) }}" style="width: 50px;"></a>
+                                    <a href="{{ asset('/uploads/shoper/places/facilities/'.$fv->pic) }}"><img src="{{ asset('/uploads/shoper/places/facilities/'.$fv->pic) }}" style="width: 50px;"></a>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -452,7 +446,6 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td>编辑</td>
                             </tr>
 
                                     @endforeach
@@ -482,6 +475,11 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        // 每页条数下拉框选中事件
+        $('#num').on('change', function(){
+            $('form').eq(0).submit();
         });
         
         // 状态开启关闭

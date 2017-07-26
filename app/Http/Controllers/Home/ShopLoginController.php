@@ -15,8 +15,7 @@ class ShopLoginController extends Controller
         $remember_token=\Cookie::get('remember_shopkeeper');
         if($remember_token)
         {
-            $request->session()->forget('user');    // 商户登录，用户退出
-            $shopkeeper=\DB::table('shopkeepers')->where('remember_token', $remember_token)->first();
+            $shopkeeper = \DB::table('shopkeepers')->where('remember_token', $remember_token)->first();
         }else
         {
             $shopkeeper = null;

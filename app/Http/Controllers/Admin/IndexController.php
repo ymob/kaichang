@@ -9,6 +9,12 @@ class IndexController extends Controller
 {
     //index
     public function index(){
-        return view('admin.index.index',['title'=>'首页列表']);
+    	$arr = [];
+    	$arr['users'] = \DB::table('users')->count();
+    	$arr['shopkeepers'] = \DB::table('shopkeepers')->count();
+    	$arr['places'] = \DB::table('places')->count();
+    	$arr['sales'] = \DB::table('orders')->where('status', 4)->count();
+    	// dd($shopkeepers);
+        return view('admin.index.index',['title'=>'首页列表', 'data' => $arr]);
     }
 }

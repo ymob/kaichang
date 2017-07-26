@@ -166,7 +166,7 @@ class UserController extends Controller
 
         if($res)
         {
-            return redirect('/admin/user/index')->with(['info'=>'更新成功']);
+            return back()->with(['info'=>'更新成功']);
         }else
         {
             return back()->with(['info'=>'更新失败']);

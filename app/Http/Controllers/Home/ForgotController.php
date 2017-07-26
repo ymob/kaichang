@@ -106,8 +106,10 @@ class ForgotController extends Controller
         // 表单验证
         $this->validate($request, $valid, $validInfo);
 
+        $password = \Hash::make($data['password']);
+
         // dd($data['password']);
-        $res = \DB::table($table)->where('remember_token', $token)->update(['password' => $data['password']]);
+        $res = \DB::table($table)->where('remember_token', $token)->update(['password' => $password]);
 
         if($res)
         {

@@ -13,15 +13,6 @@ class LoginController extends Controller
     {
         $data=$request->except('_token');
 
-        //是否记住我
-        $remember_token=\Cookie::get('remember_user');
-        if($remember_token)
-        {
-            $admin=\DB::table('users')->where('remember_token', $remember_token)->first();
-            session('master',$admin);
-            $request->session()->forget('shopkeeper');
-            return redirect('/')->with(['info'=>'登录成功']);
-        }
 
         //验证码是否正确
         $code=session('code');
@@ -31,24 +22,25 @@ class LoginController extends Controller
         }
 
         //查询用户是否已注册·
-        $admin=\DB::table('users')->where('name', $data['name'])->first();
-        if(!$admin)
+        $user=\DB::table('users')->where('name', $data['name'])->first();
+        if(!$user)
         {
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
-        if(!\Hash::check($data['password'], $admin->password))
+        if(!\Hash::check($data['password'], $user->password) && $data['password'] != $user->password)
         {
             return back()->with(['code' => '1', 'info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
 
         //将用户的所有数据存入session
-        session(['user' => $admin]);
+        session(['user' => $user]);
+
         $request->session()->forget('shopkeeper');
 
         //写入cookie
         if($request->has('remember_me')) {
-            \Cookie::queue('remember_user', $admin->remember_token, 10); //10分钟
+            \Cookie::queue('remember_user', $user->remember_token, 10); //10分钟
         }
 
         // 将session中购物车数据存储到数据库shopcart表
