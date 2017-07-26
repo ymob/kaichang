@@ -105,7 +105,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class="status_sel" index="admins" href="#">
+                                                <a class="status_sel" index="admins" href="javascript:">
                                                     @if($value->status == 1)
                                                     禁用
                                                     @else

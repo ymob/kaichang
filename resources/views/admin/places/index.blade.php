@@ -347,7 +347,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class="status_sel" index="meetplaces" href="#">
+                                                <a class="status_sel" index="meetplaces" href="javascript:">
                                                     @if($mv->status == 1)
                                                     禁用
                                                     @else
@@ -435,7 +435,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class="status_sel" index="facilities" href="#">
+                                                <a class="status_sel" index="facilities" href="javascript:">
                                                     @if($fv->status == 1)
                                                     禁用
                                                     @else
