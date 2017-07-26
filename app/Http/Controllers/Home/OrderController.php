@@ -101,7 +101,6 @@ class OrderController extends Controller
             $shopcartData2[$key2] = $val2;
         }
 
-//        dd($shopcartData2);
         $res = \DB::table('orders')->insert($shopcartData2);
 
         // 清数据库中购物车记录

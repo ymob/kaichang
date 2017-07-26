@@ -13,11 +13,10 @@
         {{--多条件搜索--}}
         <div class="margin-top">
             <div class="row">
-                <form action="{{ url('/listSearch') }}" method="get">
+                <form id="h_search" action="{{ url('/listSearch') }}" method="get">
                     <div class="col-md-8">
                         <div id="">
                             <div class="">
-                                {{ csrf_field() }}
                                 <table border="0">
                                     <tr>
                                         <th>会议规模：</th>
@@ -187,6 +186,9 @@
                                                         <input type="date" name="startime" class="form-my">
                                                     </label>
                                                 </li>
+                                                <li>
+                                                    <span id="time_info" class="text-danger" style="display:none;font-size:16px;">如果需要时间条件，请两个选项都填写</span>
+                                                </li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -237,51 +239,19 @@
                         <!--下拉-->
                         <ul class="list-inline">
                             <li>
-                                <a class="btn btn-default" href="#" role="button">综合排名</a>
+                                <a class="btn btn-default orderby" href="javascript:" field="o_score" title="从高到低排序">开场人气<span class="glyphicon glyphicon-triangle-bottom" style="margin-left: 5px;"></span></a>
                             </li>
                             <li>
-                                <a class="btn btn-default" href="#" role="button">开场人气</a>
+                                <a class="btn btn-default orderby" href="javascript:" field="o_sales" title="从高到低排序">销量<span class="glyphicon glyphicon-triangle-bottom" style="margin-left: 5px;"></span></a>
                             </li>
                             <li>
-                                <a class="btn btn-default" href="#" role="button">销量</a>
+                                <a class="btn btn-default orderby" href="javascript:" field="o_price" title="从高到低排序">价格<span class="glyphicon glyphicon-triangle-bottom" style="margin-left: 5px;"></span></a>
                             </li>
                             <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        价格
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#">从低到高</a></li>
-                                        <li><a href="#">从高到低</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        星级
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#">从低到高</a></li>
-                                        <li><a href="#">从高到低</a></li>
-                                    </ul>
-                                </div>
+                                <a class="btn btn-default orderby" href="javascript:" field="o_hotelStar" title="从高到低排序">酒店星级<span class="glyphicon glyphicon-triangle-bottom" style="margin-left: 5px;"></span></a>
                             </li>
                         </ul>
                         <!--多选-->
-                        <div class="c_box">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox1" value="option1"> 酒店
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox1" value="option1"> 含餐点
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox1" value="option1"> 可预订
-                            </label>
-                        </div>
                     </div>
                     <!--按什么显示-->
                     <div class="a_show">
@@ -300,7 +270,24 @@
                                         </dt>
                                         <dd>
                                             <ol class="list-unstyled s_main">
-                                                <li><a target="_blank" href="{{ url('/detail/pid=') }}{{ $val->id }}">{{ $val->title }}</a></li>
+                                                <li>
+                                                    <a target="_blank" href="{{ url('/detail/pid=') }}{{ $val->id }}">{{ $val->title }}</a>
+                                                    @if(session('user'))
+                                                        @if($val->coll)
+                                                        <a href="javascript:" class="pull-right collection" index="{{ $val->id }}" title="点击收藏">
+                                                            <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #f55;"></span>
+                                                        </a>
+                                                        @else
+                                                        <a href="javascript:" class="pull-right collection" index="{{ $val->id }}" title="点击收藏">
+                                                            <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #bbb;"></span>
+                                                        </a>
+                                                        @endif
+                                                    @else
+                                                    <a href="javascript:" class="pull-right collection" index="{{ $val->id }}" title="点击收藏">
+                                                        <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #bbb;"></span>
+                                                    </a>
+                                                    @endif
+                                                </li>
                                                 <li>
                                                     @if($val->hotelStar)
                                                         <a href="javascript:">{{ $val->hotelStar }}</a>
@@ -317,16 +304,20 @@
                                                     @endforeach
                                                 </li>
                                                 <li>
-                                                    @foreach($val->free as $v)
-                                                        @if($loop->index >= 5)
-                                                        <a href="javascript:">...</a>
-                                                        @break
-                                                        @endif
-                                                        <a href="javascript:">{{ $v }}</a>
-                                                    @endforeach
+                                                    @if($val->free)
+                                                        @foreach($val->free as $v)
+                                                            @if($loop->index >= 5)
+                                                            <a href="javascript:">...</a>
+                                                            @break
+                                                            @endif
+                                                            <a href="javascript:">{{ $v }}</a>
+                                                        @endforeach
+                                                    @else
+                                                        &nbsp;
+                                                    @endif
                                                 </li>
-                                                <li>成交量 : 58622单 | 评论 : 35252</li>
-                                                <li class="s_main_ri s_grade">4.8分/5分</li>
+                                                <li>成交量 : {{ $val->sales }}单 | 评论 : 35252</li>
+                                                <li class="s_main_ri model_score s_grade">{{ $val->score }}分/5分</li>
                                                 <li class="s_main_ri s_price">￥{{ $val->price }}元起</li>
                                                 <li class="s_main_ri s_reserve">
                                                     @if(isset($val->timeContradict))
@@ -341,7 +332,6 @@
                                     </dl>
                                 </li>
                             @endforeach
-
                         </ul>
                     </div>
                     <li id="place_model" style="display:none;">
@@ -351,7 +341,12 @@
                             </dt>
                             <dd>
                                 <ol class="list-unstyled s_main">
-                                    <li><a target="_blank" class="model_title" href=""></a></li>
+                                    <li>
+                                        <a target="_blank" class="model_title" href=""></a>
+                                        <a href="javascript:" class="pull-right collection" index="" title="点击收藏">
+                                            <span class="glyphicon glyphicon-heart" style="margin-right: 20px; font-size: 20px; color: #bbb;"></span>
+                                        </a>
+                                    </li>
                                     <li class="model_star_add">
                                         <a href="javascript:"></a>
                                         <span></span>
@@ -362,8 +357,8 @@
                                     <li class="model_meetNum"></li>
                                     <li class="model_support"></li>
                                     <li class="model_free"></li>
-                                    <li>成交量 : 58622单 | 评论 : 35252</li>
-                                    <li class="s_main_ri s_grade">4.8分/5分</li>
+                                    <li class="model_sales"></li>
+                                    <li class="s_main_ri model_score s_grade"></li>
                                     <li class="s_main_ri s_price model_price"></li>
                                     <li class="s_main_ri s_reserve">
                                         <a target="_blank" class="btn btn-danger model_btn" href="" role="button">预订</a>
@@ -375,8 +370,8 @@
                     </li>
                     <!--分页-->
                     <div class="seek_paging text-center">
-                        @if($scode == 1)
-                            {{ $data->appends($request)->links() }}
+                        @if(count($data) < 6)
+                            <button id="loadOther" class="btn btn-info disabled">暂无更多场地</button>
                         @else
                             <button id="loadOther" class="btn btn-info">点击加载更多</button>
                         @endif
@@ -530,7 +525,7 @@
             }
             $.ajax('/listSearch', {
                 data: {'data': ajax?ajax:{!! $ajax !!} },
-                type: 'POST',
+                type: 'get',
                 dataType: 'json',
                 success: function(data)
                 {
@@ -546,11 +541,62 @@
                         }
                         var model = $('#place_model').clone();
                         model.attr('id', '');
-                        
                         model.find('.model_pic').attr('href', '/detail/pid='+n.id);
                         model.find('img').attr('src', '/uploads/shoper/places/places/'+n.pic);
                         model.find('.model_title').attr('href', '/detail/pid='+n.id);
                         model.find('.model_title').html(n.title);
+                        model.find('.collection').attr('index', n.id);
+                        @if(session('user'))
+                        if(n.coll == 1)
+                        {
+                            model.find('.collection span').css('color', '#f55');
+                            
+                        }
+                        model.find('.collection').on('click', function(){
+                            var coll = $(this).find('span');
+                            var pid = $(this).attr('index');
+                            $.ajax('/collection/update', {
+                                data: {pid: pid},
+                                type: 'post',
+                                dataType: 'json',
+                                success: function(data)
+                                {
+                                    if(data.code == 1)
+                                    {
+                                        if(data.status == 1)
+                                        {
+                                            coll.css('color', '#f55');
+                                        }else
+                                        {
+                                            coll.css('color', '#bbb');
+                                        }
+                                    }else
+                                    {
+                                        alert('系统异常，稍后重试');
+                                    }
+                                },
+                                error: function()
+                                {
+                                    alert('系统异常，稍后重试');
+                                }
+                            });
+                        });
+                        @else
+                        model.find('.collection').on('click', function(){
+                            alert('您没有登录！');
+                            var $form_modal = $('.cd-user-modal'),
+                            $form_login = $form_modal.find('#cd-login'),
+                            $form_modal_tab = $('.cd-switcher'),
+                            $tab_login = $form_modal_tab.children('li').eq(0).children('a'),
+                            $main_nav = $('#main_nav');
+
+                            $main_nav.children('ul').removeClass('is-visible');
+                            $form_modal.addClass('is-visible'); 
+
+                            $form_login.addClass('is-selected');
+                            $tab_login.addClass('selected');
+                        });
+                        @endif
                         if(n.hotelStar)
                         {
                             model.find('.model_star_add a').html(n.hotelStar);
@@ -576,16 +622,18 @@
                             }
                             free += '<a href="javascript:">'+ n +'</a>';
                         });
+                        if(free == '') free = '&nbsp;';
                         model.find('.model_free').html(free);
                         model.find('.model_price').html('￥'+ n.price +'元起');
+                        model.find('.model_score').html(n.score +'分/5分');
+                        model.find('.model_sales').html('成交量 : '+ n.sales +'单 | 评论 : 35252');
+
+
                         if(n.timeContradict)
                         {
                             model.find('.model_btn').addClass('disabled');
                         }
                         model.find('.model_btn').attr('href', '/detail/pid='+ n.id);
-                                                
-
-
                         model.css('display', 'block');
                         $('#places_ul').append(model);
                     });
@@ -595,5 +643,83 @@
             });
         });
         @endif
+
+        // 时间和时长
+        var h_form = $('#h_search');
+        h_form.on('submit', function(){
+            var timeLong = $('[name="timeLong"]').val();
+            var startime = $('[name="startime"]').val();
+            if(!startime)
+            {
+                if(timeLong != 0)
+                {
+                    $('#time_info').css('display', 'block');
+                    return false;  
+                }
+            }
+            if(timeLong != 0)
+            {
+               if(!startime)
+                {
+                    $('#time_info').css('display', 'block');
+                    return false;  
+                } 
+            }
+        });
+
+        $('.orderby').on('click', function(){
+            var url = location.href;
+            var last = url.substr(url.length - 1);
+            if(last == '#') url = url.substr(0, url.length - 1);
+            var field = $(this).attr('field');
+            if(url.indexOf(field) > 0)
+            {
+                var lastUrl = url.substr(url.indexOf(field));
+                var start = lastUrl.indexOf('=') + 1;
+                if(lastUrl.indexOf('&') > 0)
+                {
+                    var end = lastUrl.indexOf('&');
+                }else
+                {
+                    var end = lastUrl.length;
+                }
+                var oldBy = lastUrl.substring(start, end);
+                if(oldBy == 'desc')
+                {
+                    var by = 'asc';
+                }else
+                {
+                    var by = 'desc';
+                }
+                var newUrl = url.replace(field +'='+ oldBy, field +'='+ by);
+            }else
+            {
+                if(url.indexOf('?') > 0)
+                {
+                    var newUrl = url + '&' + field +'='+ 'desc';
+                }else
+                {
+                    var newUrl = url + '?' + field +'='+ 'desc';
+                }
+            }
+
+            location.href = newUrl;
+        });
+        var url = location.href;
+        if(url.indexOf('o_') > 0)
+        {
+            var lastUrl = url.substr(url.indexOf('o_'));
+            var arr = lastUrl.split('&');
+            $.each(arr, function(i, n){
+                var ar = n.split('=');
+                $('.orderby[field="'+ ar[0] +'"]').css('background', '#ccc');
+                if(ar[1] != 'desc')
+                {
+                    $('.orderby[field="'+ ar[0] +'"] span').toggleClass('glyphicon-triangle-bottom');
+                    $('.orderby[field="'+ ar[0] +'"] span').toggleClass('glyphicon-triangle-top');
+                    $('.orderby[field="'+ ar[0] +'"]').attr('title', '从低到高排序')
+                }
+            });
+        }
     </script>
 @endsection

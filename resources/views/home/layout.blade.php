@@ -60,24 +60,16 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">我的开场 <span class="glyphicon glyphicon-user"></span></a>
-                            <ul>
-                                <li><a href="{{ url('/usercenter/index') }}">个人中心</a></li>
-                                <li><a href="#">开场</a></li>
-                            </ul>
+                            <a href="{{ url('/usercenter/index') }}">我的开场 <span class="glyphicon glyphicon-user"></span></a>
                         </li>
                         <li>
                             <a href="{{ url('/shopcart/index') }}">
                                 购物车
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
-                            {{--<ul>--}}
-                                {{--<li><a href="#">开场</a></li>--}}
-                                {{--<li><a href="#">开场</a></li>--}}
-                            {{--</ul>--}}
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/usercenter/collection') }}">
                                 收藏夹 
                                 <span class="glyphicon glyphicon-heart"></span>
                             </a>
@@ -555,7 +547,53 @@
         $(".J-total").html(sum);
 
 
+        // 收藏
+        @if(session('user'))
+            $('.collection').on('click', function(){
+                var coll = $(this).find('span');
+                var pid = $(this).attr('index');
+                $.ajax('/collection/update', {
+                    data: {pid: pid},
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(data)
+                    {
+                        if(data.code == 1)
+                        {
+                            if(data.status == 1)
+                            {
+                                coll.css('color', '#f55');
+                            }else
+                            {
+                                coll.css('color', '#bbb');
+                            }
+                        }else
+                        {
+                            alert('系统异常，稍后重试');
+                        }
+                    },
+                    error: function()
+                    {
+                        alert('系统异常，稍后重试');
+                    }
+                });
+            });
+        @else
+            $('.collection').on('click', function(){
+                alert('您没有登录！');
+                var $form_modal = $('.cd-user-modal'),
+                $form_login = $form_modal.find('#cd-login'),
+                $form_modal_tab = $('.cd-switcher'),
+                $tab_login = $form_modal_tab.children('li').eq(0).children('a'),
+                $main_nav = $('#main_nav');
 
+                $main_nav.children('ul').removeClass('is-visible');
+                $form_modal.addClass('is-visible'); 
+
+                $form_login.addClass('is-selected');
+                $tab_login.addClass('selected');
+            });
+        @endif
     </script>
 </body>
 </html>

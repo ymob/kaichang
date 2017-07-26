@@ -12,7 +12,7 @@
             </div>
             <div id="search_e">
 
-                <form action="/indexSearch" method="get" >
+                <form action="{{ url('/listSearch') }}" method="get">
                     <ul>
                         <li class="city">
                             <a href="#">
@@ -130,8 +130,7 @@
             </div>
             <div id="search_d">
                 <div class="">
-                    <form action="{{ url('/listSearch') }}" method="post">
-                        {{ csrf_field() }}
+                    <form action="{{ url('/listSearch') }}" method="get">
                         <table border="0">
                             <tr>
                                 <th>会议规模：</th>

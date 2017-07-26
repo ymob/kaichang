@@ -18,11 +18,6 @@ class UserCenterController extends Controller
 				['status', $code]
 			])->get();
 
-//		foreach ($data as $key => $val) {
-//			$arr = explode(',', $val->sids);
-//			$res = \DB::table('shopdetails')->whereIn('sid', $arr)->get();
-//			$val->snames = $res;
-//		}
 
 		return view('home.usercenter.index', ['title' => '用户中心首页', 'code' => $code, 'data' => $data]);
 
@@ -30,17 +25,15 @@ class UserCenterController extends Controller
 
 
 	// detail
-    //加载用户修改信息页面
+    // 加载用户修改信息页面
 	public function details()
 	{
-//		return view('home.usercenter.detail', ['title' => '我的信息', 'user' => session('user')]);
 		return view('home.usercenter.details', ['user' => session('user'),'title'=>'用户个人中心']);
-
 	}
 
 
 	// updetail
-    //执行个人用户信息修改
+    // 执行个人用户信息修改
 	public function updetails(Request $request)
 	{
 	    //获取修改后的数据
@@ -129,8 +122,6 @@ class UserCenterController extends Controller
         }
 	}
 
-
-	// uppassword
     //修改密码
 	public function uppassword(Request $request)
 	{
@@ -151,7 +142,6 @@ class UserCenterController extends Controller
 
         $this->validate($request, $valid, $validInfo);
 
-// dd(session('user')->password);
 		if(!\Hash::check($data['oldpass'], session('user')->password))
 		{
 			return back()->with(['info'=>'原密码不正确']);
@@ -170,8 +160,8 @@ class UserCenterController extends Controller
 		}
 	}
 
-    // 个人用户订单列表
-	public function order(Request $request,$status)
+    // 个人用户订单
+	public function order(Request $request, $status)
 	{
         //获取每页显示的数据条数
         $num = 10;
@@ -195,6 +185,7 @@ class UserCenterController extends Controller
         foreach($data as $key2=>$val2)
         {
             $data2[$key2] = $val2;
+            $data=\DB::table('orders')->where('status', $status)->paginate($num);
         }
 
         $support = array('','客房','茶歇','AV设备');
@@ -277,8 +268,25 @@ class UserCenterController extends Controller
             }
         }
 
-
         return view('home.usercenter.shopcart',['title'=>'购物车','shopcart'=>$shopcart]);
+    }
+
+    public function collection()
+    {
+        $uid = session('user')->id;
+
+        $data = \DB::table('collection')
+            ->join('places', 'places.id', 'collection.pid')
+            ->where([['collection.uid', $uid], ['collection.status', 1]])
+            ->select('collection.*', 'places.title', 'places.pic', 'places.updown')
+            ->orderBy('collection.updated', 'desc')
+            ->get();
+        foreach ($data as $key => $val) {
+            $arr = explode(',', $val->pic);
+            $val->pic = $arr[0];
+        }
+
+        return view('home.usercenter.collection', ['title' => '我的收藏', 'data' => $data]);
     }
 
 }

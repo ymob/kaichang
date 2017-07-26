@@ -10,6 +10,7 @@ class DetailsController extends Controller
     //加载搜索结果详情页
     public function index($pid)
     {
+        $placesId = $pid;
         // 场地信息 //
         $data = \DB::table('places')->where('id',$pid)->first();
         // 地址
@@ -92,6 +93,7 @@ class DetailsController extends Controller
                 $shopcart = [];
             }
         }
+        
         $support = array('','客房','茶歇','AV设备');
         if($shopcart)
         {
@@ -105,7 +107,7 @@ class DetailsController extends Controller
             foreach($shopcart as $key=>$val)
             {
                 $val = (array)$val;
-                $pid = \DB::table('meetplaces')->where('id',$val['mid'])->value('pid');
+                $pid = \DB::table('meetplaces')->where('id', $val['mid'])->value('pid');
                 $val['pid'] = $pid;
                 $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
                 $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
@@ -127,6 +129,30 @@ class DetailsController extends Controller
                 $shopcart[$key] = $val;
             }
         }
+
+
+        $user = session('user');
+        if($user)
+        {
+            $coll = \DB::table('collection')->where([['uid', $user->id], ['pid', $placesId]])->first();
+            if($coll)
+            {
+                if($coll->status == 1)
+                {
+                    $data->coll = 1;
+                }else
+                {
+                    $data->coll = 0;
+                }
+            }else
+            {
+                $data->coll = 0;
+            }
+        }else
+        {
+            $data->coll = 0;
+        }
+
 
         $count = \DB::table('places')->where('isads',1)->count()-4;
         // dd($count);

@@ -64,7 +64,6 @@ class LoginController extends Controller
             // 清购物车session
             Session::forget('shopcart');
         }
-//        return redirect('/')->with(['info'=>'登录成功']);
         return back()->with(['info'=>'登录成功']);
     }
 

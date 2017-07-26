@@ -124,10 +124,9 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // 前台首页
 Route::get('/', 'Home\IndexController@index');
-Route::get('/indexSearch','Home\IndexController@indexSearch');
 
 // 列表页场地搜索
-Route::post('/listSearch','Home\ListController@listSearch');
+Route::get('/listSearch','Home\ListController@listSearch');
 
 // 场地搜索结果详情页
 Route::get('/detail/pid={pid}','Home\DetailsController@index');
@@ -176,7 +175,19 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
     //底部链接
     Route::get('home/foot/aboutus','Home\FootController@index');
+
+    //个人中心购物车
+    Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+
+    // 收藏
+    Route::get('/usercenter/collection','Home\UserCenterController@collection');
+    Route::post('/collection/update','Home\CollectionCenterController@update');
+    
+    //底部链接
+    Route::get('/home/foot/aboutus','Home\FootController@index');
+
     //用户评论
+
     //加载评论页面
     Route::get('/home/comment/index',"Home\CommentController@index");
 });
@@ -230,6 +241,7 @@ Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detai
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
 Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');
 
+
 // 商户登录
 Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
 Route::post('/shopcenter/dologin', 'Home\ShopLoginController@dologin');
@@ -240,5 +252,3 @@ Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
 Route::get('/404', function(){
     return view('404');
 });
-
-

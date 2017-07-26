@@ -34,8 +34,8 @@
 
 							</li>
 							<li class="left-list">
-								<i class="glyphicon glyphicon-queen"></i>
-								<a href="#">我的收藏</a>
+								<i class="glyphicon glyphicon-heart"></i>
+								<a href="/usercenter/collection">我的收藏</a>
 
 							</li>
 							<li class="left-list" style="border-bottom:none">
