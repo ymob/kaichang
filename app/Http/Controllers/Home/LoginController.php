@@ -14,7 +14,7 @@ class LoginController extends Controller
         $data=$request->except('_token');
 
         //是否记住我
-        $remember_token=\Cookie::get('remember_me');
+        $remember_token=\Cookie::get('remember_user');
         if($remember_token)
         {
             $admin=\DB::table('users')->where('remember_token', $remember_token)->first();
@@ -48,7 +48,7 @@ class LoginController extends Controller
 
         //写入cookie
         if($request->has('remember_me')) {
-            \Cookie::queue('remember_token', $admin->remember_token, 10); //10分钟
+            \Cookie::queue('remember_user', $admin->remember_token, 10); //10分钟
         }
 
         // 将session中购物车数据存储到数据库shopcart表
