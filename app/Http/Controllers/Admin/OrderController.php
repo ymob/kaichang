@@ -14,7 +14,6 @@ class OrderController extends Controller
         //获取每页显示的数据条数
         $num = 10;
 
-        $uid = session('user')->id;
         if(!$status || $status==0)
         {
             $data=\DB::table('orders')->paginate($num);

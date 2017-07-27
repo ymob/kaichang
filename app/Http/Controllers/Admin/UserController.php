@@ -159,6 +159,7 @@ class UserController extends Controller
                 $data['pic']=$filename;
             }
         }
+
         if($data['password'] == $oldDate->password)
         {
             unset($data['password']);

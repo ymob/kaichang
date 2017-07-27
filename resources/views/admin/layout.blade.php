@@ -166,12 +166,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/places/index') }}"><i class="fa fa-user-secret"></i> 场地列表</a></li>
-<<<<<<< HEAD
+
                         <li><a href="{{ url('/admin/shopuser/status') }}"><i class="fa fa-user-md"></i> 加盟商审核</a></li>
-=======
-                       <!--  <li><a href="{{ url('/admin/meetplaces/index') }}"><i class="fa fa-user-md"></i> 会场列表</a></li>
-                        <li><a href="{{ url('/admin/facilities/index') }}"><i class="fa fa-users"></i> 配套服务列表</a></li> -->
->>>>>>> 2df1b6812493acb5bd4397ac0ad02b26b819b253
+
+
                     </ul>
                 </li>
 
@@ -191,19 +189,6 @@
                 </li>
 
 
-                <li class="active treeview">
-                    <a href="#">
-                        <i class="fa fa-files-o"></i>
-                        <span>商品管理</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 商品列表</a></li>
-                       <!--  <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li> -->
-                    </ul>
-                </li>
 
                 <li class="active treeview">
                     <a href="#">

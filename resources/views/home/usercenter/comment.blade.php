@@ -33,20 +33,35 @@
             </div>
         </div>
         <div><br></div>
+        <div class="col-md-2">
+            发表评论:
+        </div>
+        <form action="{{ url('/home/comment/insert/') }}/{{ $data['mid'] }}" method="get" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-md-2">
-                发表评论:
-            </div>
+
             <div class="col-md-10">
-                <textarea name="" id="" cols="80" rows="10"></textarea>
+                    @include('UEditor::head')
+                    <!-- 加载编辑器的容器 -->
+                        <script id="container" name="content" type="text/plain">
+
+                        </script>
+
+                        <!-- 实例化编辑器 -->
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('container');
+                            ue.ready(function() {
+                                ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');
+                            });
+                        </script>
+
             </div>
         </div>
-        <div class="row text-center">
-            <button class="btn btn-primary">提交评论</button>
-        </div>
-
     </div>
-
+    <div class="row col-md-offset-4">
+        <br>
+        <button class="btn btn-primary">提交评论</button>
+    </div>
+    </form>
 @endsection
 
 @section('javascript')

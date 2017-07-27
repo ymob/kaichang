@@ -18,7 +18,7 @@ class AdverController extends Controller
 
         //查询分页搜索数据
         $data=\DB::table('places')->where('title','like','%'.$keywords.'%')->paginate($num);
-        // dd($data);
+//         dd($data);
         foreach ($data as $key => $value) {
             $address = explode(',',$value->address);
             $province = \DB::table('district')->where('id',$address[0])->value('name');
@@ -26,7 +26,8 @@ class AdverController extends Controller
             $county = \DB::table('district')->where('id',$address[2])->value('name');
             $finaladdress = implode("",[$province,$city,$county,$address[3]]);
             // var_dump($finaladdress);
-            $data[$key]->address = $finaladdress; 
+            $data[$key]->address = $finaladdress;
+            $data[$key]->pic = explode(',', $data[$key]->pic)[0];
         }
 
 
@@ -187,7 +188,8 @@ class AdverController extends Controller
             $county = \DB::table('district')->where('id',$address[2])->value('name');
             $finaladdress = implode("",[$province,$city,$county,$address[3]]);
             // var_dump($finaladdress);
-            $data[$key]->address = $finaladdress; 
+            $data[$key]->address = $finaladdress;
+            $data[$key]->pic = explode(',', $data[$key]->pic)[0];
         }
 
 

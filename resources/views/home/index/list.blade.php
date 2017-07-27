@@ -391,7 +391,7 @@
                              <div class="recommend_list">
                                 <ul class="list-unstyled">
                                     <!--一条一条的-->
-                                    <li>
+                                    <li style="padding-left: 20px">
                                         <dl class="dl-horizontal">
                                             <dt>
                                                 <img  style="width:100px;height:100px;"src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" alt="">
@@ -413,7 +413,6 @@
 
                    ?>
                     
-                   
 
                 </div>
 
@@ -424,7 +423,7 @@
             <div class="col-md-12">
                 
                  @foreach($adver as $k=>$v)
-                     <div class="col-xs-3">
+                     <div class="col-xs-3" style="padding-top: 20px;">
                         <a href="{{ url('/detail/pid=') }}{{ $v->id }}"><img style="width:200px;height:200px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
                         <ul>
                             <h3>{{$v->title}}</h3>

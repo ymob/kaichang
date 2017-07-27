@@ -258,13 +258,14 @@
             <!-- 评论 -->
             <div id="comment">
                 <div class="comment_nav">
-                    <b>评论详情（222）</b>
-                    <span>场地总评分<span>4.7</span>分，共2333次打分</span>
+                    <b>评论详情</b><span>（评论数）</span>
+                    <span>场地总评分<span>4.7</span>分，共2次打分</span>
                 </div>
+
                 <div class="comment_con row">
                     <div class="col-xs-2">
                         <img src="{{ asset('/home/images/order_2.png') }}">
-                        <p class="">183大酒店</p>
+                        <p class="">{{ $data->title }}</p>
                     </div>
                     <div class="col-xs-10 ">
                         <div class="con">
@@ -273,30 +274,57 @@
                         <img src="{{ asset('/home/images/order_2.png') }}">
                         </div>
                         <div class="good">
-                            <span>所用场地：第一会议</span>
+                            <span>所用场地：会场1</span>
                             <span>会议人数：200</span>
                             <span>会议类型：新闻发布会</span>
                         </div>
                     </div>
                 </div>
+                <?php
+                    $meet = \DB::table('meetplaces')->where('pid',$data->id)->get();
+                    if($meet)
+                    {
+                        $mids = [];
+                        foreach($meet as $k2=>$v2)
+                        {
+                            $mids[] = $v2->id;
+                        }
+                        foreach($mids as $k3=>$v3)
+                        {
+                            $com = \DB::table('comments')->where('mid',$v3)->first();
+                            if($com){
+                                ?>
                 <div class="comment_con row">
                     <div class="col-xs-2">
                         <img src="{{ asset('/home/images/order_2.png') }}">
-                        <p class="">183大酒店</p>
+                        <p class="">{{ $data->title }}</p>
                     </div>
                     <div class="col-xs-10 ">
                         <div class="con">
-                            很宽敞 <br> 
-                            场地工作人员服务很好 <br> 
-                        <img src="{{ asset('/home/images/order_2.png') }}">
+                            <br>
+                            <?php
+                                    $con = $com->content;
+                                    $con = str_replace('<p>','',$con);
+                                    $con = str_replace('</p>','',$con);
+                                    echo $con;
+                                    ?>
+                             <br>
+                            <img src="{{ asset('/home/images/order_2.png') }}">
                         </div>
                         <div class="good">
-                            <span>所用场地：第一会议</span>
+                            <span>所用场地：会场{{ $com->mid }}</span>
                             <span>会议人数：200</span>
                             <span>会议类型：新闻发布会</span>
                         </div>
                     </div>
                 </div>
+                <?php
+                            }
+                        }
+                    }
+
+                    ?>
+
                 <div id="comment_btn">
                     <button class="btn btn-info center-block">查看更多评论</button>
                 </div>
@@ -309,9 +337,13 @@
                 <div class="col-md-12">
                     @foreach($adver as $k=>$v)
                      <div class="col-xs-3">
+<<<<<<< HEAD
 
                         <a href="{{url('/detail/pid=')}}{{$v->id}}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
 
+=======
+                        <a href="{{ url('/detail/pid=') }}{{ $v->id }}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
+>>>>>>> bdeca0a326015bd6d588dcca930c7119379f0c94
                         <ul>
                             <h3>{{$v->title}}</h3>
                             <p>所在地 : {{$v->address}}</p>

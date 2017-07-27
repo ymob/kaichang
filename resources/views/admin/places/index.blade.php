@@ -359,10 +359,7 @@
                                         </ul>
                                     </div>
                                 </td>
-<<<<<<< HEAD
-                                <td></td>
-=======
->>>>>>> db0fcdf724207a53339bb5ba194e67a244568bbc
+
                             </tr>
                                     @foreach($mv->facilitie as $fk => $fv)
 
@@ -452,10 +449,7 @@
                                         </ul>
                                     </div>
                                 </td>
-<<<<<<< HEAD
-                                <td></td>
-=======
->>>>>>> db0fcdf724207a53339bb5ba194e67a244568bbc
+
                             </tr>
 
                                     @endforeach

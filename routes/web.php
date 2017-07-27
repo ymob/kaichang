@@ -28,10 +28,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
 
     // 加盟商管理
-    Route::get('/admin/shopuser/index','Admin\UserController@sindex')->middleware('adminauth');
+    Route::get('/admin/shopuser/index','Admin\UserController@sindex');
 
     // 用户管理
-    Route::get('/admin/homeuser/index','Admin\UserController@hindex')->middleware('adminauth');
+    Route::get('/admin/homeuser/index','Admin\UserController@hindex');
 
     // 后台所有用户权限管理
     Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
@@ -198,6 +198,7 @@ Route::group(['middleware' => 'homeuser'], function(){
 
     //用户评论
     Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
+    Route::get('/home/comment/insert/{mid}',"Home\UserCenterController@insert");
 
 });
 

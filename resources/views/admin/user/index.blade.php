@@ -92,36 +92,40 @@
                                 <td class="ids">{{ $value->id  }}</td>
                                 <td class="name">{{ $value->name }}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if($value->id != 1)
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="status_show">
                                                 @if($value->status == 1)
-                                                启用
+                                                    启用
                                                 @else
-                                                禁用
+                                                    禁用
                                                 @endif
                                             </span>&nbsp;
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="status_sel" index="admins" href="javascript:">
-                                                    @if($value->status == 1)
-                                                    禁用
-                                                    @else
-                                                    启用
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="status_sel" index="admins" href="javascript:">
+                                                        @if($value->status == 1)
+                                                            禁用
+                                                        @else
+                                                            启用
+                                                        @endif
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </td>
                                 <td>
                                     <img style="width:50px;height:50px;" src="/uploads/adminUser/{{ $value->pic }}" alt="">
                                 </td>
                                 <td>
                                     <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
+                                    @if($value->id != 1)
                                     <a href="javascript:" data-toggle="modal" data-target="#myModal" class="del">删除</a>
+                                    @endif
                                 </td>
 
                             </tr>
