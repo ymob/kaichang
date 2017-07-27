@@ -28,10 +28,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
 
     // 加盟商管理
-    Route::get('/admin/shopuser/index','Admin\UserController@sindex')->middleware('adminauth');
+    Route::get('/admin/shopuser/index','Admin\UserController@sindex');
 
     // 用户管理
-    Route::get('/admin/homeuser/index','Admin\UserController@hindex')->middleware('adminauth');
+    Route::get('/admin/homeuser/index','Admin\UserController@hindex');
 
     // 后台所有用户权限管理
     Route::post('/admin/user/ajaxrestatus','Admin\UserController@ajaxrestatus');
@@ -189,19 +189,21 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/orderCancel/{oid}','Home\UserCenterController@cancel');
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-    //底部链接
-    Route::get('home/foot/aboutus','Home\FootController@index');
+
     //个人中心购物车
     Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
     // 收藏
     Route::get('/usercenter/collection','Home\UserCenterController@collection');
     Route::post('/collection/update','Home\CollectionCenterController@update');
+
     //用户评论
     Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
     Route::get('/home/comment/insert/{mid}',"Home\UserCenterController@insert");
 
-   
 });
+
+   //底部链接
+    Route::get('/home/foot/aboutus','Home\FootController@index');
 
 // 用户注册
 Route::post('/regist','Home\RegistController@regist');

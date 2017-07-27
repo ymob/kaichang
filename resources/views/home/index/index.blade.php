@@ -301,7 +301,7 @@
                                             </label>
                                         </li>
                                         <li>
-                                            <span id="time_info" class="text-danger" style="display:none;font-size:12px;">如果需要时间添加，请两个选项都得填写</span>
+                                            <span id="time_info" class="text-danger" style="display:none;font-size:12px;">如果需要时间添加，请两个选项都得填写；开始时间必须在今天之后。</span>
                                         </li>
                                     </ul>
                                 </td>
@@ -435,6 +435,22 @@
                     $('#time_info').css('display', 'block');
                     return false;  
                 } 
+            }
+        });
+        $('[name="startime"]').on('change', function(){
+            var time = $(this).val();
+            time = time.replace('-', '');
+            time = time.replace('-', '');
+            var now = new Date();
+            now = now.toLocaleDateString();
+            var arr = now.split('/');
+            if(arr[1] < 10) arr[1] = '0' + arr[1];
+            if(arr[2] < 10) arr[2] = '0' + arr[2];
+            now = arr.join('');
+            if(time <= now)
+            {
+                $(this).val('');
+                $('#time_info').css('display', 'block');
             }
         });
     </script>

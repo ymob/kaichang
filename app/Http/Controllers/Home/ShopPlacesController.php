@@ -595,6 +595,8 @@ class ShopPlacesController extends Controller
             }
         }
 
+        unset($data['MAX_FILE_SIZE']);
+
         //添加数据到数据库表 places ,返回ID
         $res=\DB::table('places')->insertGetId($data);
 
@@ -642,8 +644,8 @@ class ShopPlacesController extends Controller
         }
 
         //将 pid $arr 存入 session 以便添加多个会场
-        session('pid',$pid);
-        session('arr',$arr);
+        session(['pid'=>$pid]);
+        session(['arr'=>$arr]);
 
         return view('home.shopercenter.addMeet',['title'=>'添加会场', 'pid'=>$pid ,'arr'=>$arr]);
     }

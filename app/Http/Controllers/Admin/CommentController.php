@@ -29,7 +29,7 @@ class CommentController extends Controller
 
 
        		//查询商品表
-       		$data[$key]->goodname = \DB::table('goods')->where('id',$value->gid)->value('title');
+       		$data[$key]->goodname = \DB::table('goods')->where('id',$value->mid)->value('title');
 
        	}
 
@@ -42,18 +42,17 @@ class CommentController extends Controller
     //编辑评论
     public function edit($id)
     {
-      //查出要编辑的一条数据
-      $data = \DB::table('comments')->where('id',$id)->first();
+        //查出要编辑的一条数据
+        $data = \DB::table('comments')->where('id',$id)->first();
 
-      //关联查询前台用户表中的用户名
-      $data->username = \DB::table('users')->where('id',$data->uid)->value('name');
-     
-      //关联查询商品表中的商品名称
-      $data->title = \DB::table('goods')->where('id',$data->gid)->value('title');
-      
-      //加载编辑页面
-      return view('admin.comment.edit',['data'=>$data,'title'=>'评论编辑']);
+        //关联查询前台用户表中的用户名
+        $data->username = \DB::table('users')->where('id',$data->uid)->value('name');
 
+        //关联查询商品表中的商品名称
+        $data->title = \DB::table('goods')->where('id',$data->mid)->value('title');
+
+        //加载编辑页面
+        return view('admin.comment.edit',['data'=>$data,'title'=>'评论编辑']);
     }
 
     //执行修改动作
@@ -112,7 +111,7 @@ class CommentController extends Controller
 
 
         //查询商品表
-        $data[$key]->goodname = \DB::table('goods')->where('id',$value->gid)->value('title');
+        $data[$key]->goodname = \DB::table('goods')->where('id',$value->mid)->value('title');
 
       }
 

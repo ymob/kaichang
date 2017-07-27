@@ -13,7 +13,7 @@ class ListController extends Controller
     public function listSearch(Request $request)
     {
     	$pageSize = 5;
-        
+
         if($request->data)
         {
             $data = $request->data;
@@ -23,11 +23,15 @@ class ListController extends Controller
             $data = $request->except('_token');
             $page = $request->input('page', 1);
         }
-
         $startPage = ($page - 1) * $pageSize;
         if($startPage < 0) $startPage = 0;
 
-		$where = 'WHERE updown=1 ';
+		$where = 'WHERE updown=1 && status=1 ';
+
+        if(isset($data['keywords']))
+        {
+            $where .= ' && title like "%'. $data['keywords'] .'%" ';
+        }
 
         // 地区
 		$arr_add = ['北京'=>1,'天津'=>2,'沈阳'=>107,'大连'=>108,'哈尔滨'=>130,'石家庄'=>73,'太原'=>84,'呼和浩特'=>95,'廊坊'=>82,'上海'=>9,'杭州'=>175,'南京'=>162,'苏州'=>166,'无锡'=>163,'济南'=>223,'厦门'=>204,'宁波'=>176,'福州'=>203,'青岛'=>224,'合肥'=>186,'常州'=>165,'扬州'=>171,'温州'=>177,'绍兴'=>180,'嘉兴'=>178,'威海'=>232,'镇江'=>172,'南通'=>167,'金华'=>183,'徐州'=>164,'潍坊'=>229,'淄博'=>225,'临沂'=>235,'马鞍山'=>190,'台州'=>184,'泰州'=>173,'济宁'=>230,'泰安'=>231,'成都'=>385,'武汉'=>258,'郑州'=>240,'长沙'=>275,'南昌'=>212,'贵阳'=>406,'西宁'=>462,'重庆'=>22,'西安'=>438,'昆明'=>415,'兰州'=>448,'乌鲁木齐'=>475,'银川'=>470,'广州'=>289,'深圳'=>291,'佛山'=>294,'珠海'=>292,'东莞'=>305,'三亚'=>325,'海口'=>324,'南宁'=>310,'惠州'=>299];
@@ -124,7 +128,7 @@ class ListController extends Controller
 
         $places = \Cache::get($key_where, function() use($where, $key_where) {
             $res = \DB::select("SELECT * FROM places ".$where);
-            \Cache::put($key_where, $res, 5);
+            \Cache::put($key_where, $res, 1);
             return $res;
         });
 
@@ -298,7 +302,12 @@ class ListController extends Controller
             $v->address = implode(' ',$arr).' '.$address[3];
 
             // 会场数
-            $v->meetNum = \DB::table('meetplaces')->where('pid',$v->id)->count();
+            $v->meetNum = \DB::table('meetplaces')->where('pid', $v->id)->count();
+            if($v->meetNum == 0)
+            {
+                unset($places[$k]);
+                continue;
+            }
 
             // 酒店星级
             if($v->hotelStar)
@@ -369,6 +378,21 @@ class ListController extends Controller
         $places = array_slice($places, $startPage, $pageSize+1);
         $data['page'] = $page + 1;
 
+        $count = \DB::table('places')->where('isads',1)->count()-4;
+        // dd($count);
+        $num = rand(1,$count);
+        $adver  = \DB::table('places')->where('isads',1)->skip($num)->take(4)->get();
+        foreach ($adver as $key => $value) {
+            $adver[$key]->pic = explode(',',$value->pic)[0];
+            $address = explode(',',$value->address);
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            $adver[$key]->address = $finaladdress;
+            // var_dump($finaladdress);
+        }
+
         if($request->data)
         {
             $data['places'] = $places;
@@ -377,7 +401,7 @@ class ListController extends Controller
         }else
         {
             $ajax = json_encode($data);
-            return view('home.index.list', ['title'=>'搜索结果列表页', 'ajax' => $ajax, 'data' => $places]);
+            return view('home.index.list', ['title'=>'搜索结果列表页', 'adver'=>$adver, 'ajax' => $ajax, 'data' => $places]);
         }
 
     }

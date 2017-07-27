@@ -189,19 +189,6 @@
                 </li>
 
 
-                <li class="active treeview">
-                    <a href="#">
-                        <i class="fa fa-files-o"></i>
-                        <span>商品管理</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 商品列表</a></li>
-                       <!--  <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li> -->
-                    </ul>
-                </li>
 
                 <li class="active treeview">
                     <a href="#">

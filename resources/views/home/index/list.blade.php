@@ -187,7 +187,7 @@
                                                     </label>
                                                 </li>
                                                 <li>
-                                                    <span id="time_info" class="text-danger" style="display:none;font-size:16px;">如果需要时间条件，请两个选项都填写</span>
+                                                    <span id="time_info" class="text-danger" style="display:none;font-size:16px;">如果需要时间条件，请两个选项都填写，且开始时间必须在今天之后</span>
                                                 </li>
                                             </ul>
                                         </td>
@@ -391,7 +391,7 @@
                              <div class="recommend_list">
                                 <ul class="list-unstyled">
                                     <!--一条一条的-->
-                                    <li>
+                                    <li style="padding-left: 20px">
                                         <dl class="dl-horizontal">
                                             <dt>
                                                 <img  style="width:100px;height:100px;"src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" alt="">
@@ -413,7 +413,6 @@
 
                    ?>
                     
-                   
 
                 </div>
 
@@ -423,19 +422,18 @@
         <div id="commend" class="row a_generalize margin-top">
             <div class="col-md-12">
                 
-                 {{--@foreach($adver as $k=>$v)--}}
-                     <div class="col-xs-3">
-                        {{--<a href=""><img style="width:200px;height:200px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>--}}
+                 @foreach($adver as $k=>$v)
+                     <div class="col-xs-3" style="padding-top: 20px;">
+                        <a href="{{ url('/detail/pid=') }}{{ $v->id }}"><img style="width:200px;height:200px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
                         <ul>
-                            {{--<h3>{{$v->title}}</h3>--}}
-                            {{--<p>所在地 : {{$v->address}}</p>--}}
-                            {{--<p>最大会所场面积:{{$v->maxArea}}平米</p>--}}
-                            {{--<p>最多容纳人数{{$v->maxPeople}}</p>--}}
-                            {{--<p>联系电话 : {{$v->phone}}</p>--}}
+                            <h3>{{$v->title}}</h3>
+                            <p>所在地 : {{$v->address}}</p>
+                            <p>最大会所场面积:{{$v->maxArea}}平米</p>
+                            <p>最多容纳人数{{$v->maxPeople}}</p>
+                            <p>联系电话 : {{$v->phone}}</p>
                         </ul>
                     </div>
-                {{--@endforeach--}}
-               
+                @endforeach
             </div>
         </div>
 
@@ -666,5 +664,22 @@
                 }
             });
         }
+
+        $('[name="startime"]').on('change', function(){
+            var time = $(this).val();
+            time = time.replace('-', '');
+            time = time.replace('-', '');
+            var now = new Date();
+            now = now.toLocaleDateString();
+            var arr = now.split('/');
+            if(arr[1] < 10) arr[1] = '0' + arr[1];
+            if(arr[2] < 10) arr[2] = '0' + arr[2];
+            now = arr.join('');
+            if(time <= now)
+            {
+                $(this).val('');
+                $('#time_info').css('display', 'block');
+            }
+        });
     </script>
 @endsection

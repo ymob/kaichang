@@ -273,31 +273,31 @@
         });
 
 
+//
+//        //限制上传图片大小
+//         function check()
+//        {
+//
+//          var imagSize =  document.getElementById("pic").files[0].size;
+//          var size = imagSize/(1024*1024);
+//          var res = size.toFixed(2);
+//          // alert("图片大小："+imagSize+"B")
+//          if(imagSize>1024*1024*0.5)
+//            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+//            return false;
+//        }
 
-        //限制上传图片大小
-         function check()
-        {
-          
-          var imagSize =  document.getElementById("pic").files[0].size;
-          var size = imagSize/(1024*1024);
-          var res = size.toFixed(2);
-          // alert("图片大小："+imagSize+"B")
-          if(imagSize>1024*1024*0.5)
-            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
-            return false;
-        }
-
-         function check1()
-        {
-          
-          var imagSize =  document.getElementById("evidencePic").files[0].size;
-          var size = imagSize/(1024*1024);
-          var res = size.toFixed(2);
-          // alert("图片大小："+imagSize+"B")
-          if(imagSize>1024*1024*0.5)
-            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
-            return false;
-        }
+//         function check1()
+//        {
+//
+//          var imagSize =  document.getElementById("evidencePic").files[0].size;
+//          var size = imagSize/(1024*1024);
+//          var res = size.toFixed(2);
+//          // alert("图片大小："+imagSize+"B")
+//          if(imagSize>1024*1024*0.5)
+//            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+//            return false;
+//        }
 
       $.each($(".nav-son li"),function(i,n){
           $(this).removeClass('active-nav-son');
