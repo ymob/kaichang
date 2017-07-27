@@ -110,9 +110,7 @@
               @if($val['status']==4)
                   <a href="{{ url('/home/comment/index/') }}/{{ $val['mid'] }}">发表评论</a>
               @endif
-              @if($val['status']==4)
-                  <a href="{{ url('usercenter/judge/') }}/{{ $val['id'] }}">去评价</a>
-              @endif
+            
           </td>
 
       </tr>
