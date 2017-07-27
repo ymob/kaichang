@@ -267,7 +267,6 @@ class ShopPlacesController extends Controller
                 {
                     $arr['free'][$v] = $freeValues[$v];
                 }
-
             }
         }else
         {

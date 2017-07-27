@@ -236,6 +236,63 @@
         </div>
     </div> 
 
+    <?php
+    if(session('user'))
+    {
+        $uid = session('user')->id;
+        $res = \DB::table('shopcart')->where('uid',$uid)->get()->toArray();
+        if($res)
+        {
+            $shopcart = $res;
+        }else{
+            $shopcart = [];
+        }
+    }else
+    {
+        if(session('shopcart'))
+        {
+            $shopcart = session('shopcart');
+        }else{
+            $shopcart = [];
+        }
+    }
+
+    $support = array('','客房','茶歇','AV设备');
+    if($shopcart)
+    {
+        foreach($shopcart as $k=>$v)
+        {
+            if (is_object($v)) {
+                $shopcart[$k] = (array)$v;
+            }
+        }
+
+        foreach($shopcart as $key=>$val)
+        {
+            $val = (array)$val;
+            $pid = \DB::table('meetplaces')->where('id', $val['mid'])->value('pid');
+            $val['pid'] = $pid;
+            $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
+            $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
+            $fids = explode(',',$val['fids']);
+            $count = array_count_values( $fids);
+            $fids = array_unique($fids);
+            $arr = [];
+            foreach($fids as $k=>$v)
+            {
+                $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
+                if($sid)
+                {
+                    $arr[] = $support[$sid].' ✖ '.$count[$v];
+                }
+            }
+
+            $val['fname'] = $arr;
+            $val['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
+            $shopcart[$key] = $val;
+        }
+    }
+    ?>
 
     <!-- 购物车 -->
     <div class="J-global-toolbar">

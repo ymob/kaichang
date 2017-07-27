@@ -83,6 +83,12 @@
             shopsum += parseInt($(this).html());
         });
         $(".shopcartTotal").html(shopsum);
+
+        $.each($(".nav-son li"),function(i,n){
+            $(this).removeClass('active-nav-son');
+        });
+
+        $(".nav-son li").eq(1).addClass('active-nav-son');
     </script>
 @endsection
 

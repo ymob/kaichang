@@ -159,8 +159,8 @@ class DetailsController extends Controller
         $num = rand(1,$count);
         $adver  = \DB::table('places')->where('isads',1)->skip($num)->take(4)->get();
         foreach ($adver as $key => $value) {
-           $address = explode(',',$value->address);
-            
+            $adver[$key]->pic = explode(',',$value->pic)[0];
+            $address = explode(',',$value->address);
             $province = \DB::table('district')->where('id',$address[0])->value('name');
             $city = \DB::table('district')->where('id',$address[1])->value('name');
             $county = \DB::table('district')->where('id',$address[2])->value('name');
