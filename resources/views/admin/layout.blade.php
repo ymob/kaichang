@@ -37,6 +37,7 @@
     <script src="{{ asset('/admin/adminlte/bootstrap/js/html5shiv.min.js') }}"></script>
     <script src="{{ asset('/admin/adminlte/bootstrap/js/respond.min.js') }}"></script>
     <![endif]-->
+    @yield('head')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -165,8 +166,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/places/index') }}"><i class="fa fa-user-secret"></i> 场地列表</a></li>
-                        <li><a href="{{ url('/admin/meetplaces/index') }}"><i class="fa fa-user-md"></i> 会场列表</a></li>
-                        <li><a href="{{ url('/admin/facilities/index') }}"><i class="fa fa-users"></i> 配套服务列表</a></li>
+                       <!--  <li><a href="{{ url('/admin/meetplaces/index') }}"><i class="fa fa-user-md"></i> 会场列表</a></li>
+                        <li><a href="{{ url('/admin/facilities/index') }}"><i class="fa fa-users"></i> 配套服务列表</a></li> -->
                     </ul>
                 </li>
 
@@ -196,7 +197,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 商品列表</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
+                       <!--  <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li> -->
                     </ul>
                 </li>
 
@@ -211,7 +212,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/admin/order/index/0
                         ') }}"><i class="fa fa-circle-o"></i> 订单列表</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li>
+                      <!--   <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> .....</a></li> -->
                     </ul>
                 </li>
 
@@ -232,14 +233,14 @@
                 <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
-                        <span>轮播图管理</span>
+                        <span>手机登录二维码管理</span>
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('/admin/category') }}"><i class="fa fa-circle-o"></i> 加盟商轮播图</a></li>
-                        <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li>
+                        <li><a href="{{ url('/admin/code') }}"><i class="fa fa-circle-o"></i> 二维码管理</a></li>
+                        <!-- <li><a href="{{ url('/admin/category/create') }}"><i class="fa fa-circle-o"></i> ......</a></li> -->
                     </ul>
                 </li>
 

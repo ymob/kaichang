@@ -29,7 +29,7 @@
         </div>
         <div class="row order-name"></div>
 
-        @if(isset($shopcart))
+       
             @foreach($shopcart as $k=>$v)
                 <div class="row order-detail wd">
                     <div class="col-md-8 bot"id="title3">

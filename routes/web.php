@@ -109,6 +109,13 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::get('admin/cache/cache','Admin\CacheController@cache');
 
 
+    //手机登录二维码管理
+    Route::get('admin/code','Admin\CodeController@index');
+    //修改二维码
+    Route::post('admin/code/update','Admin\CodeController@update');
+
+
+
 });
 
 //登录
@@ -124,10 +131,12 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // 前台首页
 Route::get('/', 'Home\IndexController@index');
-Route::get('/indexSearch','Home\IndexController@indexSearch');
+
+//手机开场二维码
+Route::get('home/code','Home\IndexController@code');
 
 // 列表页场地搜索
-Route::post('/listSearch','Home\ListController@listSearch');
+Route::get('/listSearch','Home\ListController@listSearch');
 
 // 场地搜索结果详情页
 Route::get('/detail/pid={pid}','Home\DetailsController@index');
@@ -138,7 +147,7 @@ Route::get('/shopcart/add','Home\ShopcartController@add');
 Route::get('/shopcart/delete/{ctime}','Home\ShopcartController@delete');
 
 
-// 订单
+// 前台订单
 Route::get('/home/order/order',"Home\OrderController@index");
 Route::get('/order/submitOrder','Home\OrderController@submitOrder');
 
@@ -162,26 +171,34 @@ Route::group(['middleware' => 'homeuser'], function(){
 
     // 个人中心
     //个人中心主页面
-    Route::get('/usercenter/index', 'Home\UserCenterController@index');
+    Route::get('/usercenter/index', 'Home\UserCenterController@details');
     //用户个人中心详细信息加载页面
     Route::get('/usercenter/details', 'Home\UserCenterController@details');
     //执行个人用户修改个人信息和修改密码
     Route::post('/usercenter/updetails','Home\UserCenterController@updetails');
     //修改密码
     Route::post('/usercenter/uppassword', 'Home\UserCenterController@uppassword');
-    //个人用户订单查询
+    //个人用户订单
     Route::get('usercenter/order/{status}','Home\UserCenterController@order');
-
-
+    Route::get('usercenter/orderCancel/{oid}','Home\UserCenterController@cancel');
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-    
     //底部链接
     Route::get('home/foot/aboutus','Home\FootController@index');
 
+    //个人中心购物车
+    Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
+
+    // 收藏
+    Route::get('/usercenter/collection','Home\UserCenterController@collection');
+    Route::post('/collection/update','Home\CollectionCenterController@update');
+    
+    //底部链接
+    Route::get('/home/foot/aboutus','Home\FootController@index');
+
     //用户评论
-    //加载评论页面
-    Route::get('/home/comment/index',"Home\CommentController@index");
+
+   
 });
 
 // 用户注册
@@ -233,6 +250,7 @@ Route::get('/shopcenter/regist/detail/{token}', 'Home\ShopRegistController@detai
 Route::post('/shopcenter/regist/detail/add/{token}', 'Home\ShopRegistController@addDetail');
 Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@status');
 
+
 // 商户登录
 Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
 Route::post('/shopcenter/dologin', 'Home\ShopLoginController@dologin');
@@ -243,5 +261,3 @@ Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
 Route::get('/404', function(){
     return view('404');
 });
-
-

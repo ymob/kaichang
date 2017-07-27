@@ -9,7 +9,9 @@ class IndexController extends Controller
 {
     // 加载网站首页
     public function index()
-    {
+    {   
+        // $code = \DB::table('code')->get();
+        // dd($code);
     	return view('home.index.index',['title'=>'首页']);
     }
 
@@ -81,9 +83,10 @@ class IndexController extends Controller
         ->get();
 
 
+
        // dd($adver);
         return view('home.index.list',['title'=>'搜索结果列表页', 'request'=>$request->all(), 'scode' => 1, 'data'=>$data,'adver'=>$adver]);
     }
 
-    
+   
 }

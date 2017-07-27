@@ -136,7 +136,7 @@
                                 <td>{{ $val->address }}</td>
                                 <td>{{ $val->phone }}</td>
                                 <td>
-                                    <img src="{{ asset('/uploads/shoper/evidencepic/'.$val->evidencePic) }}" style="width: 50px;">
+                                    <img src="{{ asset('/uploads/shoper/places/evidence/'.$val->evidencePic) }}" style="width: 50px;">
                                 </td>
                                 <td>{{ $val->park }}</td>
                                 <td>{{ $val->maxArea }}</td>
@@ -334,10 +334,11 @@
                                         ,
                                     @endforeach
                                 </td>
-                                <td>价格：{{ $mv->price }}</td>
+                               
                                 <td>
                                     <a href="{{ url('/uploads/shoper/places/'.$mv->pic) }}"><img src="{{ asset('/uploads/shoper/places/'.$mv->pic) }}" style="width: 50px;"></a>
                                 </td>
+                                 <td>价格：{{ $mv->price }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -363,7 +364,7 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td>编辑</td>
+                                <td></td>
                             </tr>
                                     @foreach($mv->facilitie as $fk => $fv)
 
@@ -423,10 +424,11 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td>{{ $fv->price }}</td>
+                               
                                 <td>
                                     <a href="{{ url('/uploads/shoper/places/'.$fv->pic) }}"><img src="{{ asset('/uploads/shoper/places/'.$fv->pic) }}" style="width: 50px;"></a>
                                 </td>
+                                 <td>{{ $fv->price }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -452,7 +454,7 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td>编辑</td>
+                                <td></td>
                             </tr>
 
                                     @endforeach
