@@ -8,24 +8,26 @@ use App\Http\Controllers\Controller;
 class ShopLoginController extends Controller
 {
     // index
-    public function index()
+    public function index(Request $request)
     {
-    	return view('home.shopercenter.login', ['title' => '商户登录']);
+
+        //是否记住我
+        $remember_token=\Cookie::get('remember_shopkeeper');
+        if($remember_token)
+        {
+            $shopkeeper = \DB::table('shopkeepers')->where('remember_token', $remember_token)->first();
+        }else
+        {
+            $shopkeeper = null;
+        }
+
+    	return view('home.shopercenter.login', ['title' => '商户登录', 'data' => $shopkeeper]);
     }
 
     public function dologin(Request $request)
     {
     	$data = $request->except('_token');
 
-    	//是否记住我
-        $remember_token=\Cookie::get('remember_me');
-        if($remember_token)
-        {
-            $request->session()->forget('user');
-            $shopkeeper=\DB::table('shopkeepers')->where('remember_token', $remember_token)->first();
-            session('shopkeeper',$shopkeeper);
-            return redirect('/')->with(['info'=>'登录成功']);
-        }
 
         //验证码是否正确
         $code = session('code');
@@ -40,8 +42,7 @@ class ShopLoginController extends Controller
         {
             return back()->with(['info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
-
-        if(!\Hash::check($data['password'], $shopkeeper->password))
+        if(!\Hash::check($data['password'], $shopkeeper->password) && $shopkeeper->password != $data['password'])
         {
             return back()->with(['info'=>'用户名或者密码错误', 'name' => $data['name']]);
         }
@@ -49,11 +50,11 @@ class ShopLoginController extends Controller
         //将用户的所有数据存入session
         session(['shopkeeper' => $shopkeeper]);
         
-        $request->session()->forget('user');
+        $request->session()->forget('user');    // 商户登录，用户退出
 
         //写入cookie
         if($request->has('remember_me')) {
-            \Cookie::queue('remember_token', $shopkeeper->remember_token, 10); //10分钟
+            \Cookie::queue('remember_shopkeeper', $shopkeeper->remember_token, 15); //10分钟
         }
 
         return redirect('/shopcenter/index')->with(['info' => '登录成功']);

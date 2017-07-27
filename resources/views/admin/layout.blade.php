@@ -351,7 +351,7 @@
 
 @yield('js')
 
-@yield('modaljs');
+@yield('modaljs')
 
 </body>
 </html>

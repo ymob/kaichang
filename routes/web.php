@@ -20,10 +20,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
     //管理员管理
     Route::get('/admin/user/add','Admin\UserController@add')->middleware('adminauth');
-    Route::post('/admin/user/insert','Admin\UserController@insert');
-    Route::get('/admin/user/index','Admin\UserController@index');
+    Route::post('/admin/user/insert','Admin\UserController@insert')->middleware('adminauth');
+    Route::get('/admin/user/index','Admin\UserController@index')->middleware('adminauth');
     Route::get('/admin/user/edit/{id}','Admin\UserController@edit')->middleware('adminauth');
-    Route::post('/admin/user/update','Admin\UserController@update');
+    Route::post('/admin/user/update','Admin\UserController@update')->middleware('adminauth');
     Route::get('/admin/user/delete/{id}','Admin\UserController@delete')->middleware('adminauth');
     //ajax 操作 管理员
     Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
@@ -117,6 +117,8 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
 
 });
+
+// Route::get('/admin', 'Admin\LoginController@index');
 
 //登录
 Route::get('/admin/login','Admin\LoginController@index');

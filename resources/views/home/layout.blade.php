@@ -155,12 +155,23 @@
                         </ul>
                     </div>
                     @endif
+                    <?php 
+
+                    $remember_token=\Cookie::get('remember_user');
+                    if($remember_token)
+                    {
+                        $user = \DB::table('users')->where('remember_token', $remember_token)->first();
+                    }else
+                    {
+                        $user = null;
+                    }
+                     ?>
                     <div class="form-group has-feedback">
-                        <input type="text" name="name" value="{{ session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
+                        <input type="text" name="name" value="{{ $user?$user->name:session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" name="password" value="" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
+                        <input type="password" name="password" value="{{ $user?$user->password:'' }}" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-lock form_ico form-control-feedback" style=""></span>
                     </div>
                     <div class="form-group has-feedback">

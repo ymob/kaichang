@@ -20,11 +20,11 @@
                         </div>
                         @endif
                         <div class="form-group has-feedback">
-                            <input type="text" name="name" value="{{ session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
+                            <input type="text" name="name" value="{{ $data?$data->name:session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
                             <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="password" name="password" value="" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
+                            <input type="password" name="password" value="{{ $data?$data->password:'' }}" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
                             <span class="glyphicon glyphicon-lock form_ico form-control-feedback" style=""></span>
                         </div>
                         <div class="form-group has-feedback row">
