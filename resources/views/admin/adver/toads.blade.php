@@ -94,7 +94,7 @@
                             <tr class="parent" width="800px" style="text-align:center">
                                 <td class="ids">{{$value->id}}</td>
                                 <td class="name">{{ $value->title}}</td>
-                                <td class="pic"><img src="{{asset('uploads/shoper/places/places/$value->pic')}}" style="width:50px;height:50px"></td>
+                                <td class="pic"><img src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" style="width:50px;height:50px"></td>
                                
                              
                               <!--   <td class="name" ><div style='width: 100px;display:block;word-break: break-all;word-wrap: break-word;'>{{$value->address }}</div></td> -->

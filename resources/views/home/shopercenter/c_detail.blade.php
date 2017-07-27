@@ -28,7 +28,7 @@
 			<tr>
 				<th>公司营业执照</th>
 				<td>
-					<img src="{{ asset('/uploads/shoper/license/'.$shopdetail->license) }}" alt="">
+					<img src="{{ asset('/uploads/shoper/license/'.$shopdetail->license) }}" alt="" style="height:50px;">
 				</td>
 			</tr>
 		</table>
@@ -109,4 +109,14 @@
 			</div>
 		</form>
 	</div>
+@endsection
+
+@section('javascript')
+	<script>
+        $.each($(".nav-son li"),function(i,n){
+            $(this).removeClass('active-nav-son');
+        });
+
+        $(".nav-son li").eq(1).addClass('active-nav-son');
+	</script>
 @endsection

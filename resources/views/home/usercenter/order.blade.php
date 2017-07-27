@@ -105,11 +105,12 @@
           </td>
           <td class="style-td">
               @if($val['status']==1 || $val['status']==2)
-                  <a href="{{ url('usercenter/orderCancel/') }}/{{ $val['id'] }}">取消订单</a>
+                  <a href="{{ url('/usercenter/orderCancel/') }}/{{ $val['id'] }}">取消订单</a>
               @endif
               @if($val['status']==4)
-                  <a href="{{ url('usercenter/judge/') }}/{{ $val['id'] }}">去评价</a>
+                  <a href="{{ url('/home/comment/index/') }}/{{ $val['mid'] }}">发表评论</a>
               @endif
+            
           </td>
 
       </tr>

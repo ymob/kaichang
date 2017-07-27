@@ -29,7 +29,7 @@ class CommentController extends Controller
 
 
        		//查询商品表
-       		$data[$key]->goodname = \DB::table('goods')->where('id',$value->gid)->value('title');
+       		$data[$key]->goodname = \DB::table('goods')->where('id',$value->mid)->value('title');
 
        	}
 
@@ -49,7 +49,7 @@ class CommentController extends Controller
       $data->username = \DB::table('users')->where('id',$data->uid)->value('name');
      
       //关联查询商品表中的商品名称
-      $data->title = \DB::table('goods')->where('id',$data->gid)->value('title');
+      $data->title = \DB::table('goods')->where('id',$data->mid)->value('title');
       
       //加载编辑页面
       return view('admin.comment.edit',['data'=>$data,'title'=>'评论编辑']);
@@ -112,7 +112,7 @@ class CommentController extends Controller
 
 
         //查询商品表
-        $data[$key]->goodname = \DB::table('goods')->where('id',$value->gid)->value('title');
+        $data[$key]->goodname = \DB::table('goods')->where('id',$value->mid)->value('title');
 
       }
 

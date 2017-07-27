@@ -23,8 +23,6 @@ class UserCenterController extends Controller
 
 	}
 
-
-	// detail
     // 加载用户修改信息页面
 	public function details()
 	{
@@ -164,7 +162,7 @@ class UserCenterController extends Controller
 	public function order(Request $request, $status)
 	{
         //获取每页显示的数据条数
-        $num = 10;
+        $num = 50;
 
         $uid = session('user')->id;
         if(!$status || $status==0)
@@ -289,5 +287,38 @@ class UserCenterController extends Controller
 
         return view('home.usercenter.collection', ['title' => '我的收藏', 'data' => $data]);
     }
+
+    // 加载评论页面
+    public function comment($oid)
+    {
+        $res = \DB::table('orders')->where('id',$oid)->first();
+
+        $support = array('','客房','茶歇','AV设备');
+        $res = (array)$res;
+        $pid = \DB::table('meetplaces')->where('id', $res['mid'])->value('pid');
+        $res['pid'] = $pid;
+        $res['pname'] = \DB::table('places')->where('id',$pid)->value('title');
+        $res['mname'] = \DB::table('meetplaces')->where('id',$res['mid'])->value('title');
+        $fids = explode(',',$res['fids']);
+        $count = array_count_values( $fids);
+        $fids = array_unique($fids);
+        $arr = [];
+        foreach($fids as $k=>$v)
+        {
+            $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
+            if($sid)
+            {
+                $arr[] = $support[$sid].' ✖ '.$count[$v];
+            }
+        }
+
+        $res['fname'] = $arr;
+        $res['pic'] = \DB::table('meetplaces')->where('id',$res['mid'])->value('pic');
+
+//        dd($res);
+
+        return view('home.usercenter.comment',['title'=>'评论页面', 'data'=>$res]);
+    }
+
 
 }

@@ -73,14 +73,15 @@ class IndexController extends Controller
             $data[$k]->pic = $pics[0];
 
         }
-        $count = \DB::table('places')->where('isads',1)->count()-4;
+         $count = \DB::table('places')->where('isads',1)->count()-4;
         // dd($count);
         $num = rand(0,$count);
         $adver = \DB::table('places')
         ->where('isads',1)
-        ->skip($num)
+        // ->inRandomOrder()
         ->take(4)
         ->get();
+        // dd($adver);
 
 
 
