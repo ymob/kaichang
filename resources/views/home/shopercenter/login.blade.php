@@ -9,7 +9,7 @@
             <div class="row">
                 <h1>加盟商登录</h1>
                 <hr>
-                <div class="col-xs-6 col-xs-offset-3" style="margin-top: 50px;margin-bottom: 50px;">
+                <div id="shoper-login" class="col-xs-6 col-xs-offset-3" style="margin-top: 50px;margin-bottom: 50px;">
                     <form action="{{ url('/shopcenter/dologin') }}" method="post">
                         {{ csrf_field() }}
                         @if (session('info'))
@@ -19,6 +19,9 @@
                             </ul>
                         </div>
                         @endif
+                        <div class="info-my hidden form-group alert alert-danger">
+                            <span>22</span>
+                        </div>
                         <div class="form-group has-feedback">
                             <input type="text" name="name" value="{{ $data?$data->name:session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
                             <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
@@ -56,4 +59,52 @@
             <hr>
         </div>
     </article>
+@endsection
+
+@section('js')
+    <script>
+        $('#shoper-login form').find('[name="name"],[name="password"]').on('blur', function(){
+            var name = $(this).val();
+            if (name.replace(/[\s]/g, "").length ==0)
+            {
+                $(this).css('border', '1px solid red');
+                $(this).attr('status', 0);
+            }else
+            {
+                $(this).css('border', '1px solid green');
+                $(this).attr('status', 1);
+            }
+        });
+        $('#shoper-login form').find('[name="code"]').on('blur', function(){
+            var name = $(this).val();
+            if (name.replace(/[\s]/g, "").length != 5)
+            {
+                $('#shoper-login form').find('.info-my').html('请填写正确的验证码');
+                $('#shoper-login form').find('.info-my').removeClass('hidden');
+                $(this).css('border', '1px solid red');
+                $(this).attr('status', 0);
+            }else
+            {
+                $(this).css('border', '1px solid green');
+                $(this).attr('status', 1);
+            }
+        });
+        
+
+        $('#shoper-login form').on('submit', function(){
+            $(this).find('[name="name"]').blur();
+            $(this).find('[name="password"]').blur();
+            $(this).find('[name="code"]').blur();
+            var res1 = $(this).find('[name="name"]').attr('status');
+            var res2 = $(this).find('[name="password"]').attr('status');
+            var res3 = $(this).find('[name="code"]').attr('status');
+            if(res1 != 1 || res2 != 1 || res3 != 1)
+            {
+                $(this).find('.info-my').html('请填写正确的信息');
+                $(this).find('.info-my').removeClass('hidden');
+                return false;
+            }
+
+        });
+    </script>
 @endsection

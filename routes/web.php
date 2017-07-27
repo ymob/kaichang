@@ -41,6 +41,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
     // ++++++ 场地管理 ++++++
 
     Route::get('/admin/places/index', 'Admin\PlacesController@index');
+    Route::get('/admin/shopuser/status', 'Admin\PlacesController@status');
+    Route::get('/admin/shopuser/status/{id}', 'Admin\PlacesController@status_yes');
+    Route::post('/admin/shopuser/status/{id}', 'Admin\PlacesController@status_no');
+    Route::post('/admin/shopuser/isstatus', 'Admin\PlacesController@isstatus');
 
     // ++++++++++++++++++++++
 

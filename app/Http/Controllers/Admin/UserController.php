@@ -72,7 +72,7 @@ class UserController extends Controller
 
         $data['updated_at'] = $time;
 
-        $res=\DB::table('users')->insert($data);
+        $res=\DB::table('admins')->insert($data);
 
         if($res){
             return redirect('/admin/user/index')->with(['info'=>'添加成功']);
@@ -211,8 +211,14 @@ class UserController extends Controller
 
         $keywords=$request->input('keywords','');
 
-        $data=\DB::table('shopkeepers')->where('name','like','%'.$keywords.'%')->paginate($num);
+        $data=\DB::table('shopkeepers')
+            ->join('shopdetails', 'shopdetails.sid', 'shopkeepers.id')
+            ->where([['shopkeepers.name','like','%'.$keywords.'%'], ['shopkeepers.status', 1]])
+            ->orWhere([['shopkeepers.name','like','%'.$keywords.'%'], ['shopkeepers.status', 0]])
+            ->select('shopkeepers.*', 'shopdetails.name as dname', 'shopdetails.address', 'shopdetails.license')
+            ->paginate($num);
 
+            // dd($data);
         return view('admin.user.sindex',['title'=>'加盟商列表','request'=>$request->all(),'data'=>$data]);
     }
 

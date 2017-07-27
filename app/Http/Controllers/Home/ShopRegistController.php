@@ -87,8 +87,9 @@ class ShopRegistController extends Controller
         {
             return redirect('/404');
         }
+        $info = \Cache::get('status-info-no'.$res->id, null);
 
-        return view('home.shopercenter.detail', ['title' => '商户详情', 'token' => $res->remember_token]);
+        return view('home.shopercenter.detail', ['title' => '商户详情', 'info' => $info,'token' => $res->remember_token]);
     }
 
 
@@ -97,13 +98,14 @@ class ShopRegistController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
             'phone' => 'required',
-            'postcode' => 'required',
+            'postcode' => 'required|integer',
             'address' => 'required',
             'license' => 'required|image'
         ],[
             'name.required' => '用户名不能为空',
             'phone.required' => '联系电话不能为空',
             'postcode.required' => '邮编不能为空',
+            'postcode.integer' => '邮编格式不正确',
             'address.required' => '联系地址不能为空',
             'license.required' => '必须上传营业执照',
             'license.image' => '请上传合适图片格式，例如： jpeg、png、bmp、gif、或 svg 。'
@@ -148,7 +150,15 @@ class ShopRegistController extends Controller
         $res=\DB::table('shopdetails')->insert($data);
 
         if($res){
-            \DB::table('shopkeepers')->where('id', $sid)->update(['status' => 1]);
+            $status = \Cache::get('shopkeeper-is-status', 1);
+            if($status)
+            {
+                $status = 3;
+            }else
+            {
+                $status = 1;
+            }
+            \DB::table('shopkeepers')->where('id', $sid)->update(['status' => $status]);
             return redirect('/shopcenter/regist/status/'.$token)->with(['info' => '商家信息审核通过,请登录 进入商家中心发布场地！']);
         }else{
             return back()->withInput()->with(['info' => '提交失败！']);
@@ -162,10 +172,24 @@ class ShopRegistController extends Controller
 
         if(!$res || $res->status != 3)
         {
+            if($res->status != 3)
+            {
+                $status = \DB::table('shopkeepers')->where('remember_token', $token)->first()->status;
+                if($status == 1 && session('shopkeeper'))
+                {
+                    session('shopkeeper')->status = 1;
+                    return redirect('/shopcenter/index');
+                }elseif($status == 2 && session('shopkeeper'))
+                {
+                    session('shopkeeper')->status = 2;
+                    return redirect('/shopcenter/index');
+                }
+
+            }
             return redirect('/404');
         }
         
-//        return view('home.shopercenter.status', ['title' => '等待审核']);
-        return view('home.shopercenter.login', ['title' => '商家登录'])->with(['info'=>'商家信息审核通过,请登录 进入商家中心发布场地']);
+       return view('home.shopercenter.status', ['title' => '等待审核']);
+        // return view('home.shopercenter.login', ['title' => '商家登录'])->with(['info'=>'商家信息审核通过,请登录 进入商家中心发布场地']);
     }
 }

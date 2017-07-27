@@ -30,6 +30,11 @@
 	                            {{ session('info') }}
 	                        </div>
 	                    @endif
+	                    @if($info)
+	                        <div class="alert alert-danger">
+	                            {{ $info }}，请重新提交审核。
+	                        </div>
+	                    @endif
 	                    <div class="form-group has-feedback">
 	                        <input type="text" name="name" class="form-control form_my" placeholder="请输入公司名" value="{{ old('name')  }}" style="padding-left: 20px;">
 	                        <span class="glyphicon glyphicon-home form_ico form-control-feedback"></span>
