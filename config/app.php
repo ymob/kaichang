@@ -179,6 +179,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Stevenyangecho\UEditor\UEditorServiceProvider::class,
 
     ],
 

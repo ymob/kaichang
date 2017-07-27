@@ -58,11 +58,11 @@
         $(this).addClass("active-nav-son").siblings().removeClass("active-nav-son");
     });
 
-    $.each($(".nav-son li"),function(i,n){
-        $(this).removeClass('active-nav-son');
-    });
-
-    $(".nav-son li").eq(0).addClass('active-nav-son');
+//    $.each($(".nav-son li"),function(i,n){
+//        $(this).removeClass('active-nav-son');
+//    });
+//
+//    $(".nav-son li").eq(0).addClass('active-nav-son');
 
 	</script>
 
