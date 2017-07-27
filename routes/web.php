@@ -185,23 +185,18 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/orderCancel/{oid}','Home\UserCenterController@cancel');
     //个人中心购物车
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-    //底部链接
-    Route::get('home/foot/aboutus','Home\FootController@index');
-
+   
     //个人中心购物车
     Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
 
     // 收藏
     Route::get('/usercenter/collection','Home\UserCenterController@collection');
     Route::post('/collection/update','Home\CollectionCenterController@update');
-    
-    //底部链接
-    Route::get('/home/foot/aboutus','Home\FootController@index');
-
-    //用户评论
-
-   
+ 
 });
+
+   //底部链接
+    Route::get('/home/foot/aboutus','Home\FootController@index');
 
 // 用户注册
 Route::post('/regist','Home\RegistController@regist');

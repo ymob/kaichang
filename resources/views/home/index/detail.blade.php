@@ -308,7 +308,7 @@
                 <div class="col-md-12">
                     @foreach($adver as $k=>$v)
                      <div class="col-xs-3">
-                        <a href=""><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
+                        <a href="{{url('/detail/pid=')}}{{$v->id}}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
                         <ul>
                             <h3>{{$v->title}}</h3>
                             <p>所在地 : {{$v->address}}</p>
