@@ -381,95 +381,40 @@
                 <!--推荐-->
                 <div class="seek_recommend">
                     <div class="recommend_title">热门场地</div>
-                    <div class="recommend_list">
-                        <ul class="list-unstyled">
-                            <!--一条一条的-->
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <img src="./home/images/tu5.png" alt="">
-                                    </dt>
-                                    <dd>
-                                        <ol class="list-unstyled">
-                                            <li><a href="">广西大厦</a></li>
-                                            <li>星级酒店</li>
-                                            <li>北京朝阳区潘家园华威里26号</li>
-                                        </ol>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
+                    
+                   <?php 
+                        $rate = \DB::table('places')->orderBy('sales','desc')->take(5)->get();
+                        foreach($rate as $key=>$value)
+                        {
+                   ?>
+                            
+                             <div class="recommend_list">
+                                <ul class="list-unstyled">
+                                    <!--一条一条的-->
+                                    <li>
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                <img  style="width:100px;height:100px;"src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" alt="">
+                                            </dt>
+                                            <dd>
+                                                <ol class="list-unstyled">
+                                                    <li><a href="{{url('/detail/pid=')}}{{ $value->id }}">{{$value->title}}</a></li>
+                                                    <li>{{$value->hotelStar}}星级酒店</li>
+                                                    <li>{{$value->description}}</li>
+                                                </ol>
+                                            </dd>
+                                        </dl>
+                                    </li>
+                                   
+                                </ul>
                     </div>
+                   <?php
+                        }
+
+                   ?>
+                    
+                   
+
                 </div>
 
         </div>

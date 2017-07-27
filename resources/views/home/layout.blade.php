@@ -100,11 +100,19 @@
                                 <span class="glyphicon glyphicon-globe"></span>
                             </a>
                         </li>
+
+                        <?php
+
+                             $code = \DB::table('code')->where('id',1)->value('pic');
+                                 // var_dump($code);
+                        ?>
                         <li>
-                            <a href="#">
+                            <a href="#" class="phone">
                                 手机开场
                                 <span class="glyphicon glyphicon-phone"></span>
+                                <div><img class="code hide"src="{{url('uploads/code/')}}/{{$code}}" style="width:90px;height:90px;position:absolute;margin-top:10px;margin-left:-13px"></div>
                             </a>
+                            
                         </li>
                     </ul>
                 </div>
@@ -147,12 +155,23 @@
                         </ul>
                     </div>
                     @endif
+                    <?php 
+
+                    $remember_token=\Cookie::get('remember_user');
+                    if($remember_token)
+                    {
+                        $user = \DB::table('users')->where('remember_token', $remember_token)->first();
+                    }else
+                    {
+                        $user = null;
+                    }
+                     ?>
                     <div class="form-group has-feedback">
-                        <input type="text" name="name" value="{{ session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
+                        <input type="text" name="name" value="{{ $user?$user->name:session('name') }}" class="form-control form_my" placeholder="请输入用户名" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-user form_ico form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" name="password" value="" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
+                        <input type="password" name="password" value="{{ $user?$user->password:'' }}" class="form-control form_my" placeholder="请输入密码" style="padding-left: 20px;">
                         <span class="glyphicon glyphicon-lock form_ico form-control-feedback" style=""></span>
                     </div>
                     <div class="form-group has-feedback">
@@ -435,6 +454,15 @@
 	<script src="{{ asset('/home/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/home/js/index/main.js') }}"></script>
     <script src="{{ asset('/home/js/index/nav.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.phone').on('mouseover',function(){
+            $('.code').removeClass('hide');
+        }).on('mouseout',function(){
+             $('.code').addClass('hide');
+        });
+
+    </script>
 
 @yield('js')
 

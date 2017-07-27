@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">密码</label>
-                                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="{{ decrypt($data->password) }}" 
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="{{ $data->password }}" 
                                     @if(session('master')->id != 1)
                                         
                                         @if($data->id != session('master')->id)

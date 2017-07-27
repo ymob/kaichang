@@ -19,10 +19,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
 
     //管理员管理
     Route::get('/admin/user/add','Admin\UserController@add')->middleware('adminauth');
-    Route::post('/admin/user/insert','Admin\UserController@insert');
-    Route::get('/admin/user/index','Admin\UserController@index');
+    Route::post('/admin/user/insert','Admin\UserController@insert')->middleware('adminauth');
+    Route::get('/admin/user/index','Admin\UserController@index')->middleware('adminauth');
     Route::get('/admin/user/edit/{id}','Admin\UserController@edit')->middleware('adminauth');
-    Route::post('/admin/user/update','Admin\UserController@update');
+    Route::post('/admin/user/update','Admin\UserController@update')->middleware('adminauth');
     Route::get('/admin/user/delete/{id}','Admin\UserController@delete')->middleware('adminauth');
     //ajax 操作 管理员
     Route::post('/admin/user/ajaxrename','Admin\UserController@ajaxRename');
@@ -108,7 +108,16 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::get('admin/cache/cache','Admin\CacheController@cache');
 
 
+    //手机登录二维码管理
+    Route::get('admin/code','Admin\CodeController@index');
+    //修改二维码
+    Route::post('admin/code/update','Admin\CodeController@update');
+
+
+
 });
+
+// Route::get('/admin', 'Admin\LoginController@index');
 
 //登录
 Route::get('/admin/login','Admin\LoginController@index');
@@ -123,6 +132,9 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 
 // 前台首页
 Route::get('/', 'Home\IndexController@index');
+
+//手机开场二维码
+Route::get('home/code','Home\IndexController@code');
 
 // 列表页场地搜索
 Route::get('/listSearch','Home\ListController@listSearch');
@@ -182,6 +194,8 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::post('/collection/update','Home\CollectionCenterController@update');
     //用户评论
     Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
+
+   
 });
 
 // 用户注册

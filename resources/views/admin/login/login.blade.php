@@ -42,16 +42,16 @@
         <form action="/admin/login" method="post">
             {{ csrf_field() }}
             <div class="form-group has-feedback">
-                <input type="text" name="name" class="form-control" placeholder="请输入用户名" value="{{ $master->name or '' }}">
+                <input type="text" name="name" class="form-control" placeholder="请输入用户名" value="{{ $master->name or old('name') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="请输入密码" value="">
+                <input type="password" name="password" class="form-control" placeholder="请输入密码" value="{{ $master->password or '' }}">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="text" name="code"  style="width: 200px;height: 36px;" placeholder="请输入验证码">
-                <a onclick="javascript:re_captcha();" ><img src="{{ URL('kit/captcha/1') }}"  alt="验证码" title="刷新图片" width="100" height="40" id="c2c98f0de5a04167a9e427d883690ff6" border="0" style="margin: 0px 0px 0px 5px;"></a>
+                <input type="text" name="code" class="form-control col-xs-8" style="width: 200px;height: 36px;" placeholder="请输入验证码">
+                <a onclick="javascript:re_captcha();" class="col-xs-4"><img src="{{ URL('kit/captcha/1') }}"  alt="验证码" title="刷新图片" width="100" height="40" id="c2c98f0de5a04167a9e427d883690ff6" border="0" style="margin: 0px 0px 0px 5px;"></a>
             </div>
             <div class="row">
                 <div class="col-xs-8">
@@ -69,7 +69,6 @@
             </div>
         </form>
 
-        <a href="#">忘记密码?</a><br>
 
     </div>
     <!-- /.login-box-body -->

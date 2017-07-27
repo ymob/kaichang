@@ -19,10 +19,11 @@ class PlacesController extends Controller
         $keywords = $request->input('keywords', '');
 
         $data = \DB::table('places')
-        	->join('shopkeepers', 'shopkeepers.id', '=', 'places.id')
+        	->join('shopkeepers', 'places.sid', '=', 'shopkeepers.id')
         	->where('places.title','like','%'.$keywords.'%')
         	->select('places.*', 'shopkeepers.name')
         	->paginate($num);
+        // dd($data);
         foreach ($data as $key => $val) {
 			$arr1 = explode(',', $val->freeService);
 			$val->freeService = $arr1;
