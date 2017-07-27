@@ -37,6 +37,9 @@
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'simpleupload', 'insertimage',
         ]]
+
+        ,imageUrl:URL+"jsp/imageUp.jsp"             //图片上传提交地址
+        ,imagePath:URL + "jsp/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -80,8 +83,8 @@
         //首行缩进距离,默认是2em
         //,indentValue:'2em'
 
-        //,initialFrameWidth:1000  //初始化编辑器宽度,默认1000
-        //,initialFrameHeight:320  //初始化编辑器高度,默认320
+        ,initialFrameWidth:600  //初始化编辑器宽度,默认1000
+        ,initialFrameHeight:220  //初始化编辑器高度,默认320
 
         //,readonly : false //编辑器初始化结束后,编辑区域是否是只读的，默认是false
 

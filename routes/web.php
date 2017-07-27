@@ -198,6 +198,7 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::post('/collection/update','Home\CollectionCenterController@update');
     //用户评论
     Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
+    Route::get('/home/comment/insert/{mid}',"Home\UserCenterController@insert");
 
    
 });

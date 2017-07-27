@@ -320,5 +320,22 @@ class UserCenterController extends Controller
         return view('home.usercenter.comment',['title'=>'评论页面', 'data'=>$res]);
     }
 
+    public function insert($mid,Request $request)
+    {
+//        dd($request->all());
+        $data['content'] = $request->input('content');
+        $data['uid'] = session('user')->id;
+        $data['mid'] = $mid;
+        $data['status'] = 1;
+        $data['created_at'] = time();
+        $res = \DB::table('comments')->insert($data);
+        $pid = \DB::table('meetplaces')->where('id',$mid)->value('pid');
+        if($res)
+        {
+            return redirect('/detail/pid='.$pid)->with(['title','场地详情页']);
+        }else{
+            return back();
+        }
+    }
 
 }

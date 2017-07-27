@@ -36,25 +36,24 @@
         <div class="col-md-2">
             发表评论:
         </div>
+        <form action="{{ url('/home/comment/insert/') }}/{{ $data['mid'] }}" method="get" enctype="multipart/form-data">
         <div class="row">
 
             <div class="col-md-10">
-                @include('UEditor::head')
-                <!-- 加载编辑器的容器 -->
-                <script id="container" name="content" type="text/plain">
+                    @include('UEditor::head')
+                    <!-- 加载编辑器的容器 -->
+                        <script id="container" name="content" type="text/plain">
 
-                </script>
+                        </script>
 
-                <!-- 实例化编辑器 -->
-                <script type="text/javascript">
-                    var ue = UE.getEditor('container');
-                        initialFrameWidth : 900,//文本框宽和高
-                        initialFrameHeight : 350,//文本框宽和高
+                        <!-- 实例化编辑器 -->
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('container');
+                            ue.ready(function() {
+                                ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');
+                            });
+                        </script>
 
-                        ue.ready(function() {
-                        ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');
-                    });
-                </script>
             </div>
         </div>
     </div>
@@ -62,7 +61,7 @@
         <br>
         <button class="btn btn-primary">提交评论</button>
     </div>
-
+    </form>
 @endsection
 
 @section('javascript')
