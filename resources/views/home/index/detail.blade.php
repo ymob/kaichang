@@ -303,12 +303,13 @@
             </div>
             <!-- end 评论 -->
 
+            <div class="hr-dashed"></div>
             <!-- 推荐 -->
             <div id="commend" class="row">
                 <div class="col-md-12">
                     @foreach($adver as $k=>$v)
                      <div class="col-xs-3">
-                        <a href=""><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
+                        <a href="{{ url('/detail/pid=') }}{{ $v->id }}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
                         <ul>
                             <h3>{{$v->title}}</h3>
                             <p>所在地 : {{$v->address}}</p>
@@ -323,7 +324,6 @@
                 
             </div>
             <!-- end 推荐 -->
-            <div class="hr-dashed"></div>
         </div>       
     </article>
 @endsection

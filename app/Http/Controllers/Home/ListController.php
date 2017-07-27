@@ -369,6 +369,21 @@ class ListController extends Controller
         $places = array_slice($places, $startPage, $pageSize+1);
         $data['page'] = $page + 1;
 
+        $count = \DB::table('places')->where('isads',1)->count()-4;
+        // dd($count);
+        $num = rand(1,$count);
+        $adver  = \DB::table('places')->where('isads',1)->skip($num)->take(4)->get();
+        foreach ($adver as $key => $value) {
+            $adver[$key]->pic = explode(',',$value->pic)[0];
+            $address = explode(',',$value->address);
+            $province = \DB::table('district')->where('id',$address[0])->value('name');
+            $city = \DB::table('district')->where('id',$address[1])->value('name');
+            $county = \DB::table('district')->where('id',$address[2])->value('name');
+            $finaladdress = implode("",[$province,$city,$county,$address[3]]);
+            $adver[$key]->address = $finaladdress;
+            // var_dump($finaladdress);
+        }
+
         if($request->data)
         {
             $data['places'] = $places;
@@ -377,7 +392,7 @@ class ListController extends Controller
         }else
         {
             $ajax = json_encode($data);
-            return view('home.index.list', ['title'=>'搜索结果列表页', 'ajax' => $ajax, 'data' => $places]);
+            return view('home.index.list', ['title'=>'搜索结果列表页', 'adver'=>$adver, 'ajax' => $ajax, 'data' => $places]);
         }
 
     }

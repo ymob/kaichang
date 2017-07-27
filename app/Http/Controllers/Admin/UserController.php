@@ -159,8 +159,13 @@ class UserController extends Controller
                 $data['pic']=$filename;
             }
         }
-
-        $data['password'] = \Hash::make($data['password']);
+        if($data['password'] == $oldDate->password)
+        {
+            unset($data['password']);
+        }else
+        {
+            $data['password'] = \Hash::make($data['password']);
+        }
 
         $res=\DB::table('admins')->where('id',$request->id)->update($data);
 
