@@ -309,11 +309,9 @@
                 <div class="col-md-12">
                     @foreach($adver as $k=>$v)
                      <div class="col-xs-3">
-<<<<<<< HEAD
-                        <a href="{{ url('/detail/pid=') }}{{ $v->id }}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
-=======
+
                         <a href="{{url('/detail/pid=')}}{{$v->id}}"><img style="width:250px;height:250px;" src="{{ url('uploads/shoper/places/places') }}/{{$v->pic}}"></a>
->>>>>>> 07caf7a4af0cba52a4121523db043e73dc8356bd
+
                         <ul>
                             <h3>{{$v->title}}</h3>
                             <p>所在地 : {{$v->address}}</p>
