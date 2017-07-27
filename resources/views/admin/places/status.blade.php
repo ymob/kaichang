@@ -21,7 +21,13 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">加盟商列表</h3>
+                        <h3 class="box-title">加盟商列表</h3>&nbsp;&nbsp;&nbsp;&nbsp;
+                        是否需要审核：
+                        @if($status)
+                            <a id="isstatus" href="javascript:" title="仅在本次操作之后注册的商户不需要审核">是</a>
+                        @else
+                            <a id="isstatus" href="javascript:" title="仅在本次操作之后注册的商户需要审核">否</a>
+                        @endif
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -32,7 +38,7 @@
                             </div>
                         @endif
 
-                        <form action="/admin/shopuser/index" method="get">
+                        <form action="/admin/shopuser/status" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -80,10 +86,10 @@
                                 <th>加盟商名</th>
                                 <th>Email</th>
                                 <th>手机号</th>
-                                <th>状态</th>
                                 <th>公司名</th>
                                 <th>地址</th>
                                 <th>营业执照</th>
+                                <th style="width: 150px;">审核</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -94,31 +100,6 @@
                                 <td>{{ $value->name }}</td>
                                 <td>{{ $value->email }}</td>
                                 <td>{{ $value->phone }}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="status_show">
-                                                @if($value->status == 1)
-                                                启用
-                                                @else
-                                                禁用
-                                                @endif
-                                            </span>&nbsp;
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="status_sel" index="shopkeepers" href="javascript:">
-                                                    @if($value->status == 1)
-                                                    禁用
-                                                    @else
-                                                    启用
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
                                 <td>{{ $value->dname }}</td>
                                 <td>{{ $value->address }}</td>
                                 <td>
@@ -126,7 +107,10 @@
                                         <img src="{{ asset('/uploads/shoper/license/'.$value->license) }}" width="100px">
                                     </a>
                                 </td>
-
+                                <td>
+                                    <a class="btn btn-success" href="{{ url('/admin/shopuser/status/'.$value->id) }}">通过</a>
+                                    <a class="btn btn-danger status-no" href="javascript:" data-toggle="modal" data-target="#myModal">驳回</a>
+                                </td>
                             </tr>
                             @endforeach
 
@@ -151,7 +135,8 @@
 
 @section('js')
     <script>
-    
+        
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -196,31 +181,71 @@
 
         });
 
+        // 是否审核
+        $('#isstatus').on('click', function(){
+            $.ajax('/admin/shopuser/isstatus', {
+                dataType: 'JSON',
+                type: 'POST',
+                success: function(data)
+                {
+                    if(data == 1)
+                    {
+                        $('#isstatus').html('是');
+                        $('#isstatus').attr('title', '仅在本次操作之后注册的商户不需要审核');
+                    }else
+                    {
+                        $('#isstatus').html('否');
+                        $('#isstatus').attr('title', '仅在本次操作之后注册的商户需要审核');
+                    }
+                },
+                error: function()
+                {
+                    alert('数据异常，稍后重试');
+                }
+            });
+        });
+
     </script>
 @endsection
 
 @section('modaljs')
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+                    <h4 class="modal-title" id="myModalLabel">输入驳回原因</h4>
                 </div>
-                <div class="modal-body">
-                    确定要删除此条数据吗?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="delete">确认删除</button>
-                </div>
+                <form action="{{ url('') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="info alert alert-danger hidden"></div>
+                        <input type="text" name="con" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btn-status-no">驳回</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
     <script>
-        $("#delete").click(function(){
-            location.href="/admin/user/delete/"+id;
+        // 驳回
+        var id=0;
+        $(".status-no").click(function(){
+            id=$(this).parents('.parent').find('.ids').html();
+            $('#myModal').find('form').attr('action', '{{ url('/admin/shopuser/status') }}/'+id);
+        });
+
+        $('#myModal').find('form').on('submit', function(){
+            var con = $(this).find('[name="con"]').val();
+            if(con.replace(/[\s]/, '').length == 0)
+            {
+                $(this).find('.info').html('请填写驳回原因！');
+                $(this).find('.info').removeClass('hidden');
+                return false;
+            }
         });
     </script>
 @endsection

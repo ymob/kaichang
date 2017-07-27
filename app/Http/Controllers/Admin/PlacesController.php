@@ -46,5 +46,64 @@ class PlacesController extends Controller
         return view('admin.places.index',['title'=>'场地列表','request'=>$request->all(),'data'=>$data]);
     }
 
+    public function status(Request $request)
+    {
+    	$num=$request->input('num',10);
 
+        $keywords=$request->input('keywords','');
+
+        $data=\DB::table('shopkeepers')
+            ->join('shopdetails', 'shopdetails.sid', 'shopkeepers.id')
+            ->where([['shopkeepers.name','like','%'.$keywords.'%'], ['shopkeepers.status', 3]])
+            ->select('shopkeepers.*', 'shopdetails.name as dname', 'shopdetails.address', 'shopdetails.license')
+            ->paginate($num);
+
+        $status = \Cache::get('shopkeeper-is-status', 1);
+
+        return view('admin.places.status',['title'=>'加盟商列表','status' => $status, 'request'=>$request->all(),'data'=>$data]);
+    }
+
+    public function status_yes($id)
+    {
+    	$data = \DB::table('shopkeepers')->where([['id', $id], ['status', 3]])->first();
+    	if(!$data)
+    	{
+    		return redirect('404');
+    	}
+    	$res = \DB::table('shopkeepers')->where('id', $id)->update(['status' => 1]);
+    	\Cache::forget('status-info-no'.$id);
+    	return back()->with(['info' => '审核成功']);
+    }
+
+    public function status_no($id, Request $request)
+    {
+    	$data = \DB::table('shopkeepers')->where([['id', $id], ['status', 3]])->first();
+    	if(!$data)
+    	{
+    		return redirect('404');
+    	}
+    	$res = \DB::table('shopkeepers')->where('id', $id)->update(['status' => 2]);
+    	\Cache::forever('status-info-no'.$id, $request->con);
+    	\DB::table('shopdetails')->where('sid', $request->id)->delete();
+    	return back()->with(['info' => '驳回成功']);
+    }
+
+    public function isstatus()
+    {
+    	$status = \Cache::get('shopkeeper-is-status', function(){
+    		return 1;
+    		\Cache::forever('shopkeeper-is-status', 1);
+    	});
+    	if($status)
+    	{
+    		\Cache::forever('shopkeeper-is-status', 0);
+    		$status = 0;
+    	}else
+    	{
+    		\Cache::forever('shopkeeper-is-status', 1);
+    		$status = 1;
+    	}
+
+    	return response()->json($status);
+    }
 }
