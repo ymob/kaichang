@@ -100,11 +100,19 @@
                                 <span class="glyphicon glyphicon-globe"></span>
                             </a>
                         </li>
+
+                        <?php
+
+                             $code = \DB::table('code')->where('id',1)->value('pic');
+                                 // var_dump($code);
+                        ?>
                         <li>
-                            <a href="#">
+                            <a href="#" class="phone">
                                 手机开场
                                 <span class="glyphicon glyphicon-phone"></span>
+                                <div><img class="code hide"src="{{url('uploads/code/')}}/{{$code}}" style="width:90px;height:90px;position:absolute;margin-top:10px;margin-left:-13px"></div>
                             </a>
+                            
                         </li>
                     </ul>
                 </div>
@@ -250,6 +258,63 @@
         </div>
     </div> 
 
+    <?php
+    if(session('user'))
+    {
+        $uid = session('user')->id;
+        $res = \DB::table('shopcart')->where('uid',$uid)->get()->toArray();
+        if($res)
+        {
+            $shopcart = $res;
+        }else{
+            $shopcart = [];
+        }
+    }else
+    {
+        if(session('shopcart'))
+        {
+            $shopcart = session('shopcart');
+        }else{
+            $shopcart = [];
+        }
+    }
+
+    $support = array('','客房','茶歇','AV设备');
+    if($shopcart)
+    {
+        foreach($shopcart as $k=>$v)
+        {
+            if (is_object($v)) {
+                $shopcart[$k] = (array)$v;
+            }
+        }
+
+        foreach($shopcart as $key=>$val)
+        {
+            $val = (array)$val;
+            $pid = \DB::table('meetplaces')->where('id', $val['mid'])->value('pid');
+            $val['pid'] = $pid;
+            $val['pname'] = \DB::table('places')->where('id',$pid)->value('title');
+            $val['mname'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('title');
+            $fids = explode(',',$val['fids']);
+            $count = array_count_values( $fids);
+            $fids = array_unique($fids);
+            $arr = [];
+            foreach($fids as $k=>$v)
+            {
+                $sid = \DB::table('facilities')->where('id',$v)->value('supportType');
+                if($sid)
+                {
+                    $arr[] = $support[$sid].' ✖ '.$count[$v];
+                }
+            }
+
+            $val['fname'] = $arr;
+            $val['pic'] = \DB::table('meetplaces')->where('id',$val['mid'])->value('pic');
+            $shopcart[$key] = $val;
+        }
+    }
+    ?>
 
     <!-- 购物车 -->
     <div class="J-global-toolbar">
@@ -392,6 +457,15 @@
 	<script src="{{ asset('/home/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/home/js/index/main.js') }}"></script>
     <script src="{{ asset('/home/js/index/nav.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.phone').on('mouseover',function(){
+            $('.code').removeClass('hide');
+        }).on('mouseout',function(){
+             $('.code').addClass('hide');
+        });
+
+    </script>
 
 @yield('js')
 

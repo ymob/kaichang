@@ -78,5 +78,11 @@
                 return false;
             }
         });
+
+        $.each($(".nav-son li"),function(i,n){
+            $(this).removeClass('active-nav-son');
+        });
+
+        $(".nav-son li").eq(2).addClass('active-nav-son');
     </script>
 @endsection

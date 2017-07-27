@@ -198,3 +198,13 @@
             <!-- /.col -->
         </div>
 @endsection
+
+@section('javascript')
+    <script>
+        $.each($(".nav-son li"),function(i,n){
+            $(this).removeClass('active-nav-son');
+        });
+
+        $(".nav-son li").eq(3).addClass('active-nav-son');
+    </script>
+@endsection

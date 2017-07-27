@@ -116,11 +116,12 @@ class CreateAllTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid');
-            $table->integer('gid');
+            $table->integer('mid');
+            $table->string('pic')->nullable();
             $table->longText('content');
             $table->tinyinteger('status')->default('1');
             $table->integer('created_at');
-            $table->integer('updated_at');
+            $table->integer('updated_at')->nullable();
         });
 
         //购物车表

@@ -329,10 +329,11 @@
                                         ,
                                     @endforeach
                                 </td>
-                                <td>价格：{{ $mv->price }}</td>
+                               
                                 <td>
                                     <a href="{{ url('/uploads/shoper/places/meetplaces/'.$mv->pic) }}"><img src="{{ asset('/uploads/shoper/places/meetplaces/'.$mv->pic) }}" style="width: 50px;"></a>
                                 </td>
+                                 <td>价格：{{ $mv->price }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -358,6 +359,10 @@
                                         </ul>
                                     </div>
                                 </td>
+<<<<<<< HEAD
+                                <td></td>
+=======
+>>>>>>> db0fcdf724207a53339bb5ba194e67a244568bbc
                             </tr>
                                     @foreach($mv->facilitie as $fk => $fv)
 
@@ -417,10 +422,11 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td>{{ $fv->price }}</td>
+                               
                                 <td>
                                     <a href="{{ asset('/uploads/shoper/places/facilities/'.$fv->pic) }}"><img src="{{ asset('/uploads/shoper/places/facilities/'.$fv->pic) }}" style="width: 50px;"></a>
                                 </td>
+                                 <td>{{ $fv->price }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -446,6 +452,10 @@
                                         </ul>
                                     </div>
                                 </td>
+<<<<<<< HEAD
+                                <td></td>
+=======
+>>>>>>> db0fcdf724207a53339bb5ba194e67a244568bbc
                             </tr>
 
                                     @endforeach

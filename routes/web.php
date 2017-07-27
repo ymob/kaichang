@@ -11,7 +11,6 @@
 |
 */
 
-
 // 路由群组 后台
 Route::group(['middleware'=>'adminlogin'],function(){
 
@@ -113,6 +112,13 @@ Route::group(['middleware'=>'adminlogin'],function(){
     Route::get('admin/cache/cache','Admin\CacheController@cache');
 
 
+    //手机登录二维码管理
+    Route::get('admin/code','Admin\CodeController@index');
+    //修改二维码
+    Route::post('admin/code/update','Admin\CodeController@update');
+
+
+
 });
 
 // Route::get('/admin', 'Admin\LoginController@index');
@@ -131,6 +137,9 @@ Route::get('/kit/captcha/{tmp}','Admin\KitController@captcha');
 // 前台首页
 Route::get('/', 'Home\IndexController@index');
 
+//手机开场二维码
+Route::get('home/code','Home\IndexController@code');
+
 // 列表页场地搜索
 Route::get('/listSearch','Home\ListController@listSearch');
 
@@ -141,7 +150,6 @@ Route::get('/detail/pid={pid}','Home\DetailsController@index');
 Route::get('/shopcart/index','Home\ShopcartController@index');
 Route::get('/shopcart/add','Home\ShopcartController@add');
 Route::get('/shopcart/delete/{ctime}','Home\ShopcartController@delete');
-
 
 // 前台订单
 Route::get('/home/order/order',"Home\OrderController@index");
@@ -161,6 +169,8 @@ Route::post('/forgot/email', 'Home\ForgotController@email');
 Route::get('/forgot/resetpass/{token}', 'Home\ForgotController@resetpass');
 Route::post('/forgot/resetpass/{token}', 'Home\ForgotController@update');
 
+//底部链接
+Route::get('/home/foot/aboutus','Home\FootController@index');
 
 // 前台用户中心
 Route::group(['middleware' => 'homeuser'], function(){
@@ -181,21 +191,15 @@ Route::group(['middleware' => 'homeuser'], function(){
     Route::get('usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
     //底部链接
     Route::get('home/foot/aboutus','Home\FootController@index');
-
     //个人中心购物车
     Route::get('/usercenter/shopcart/shopcart','Home\UserCenterController@shopcart');
-
     // 收藏
     Route::get('/usercenter/collection','Home\UserCenterController@collection');
     Route::post('/collection/update','Home\CollectionCenterController@update');
-    
-    //底部链接
-    Route::get('/home/foot/aboutus','Home\FootController@index');
-
     //用户评论
+    Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
 
-    //加载评论页面
-    Route::get('/home/comment/index',"Home\CommentController@index");
+   
 });
 
 // 用户注册
@@ -234,8 +238,9 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::get('/shopcenter/meetplaces/delete', 'Home\ShopPlacesController@meet_delete');
     // 配套服务
     Route::post('/shopcenter/facilities/delete', 'Home\ShopPlacesController@fac_delete');
-
-
+    // 商户订单管理
+    Route::get('/shopcenter/order','Home\ShopOrdersController@orderList');
+    Route::get('/shopcenter/takeOrder/{oid}','Home\ShopOrdersController@takeOrder');
     
 });
 
@@ -252,7 +257,6 @@ Route::get('/shopcenter/regist/status/{token}', 'Home\ShopRegistController@statu
 Route::get('/shopcenter/login', 'Home\ShopLoginController@index');
 Route::post('/shopcenter/dologin', 'Home\ShopLoginController@dologin');
 Route::get('/shopcenter/logout', 'Home\ShopLoginController@logout');
-
 
 // 错误页面
 Route::get('/404', function(){
