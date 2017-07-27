@@ -121,11 +121,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ url('/admin/user/edit') }}/{{ $value->id }}">编辑</a>
-                                    @if($value->auth != 1)
-                                    <a href="#" data-toggle="modal" data-target="#myModal" class="del">删除</a>
-                                    @else
-                                    <a href="#">删除</a>
-                                    @endif
+                                    <a href="javascript:" data-toggle="modal" data-target="#myModal" class="del">删除</a>
                                 </td>
 
                             </tr>
