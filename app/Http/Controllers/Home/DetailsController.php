@@ -194,7 +194,10 @@ class DetailsController extends Controller
                     }
                 }
             }
-            // var_dump($coms);
+//            dd($coms);
+//             var_dump($coms);
+        }else{
+            $coms = null;
         }
        return response()->json($coms); 
     }

@@ -320,21 +320,14 @@
     <script>
         //查看更多评论
         // 瀑布流
-        
-        
-
         $('.detailmore').on('click', function(){
-            // if($('.detailmore').hasClass('disabled'))
-            // {
-            //     return false;
-            // }
+
             $.ajax('/morecomment', {
-                data: {'pid': {{ $data->id }} },
+                data: {'pid' : {{ $data->id }} },
                 type: 'get',
                 dataType: 'json',
                 success: function(data)
                 {
-                
                     $.each(data ,function(i,n){
                         console.log(n.content);
                         var model = $('#model').clone();
@@ -342,13 +335,13 @@
                         $('#model').after(model);
                     });
                     $('.detailmore').addClass('disabled');
-                    $('.detailmore').html('暂无更多场地');
+                    $('.detailmore').html('暂无更多评论');
+                },
+                error:function(){
+                    alert('数据异常!');
                 }
             });
         });
-     
-
-
 
         // 会场下拉的展开与收缩
         $(".detail_con").eq(0).css('display','block');

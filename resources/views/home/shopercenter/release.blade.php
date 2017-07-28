@@ -260,41 +260,6 @@
                        </td>
                        <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
                            <input type="file" id="pic" onchange="check()" name="pic" class="sm left" style="margin:5px 10px 0px 10px;">
-                           {{--<button type="button" class="btn btn-default s left">上传图片</button>--}}
-
-                           {{--@include('home.upload_img')--}}
-                           {{--<div class="upload-mask">--}}
-                           {{--</div>--}}
-                           {{--<div class="panel panel-info upload-file">--}}
-                               {{--<div class="panel-heading">--}}
-                                   {{--上传图片--}}
-                                   {{--<span class="close pull-right">关闭</span>--}}
-                               {{--</div>--}}
-                               {{--<div class="panel-body">--}}
-                                   {{--<div id="validation-errors"></div>--}}
-                                   {{--{!! Form::open( array('url' =>['/upload_img'], 'method' => 'post', 'id'=>'imgForm', 'files'=>true) ) !!}--}}
-                                   {{--<div class="form-group">--}}
-                                       {{--<label>图片上传</label>--}}
-                                       {{--<span class="require">(*)</span>--}}
-                                       {{--<input id="thumb" name="file" type="file"  required="required">--}}
-                                       {{--<input id="imgID"  type="hidden" name="id" value="">--}}
-
-                                   {{--</div>--}}
-                                   {{--{!!Form::close()!!}--}}
-                               {{--</div>--}}
-                               {{--<div class="panel-footer">--}}
-                               {{--</div>--}}
-                           {{--</div>--}}
-
-                           {{--<div class="form-group row">--}}
-                               {{--<label class="col-md-2 control-label">缩略图</label>--}}
-                               {{--<div class="col-md-4 thumb-wrap">--}}
-                                   {{--<div class="pic-upload btn btn-block btn-info btn-flat" title="点击上传">点击上传</div>--}}
-                                   {{--<img id="logo" src="">--}}
-                                   {{--<input type="hidden" name="logo" value="">--}}
-                               {{--</div>--}}
-                           {{--</div>--}}
-
                            <span class="left" style="line-height:35px;">展示大小: 576px * 350px</span>
                        </td>
                    </tr>
@@ -384,78 +349,6 @@
       $(".nav-son li").eq(2).addClass('active-nav-son');
 
       //图片上传
-      $(function(){
-          //上传图片相关
-
-          $('.upload-mask').on('click',function(){
-              $(this).hide();
-              $('.upload-file').hide();
-          })
-
-          $('.upload-file .close').on('click',function(){
-              $('.upload-mask').hide();
-              $('.upload-file').hide();
-          })
-
-          var imgSrc = $('.pic-upload').next().attr('src');
-          console.log(imgSrc);
-          if(imgSrc == ''){
-              $('.pic-upload').next().css('display','none');
-          }
-          $('.pic-upload').on('click',function(){
-              $('.upload-mask').show();
-              $('.upload-file').show();
-              console.log($(this).next().attr('id'));
-              var imgID = $(this).next().attr('id');
-              $('#imgID').attr('value',imgID);
-          })
-
-
-          //ajax 上传
-          $(document).ready(function() {
-              var options = {
-                  beforeSubmit:  showRequest,
-                  success:       showResponse,
-                  dataType: 'json'
-              };
-              $('#imgForm input[name=file]').on('change', function(){
-                  //$('#upload-avatar').html('正在上传...');
-                  $('#imgForm').ajaxForm(options).submit();
-              });
-          });
-
-          function showRequest() {
-              $("#validation-errors").hide().empty();
-              $("#output").css('display','none');
-              return true;
-          }
-
-          function showResponse(response)  {
-              if(response.success == false)
-              {
-                  var responseErrors = response.errors;
-                  $.each(responseErrors, function(index, value)
-                  {
-                      if (value.length != 0)
-                      {
-                          $("#validation-errors").append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
-                      }
-                  });
-                  $("#validation-errors").show();
-              } else {
-
-                  $('.upload-mask').hide();
-                  $('.upload-file').hide();
-                  $('.pic-upload').next().css('display','block');
-
-                  console.log(response.pic);
-
-                  $("#"+response.id).attr('src',response.pic);
-                  $("#"+response.id).next().attr('value',response.pic);
-              }
-          }
-
-      })
 
       </script>
 @endsection
