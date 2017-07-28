@@ -172,6 +172,9 @@ Route::post('/forgot/resetpass/{token}', 'Home\ForgotController@update');
 //底部链接
 Route::get('/home/foot/aboutus','Home\FootController@index');
 
+//加载更多评论
+Route::get('/morecomment','Home\DetailsController@morecomment');
+
 // 前台用户中心
 Route::group(['middleware' => 'homeuser'], function(){
 
@@ -199,6 +202,7 @@ Route::group(['middleware' => 'homeuser'], function(){
     //用户评论
     Route::get('/home/comment/index/{oid}',"Home\UserCenterController@comment");
     Route::get('/home/comment/insert/{mid}',"Home\UserCenterController@insert");
+
 
 });
 

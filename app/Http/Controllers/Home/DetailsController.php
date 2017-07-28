@@ -172,4 +172,31 @@ class DetailsController extends Controller
         return view('home.index.detail',['title'=>'搜索结果详情页', 'data'=>$data ,'meetData'=>$meetData, 'facilities'=>$facilities, 'shopcart'=>$shopcart,'adver'=>$adver]);
     }
 
+    public function morecomment(Request $request)
+    {   
+        $pid = $request->input('pid');
+        $meet = \DB::table('meetplaces')->where('pid',$pid)->get();
+        if($meet)
+        {
+            $mids = [];
+            foreach($meet as $k2=>$v2)
+            {
+                $mids[] = $v2->id;
+            }
+            $coms = [];
+            foreach($mids as $k3=>$v3)
+            {
+                $com = \DB::table('comments')->where('mid',$v3)->get();
+                if($com){
+                    foreach($com as $k4=>$v4)
+                    {
+                        $coms[] = $v4;
+                    }
+                }
+            }
+            // var_dump($coms);
+        }
+       return response()->json($coms); 
+    }
+
 }
