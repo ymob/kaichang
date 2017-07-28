@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function index()
     {   
         // $code = \DB::table('code')->get();
-        // dd($code);
+//         dd($code);
     	return view('home.index.index',['title'=>'首页']);
     }
 

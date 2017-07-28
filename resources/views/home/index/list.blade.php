@@ -379,7 +379,7 @@
                 </div>
 
                 <!--推荐-->
-                <div class="seek_recommend">
+                <div class="seek_recommend" style="position:relative;">
                     <div class="recommend_title">热门场地</div>
                     
                    <?php 
@@ -388,32 +388,30 @@
                         {
                    ?>
                             
-                             <div class="recommend_list">
-                                <ul class="list-unstyled">
-                                    <!--一条一条的-->
-                                    <li style="padding-left: 20px">
-                                        <dl class="dl-horizontal">
-                                            <dt>
-                                                <img  style="width:100px;height:100px;"src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" alt="">
-                                            </dt>
-                                            <dd>
-                                                <ol class="list-unstyled">
-                                                    <li><a href="{{url('/detail/pid=')}}{{ $value->id }}">{{$value->title}}</a></li>
-                                                    <li>{{$value->hotelStar}}星级酒店</li>
-                                                    <li>{{$value->description}}</li>
-                                                </ol>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                   
-                                </ul>
+                     <div class="recommend_list">
+                        <ul class="list-unstyled">
+                            <!--一条一条的-->
+                            <li style="padding-left: 20px;margin-top:-10px;">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img  style="width:100px;height:100px;"src="{{asset('uploads/shoper/places/places')}}/{{$value->pic}}" alt="">
+                                    </dt>
+                                    <dd>
+                                        <ol class="list-unstyled">
+                                            <li><a href="{{url('/detail/pid=')}}{{ $value->id }}">{{$value->title}}</a></li>
+                                            <li>面积: {{ $value->maxArea }}</li>
+                                            <li>人数: {{ $value->maxPeople }}</li>
+                                            <li>描述: {{ $value->description}}</li>
+                                            <li>起价: {{ $value->price }}</li>
+                                        </ol>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
                     </div>
                    <?php
                         }
-
                    ?>
-                    
-
                 </div>
 
         </div>

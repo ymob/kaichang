@@ -234,6 +234,8 @@ Route::group(['middleware' => 'homeshoper'], function(){
     Route::get('/shopcenter/places', 'Home\ShopPlacesController@index');
     Route::get('/shopcenter/places/detail', 'Home\ShopPlacesController@places');
     Route::post('/shopcenter/places/detail', 'Home\ShopPlacesController@upplaces');
+    //图片上传
+    Route::post('/upload_img','Home\UploadController@imgUpload');
     // 会场
     Route::get('/shopcenter/meetplaces', 'Home\ShopPlacesController@meetplaces');
     Route::get('/shopcenter/meetplaces/detail', 'Home\ShopPlacesController@meet_detail');

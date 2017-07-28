@@ -77,7 +77,44 @@
                         <li>
                             <a href="{{ url('/shopcenter/index') }}">
                                 商家中心
+                                <?php
+                                $jiedan = \DB::table('orders')->where('status','1')->count();
+                                if(session('shopkeeper'))
+                                {
+                                    $shopkeeperId = session('shopkeeper')->id;
+                                    $places = \DB::table('places')->where('sid',$shopkeeperId)->get();
+                                    if($places)
+                                    {
+                                        $count = 0;
+                                        $pids = [];
+                                        foreach ($places as $k=>$v)
+                                        {
+                                            $pids[] = $v->id;
+                                        }
+                                        $ordersObj = [];
+                                        foreach($pids as $k=>$v)
+                                        {
+                                            $ordersObj[] = \DB::table('orders')->where([['pid',$v],['status','1']])->orwhere([['pid',$v],['status','2']])->get();
+                                        }
+                                        $orders = [];
+                                        foreach($ordersObj as $k1=>$v1)
+                                        {
+                                            foreach($v1 as $k2=>$v2)
+                                            {
+                                                $count++;
+                                            }
+                                        }
+                                    }
+                                }else{
+                                    $count = 0;
+                                }
+
+                                    if($count>=1){
+                                ?>
+                                <span style="" class="label label-danger" style="">{{ $count }}</span>
+                                <?php } ?>
                                 <span class="glyphicon glyphicon-home"></span>
+
                             </a>
                             <ul>
                                 <li><a href="{{ url('/shopcenter/login') }}">商户登录</a></li>

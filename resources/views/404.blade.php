@@ -6,11 +6,12 @@
 	<link rel="stylesheet" href="{{ asset('/home/bootstrap/css/bootstrap.min.css') }}">
 	<style>
 		body{ margin:0; padding:0; background:#eee; }
-		div{ width: 400px; margin-top: 200px;}
+		div{ width: 450px; margin-top: 200px;}
 	</style>
 </head>
 <body>
 	<div class="center-block">
+        <h1 style="font-size: 100px; color: #666;">开场网<small>404</small></h1>
 		<h1>Sorry..页面没有找到！</h1>
 		<p>
 			似乎你所寻找的网页已移动或丢失了。

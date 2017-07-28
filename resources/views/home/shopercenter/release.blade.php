@@ -11,7 +11,52 @@
         .sm{width:200px;height:30px;margin:0px 10px;}
         .m{width:350px;height:30px;margin:0px 10px;}
         .left{float:left;}
+
+        .thumb-wrap{
+            overflow: hidden;
+        }
+        .thumb-wrap img{
+            margin-top: 10px;
+        }
+        .pic-upload{
+            width: 100%;
+            height: 34px;
+            margin-bottom: 10px;
+        }
+        #thumb-show{
+            max-width: 100%;
+            max-height: 300px;
+        }
+        .upload-mask{
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.4);
+            z-index: 1000;
+        }
+        .upload-file .close{
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .upload-file{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -105px;
+            margin-left: -150px;
+            max-width: 300px;
+            z-index: 1001;
+            display: none;
+        }
+
+        .upload-mask{
+            display: none;
+        }
     </style>
+    <script src="{{ asset('/home/js/index/jquery.form.js') }}"></script>
 @endsection
 
 @section('con')
@@ -215,6 +260,41 @@
                        </td>
                        <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
                            <input type="file" id="pic" onchange="check()" name="pic" class="sm left" style="margin:5px 10px 0px 10px;">
+                           {{--<button type="button" class="btn btn-default s left">上传图片</button>--}}
+
+                           {{--@include('home.upload_img')--}}
+                           {{--<div class="upload-mask">--}}
+                           {{--</div>--}}
+                           {{--<div class="panel panel-info upload-file">--}}
+                               {{--<div class="panel-heading">--}}
+                                   {{--上传图片--}}
+                                   {{--<span class="close pull-right">关闭</span>--}}
+                               {{--</div>--}}
+                               {{--<div class="panel-body">--}}
+                                   {{--<div id="validation-errors"></div>--}}
+                                   {{--{!! Form::open( array('url' =>['/upload_img'], 'method' => 'post', 'id'=>'imgForm', 'files'=>true) ) !!}--}}
+                                   {{--<div class="form-group">--}}
+                                       {{--<label>图片上传</label>--}}
+                                       {{--<span class="require">(*)</span>--}}
+                                       {{--<input id="thumb" name="file" type="file"  required="required">--}}
+                                       {{--<input id="imgID"  type="hidden" name="id" value="">--}}
+
+                                   {{--</div>--}}
+                                   {{--{!!Form::close()!!}--}}
+                               {{--</div>--}}
+                               {{--<div class="panel-footer">--}}
+                               {{--</div>--}}
+                           {{--</div>--}}
+
+                           {{--<div class="form-group row">--}}
+                               {{--<label class="col-md-2 control-label">缩略图</label>--}}
+                               {{--<div class="col-md-4 thumb-wrap">--}}
+                                   {{--<div class="pic-upload btn btn-block btn-info btn-flat" title="点击上传">点击上传</div>--}}
+                                   {{--<img id="logo" src="">--}}
+                                   {{--<input type="hidden" name="logo" value="">--}}
+                               {{--</div>--}}
+                           {{--</div>--}}
+
                            <span class="left" style="line-height:35px;">展示大小: 576px * 350px</span>
                        </td>
                    </tr>
@@ -272,38 +352,110 @@
 
         });
 
+        //限制上传图片大小
+         function check()
+        {
 
-//
-//        //限制上传图片大小
-//         function check()
-//        {
-//
-//          var imagSize =  document.getElementById("pic").files[0].size;
-//          var size = imagSize/(1024*1024);
-//          var res = size.toFixed(2);
-//          // alert("图片大小："+imagSize+"B")
-//          if(imagSize>1024*1024*0.5)
-//            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
-//            return false;
-//        }
+          var imagSize =  document.getElementById("pic").files[0].size;
+          var size = imagSize/(1024*1024);
+          var res = size.toFixed(2);
+          // alert("图片大小："+imagSize+"B")
+          if(imagSize>1024*1024*0.5)
+            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+            return false;
+        }
 
-//         function check1()
-//        {
-//
-//          var imagSize =  document.getElementById("evidencePic").files[0].size;
-//          var size = imagSize/(1024*1024);
-//          var res = size.toFixed(2);
-//          // alert("图片大小："+imagSize+"B")
-//          if(imagSize>1024*1024*0.5)
-//            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
-//            return false;
-//        }
+         function check1()
+        {
+
+          var imagSize =  document.getElementById("evidencePic").files[0].size;
+          var size = imagSize/(1024*1024);
+          var res = size.toFixed(2);
+          // alert("图片大小："+imagSize+"B")
+          if(imagSize>1024*1024*0.5)
+            alert("图片不得大于0.5MB，当前大小为："+ res+"M");
+            return false;
+        }
 
       $.each($(".nav-son li"),function(i,n){
           $(this).removeClass('active-nav-son');
       });
 
       $(".nav-son li").eq(2).addClass('active-nav-son');
+
+      //图片上传
+      $(function(){
+          //上传图片相关
+
+          $('.upload-mask').on('click',function(){
+              $(this).hide();
+              $('.upload-file').hide();
+          })
+
+          $('.upload-file .close').on('click',function(){
+              $('.upload-mask').hide();
+              $('.upload-file').hide();
+          })
+
+          var imgSrc = $('.pic-upload').next().attr('src');
+          console.log(imgSrc);
+          if(imgSrc == ''){
+              $('.pic-upload').next().css('display','none');
+          }
+          $('.pic-upload').on('click',function(){
+              $('.upload-mask').show();
+              $('.upload-file').show();
+              console.log($(this).next().attr('id'));
+              var imgID = $(this).next().attr('id');
+              $('#imgID').attr('value',imgID);
+          })
+
+
+          //ajax 上传
+          $(document).ready(function() {
+              var options = {
+                  beforeSubmit:  showRequest,
+                  success:       showResponse,
+                  dataType: 'json'
+              };
+              $('#imgForm input[name=file]').on('change', function(){
+                  //$('#upload-avatar').html('正在上传...');
+                  $('#imgForm').ajaxForm(options).submit();
+              });
+          });
+
+          function showRequest() {
+              $("#validation-errors").hide().empty();
+              $("#output").css('display','none');
+              return true;
+          }
+
+          function showResponse(response)  {
+              if(response.success == false)
+              {
+                  var responseErrors = response.errors;
+                  $.each(responseErrors, function(index, value)
+                  {
+                      if (value.length != 0)
+                      {
+                          $("#validation-errors").append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+                      }
+                  });
+                  $("#validation-errors").show();
+              } else {
+
+                  $('.upload-mask').hide();
+                  $('.upload-file').hide();
+                  $('.pic-upload').next().css('display','block');
+
+                  console.log(response.pic);
+
+                  $("#"+response.id).attr('src',response.pic);
+                  $("#"+response.id).next().attr('value',response.pic);
+              }
+          }
+
+      })
 
       </script>
 @endsection
