@@ -50,8 +50,8 @@ class ForgotController extends Controller
 
 	public function resetpass($token, Request $request)
 	{
-		$t = $request->input('t', 1);
 
+        $t = $request->input('t', 1);
 		if($t == 1)
 		{
 			$table = 'users';

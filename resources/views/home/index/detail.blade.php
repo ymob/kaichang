@@ -323,13 +323,13 @@
         $('.detailmore').on('click', function(){
 
             $.ajax('/morecomment', {
-                data: {'pid' : {{ $data->id }} },
+                data: {pid: {{ $data->id }} },
                 type: 'get',
                 dataType: 'json',
                 success: function(data)
                 {
                     $.each(data ,function(i,n){
-                        console.log(n.content);
+                       console.log(n.content);
                         var model = $('#model').clone();
                         model.find('.content').html(n.content);
                         $('#model').after(model);
